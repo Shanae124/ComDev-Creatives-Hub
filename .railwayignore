@@ -1,0 +1,15 @@
+node_modules/
+.next/
+frontend/node_modules/
+frontend/.next/
+.git/
+uploads/
+imscc_inspect/
+*.log
+npm-debug.log*
+.env.local
+.DS_Store
+.vscode/
+.idea/
+*.zip
+*.imscc

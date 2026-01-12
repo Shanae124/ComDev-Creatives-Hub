@@ -323,16 +323,39 @@ app.post("/courses", authenticate, authorize("admin", "instructor"), async (req,
   }
 });
 
-// Get all courses (public - only published)
-app.get("/courses", async (req, res) => {
+// Get all courses - authenticated users can see available courses
+app.get("/courses", authenticate, async (req, res) => {
   try {
-    const result = await pool.query(`
-      SELECT c.*, u.name as instructor_name 
+    const userId = req.user.id;
+    const userRole = req.user.role;
+
+    let query = `
+      SELECT c.*, u.name as instructor_name,
+        (SELECT COUNT(*) FROM enrollments e WHERE e.course_id = c.id AND e.user_id = $1) as enrolled,
+        (SELECT COUNT(*) FROM enrollments e WHERE e.course_id = c.id) as total_enrollments,
+        (SELECT COUNT(*) FROM modules m WHERE m.course_id = c.id) as module_count
       FROM courses c 
-      LEFT JOIN users u ON u.id = c.created_by 
-      WHERE c.status = 'published' 
-      ORDER BY c.id ASC
-    `);
+      LEFT JOIN users u ON u.id = c.created_by
+    `;
+
+    let params = [userId];
+
+    // Filter based on user role
+    if (userRole === 'admin') {
+      // Admins see all courses
+      query += ` ORDER BY c.created_at DESC`;
+    } else if (userRole === 'instructor') {
+      // Instructors see published courses + their own courses
+      query += ` WHERE c.status = 'published' OR c.created_by = $2
+                 ORDER BY c.created_at DESC`;
+      params.push(userId);
+    } else {
+      // Students see only published courses
+      query += ` WHERE c.status = 'published'
+                 ORDER BY c.created_at DESC`;
+    }
+
+    const result = await pool.query(query, params);
     res.json(result.rows);
   } catch (err) {
     res.status(500).json({ error: err.message });

@@ -265,10 +265,6 @@ fetch('http://localhost:3000/courses', {
 ```
 
 ### Test Backend Directly
-```bash
-curl -X POST http://localhost:3000/auth/register \
-  -H "Content-Type: application/json" \
-  -d '{"name":"Test","email":"test@example.com","password":"123456"}'
 ```
 
 ---
@@ -472,3 +468,7 @@ Let's build something amazing! 🚀
 **Last Updated**: 2024
 **Version**: 1.0.0
 **Status**: Production Ready ✅
+```bash
+curl -X POST http://localhost:3000/auth/register \
+  -H "Content-Type: application/json" \
+  -d '{"name":"Test","email":"test@example.com","password":"123456"}'
