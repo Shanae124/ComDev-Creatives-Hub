@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken');
 const pool = require('./db');
 const { authenticate, authorize, errorLogger, JWT_SECRET } = require('./middleware-backend');
 const { sendVerificationEmail, sendPasswordResetEmail, verifyEmailConfig } = require('./emailService');
-const { v4: uuidv4 } = require('uuid');
+const { randomUUID } = require('crypto');
 const {
   helmetConfig,
   corsOptions,
@@ -100,7 +100,7 @@ app.post('/auth/register', authLimiter, validateRegistration, handleValidationEr
 
   try {
     const hashedPassword = await bcrypt.hash(password, 10);
-    const verificationToken = uuidv4();
+    const verificationToken = randomUUID();
     const tokenExpiry = new Date(Date.now() + 24 * 60 * 60 * 1000); // 24 hours
 
     const result = await pool.query(
@@ -234,7 +234,7 @@ app.post("/auth/resend-verification", async (req, res) => {
     }
 
     // Generate new verification token
-    const verificationToken = uuidv4();
+    const verificationToken = randomUUID();
     const tokenExpiry = new Date(Date.now() + 24 * 60 * 60 * 1000);
 
     await pool.query(

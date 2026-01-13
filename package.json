@@ -9,9 +9,10 @@
     "dev:backend": "node server.js",
     "dev:both": "concurrently \"npm run dev:backend\" \"npm run dev\"",
     "lint": "eslint .",
-    "start": "next start -p ${PORT:-3001}",
+    "start": "node start-servers.js",
+    "start:local": "next start -p 3001",
     "backend": "node server.js",
-    "postinstall": "prisma generate || true",
+    "postinstall": "node -e \"process.exit(0)\"",
     "railway:init": "node initdb.js"
   },
   "engines": {
@@ -19,6 +20,7 @@
     "npm": ">=9.0.0"
   },
   "dependencies": {
+    "concurrently": "^8.2.2",
     "@hookform/resolvers": "^3.10.0",
     "@radix-ui/react-accordion": "1.2.2",
     "@radix-ui/react-alert-dialog": "1.1.4",
