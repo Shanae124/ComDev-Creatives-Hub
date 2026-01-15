@@ -11,7 +11,8 @@ const nextConfig = {
       beforeFiles: [
         {
           source: '/api/:path*',
-          destination: 'http://localhost:3000/:path*',
+          // Use env-configured API URL in production; default to local dev
+          destination: `${process.env.API_URL || 'http://localhost:3000'}/:path*`,
         },
       ],
     };

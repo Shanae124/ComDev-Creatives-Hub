@@ -124,7 +124,38 @@ app.post('/auth/register', authLimiter, validateRegistration, handleValidationEr
 
     res.json(response);
   } catch (err) {
-    res.status(400).json({ error: err.message });
+    // Handle duplicate email: resend verification if not verified
+    const isUniqueViolation = err && (err.code === '23505' || (err.message || '').toLowerCase().includes('duplicate key'));
+    if (isUniqueViolation) {
+      try {
+        const existing = await pool.query("SELECT id, name, email, role, email_verified FROM users WHERE email = $1", [email]);
+        if (existing.rows.length > 0) {
+          const user = existing.rows[0];
+          if (!user.email_verified) {
+            const newToken = randomUUID();
+            const newExpiry = new Date(Date.now() + 24 * 60 * 60 * 1000);
+            await pool.query(
+              "UPDATE users SET verification_token = $1, verification_token_expires = $2 WHERE id = $3",
+              [newToken, newExpiry, user.id]
+            );
+            const emailResult = await sendVerificationEmail(email, user.name || name || 'User', newToken);
+            const response = {
+              user: { id: user.id, name: user.name, email: user.email, role: user.role, email_verified: false },
+              message: "Account already exists but is not verified. We've resent the verification email.",
+            };
+            if (emailResult.previewUrl) {
+              response.emailPreviewUrl = emailResult.previewUrl;
+              response.devNote = "Using test email - preview at: " + emailResult.previewUrl;
+            }
+            return res.json(response);
+          }
+        }
+        return res.status(400).json({ error: "Email already registered" });
+      } catch (e) {
+        return res.status(400).json({ error: "Email already registered" });
+      }
+    }
+    res.status(500).json({ error: err.message });
   }
 });
 

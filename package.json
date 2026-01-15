@@ -13,7 +13,9 @@
     "start:local": "next start -p 3001",
     "backend": "node server.js",
     "postinstall": "node -e \"process.exit(0)\"",
-    "railway:init": "node initdb.js"
+    "railway:init": "node initdb.js",
+    "user:delete": "node scripts/dev-user-tools.js delete",
+    "user:verify": "node scripts/dev-user-tools.js verify"
   },
   "engines": {
     "node": ">=18.0.0",
