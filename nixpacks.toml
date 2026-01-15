@@ -2,10 +2,10 @@
 nixPkgs = ["nodejs_20", "postgresql"]
 
 [phases.install]
-cmds = ["npm install"]
+cmds = ["npm ci --include=dev || npm install"]
 
 [phases.build]
 cmds = ["npm run build"]
 
 [start]
-cmd = "npm start"
+cmd = "bash railway-start.sh"
