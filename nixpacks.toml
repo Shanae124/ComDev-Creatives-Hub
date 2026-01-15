@@ -8,4 +8,4 @@ cmds = ["npm ci --include=dev || npm install"]
 cmds = ["npm run build"]
 
 [start]
-cmd = "bash railway-start.sh"
+cmd = "node start-production.js"
