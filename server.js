@@ -881,7 +881,9 @@ app.use(notFoundHandler);
 app.use(errorHandler);
 
 // ==================== START SERVER ====================
-const PORT = process.env.PORT || 3000;
+// Allow running API on a separate port when co-locating with Next.js
+// In Railway, Next binds to PORT; API binds to API_PORT (default 3001)
+const PORT = process.env.API_PORT || process.env.PORT || 3000;
 
 app.listen(PORT, async () => {
   console.log('\n================================================');

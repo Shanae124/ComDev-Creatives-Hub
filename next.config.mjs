@@ -7,10 +7,17 @@ const nextConfig = {
     unoptimized: true,
   },
   publicRuntimeConfig: {
-    API_URL: process.env.API_URL || 'http://localhost:3000',
+    // Default API URL: dev -> localhost:3000, prod -> 127.0.0.1:3001 (same container)
+    API_URL: (() => {
+      const isProd = process.env.NODE_ENV === 'production';
+      const defaultUrl = isProd ? 'http://127.0.0.1:3001' : 'http://localhost:3000';
+      return process.env.API_URL || defaultUrl;
+    })(),
   },
   async rewrites() {
-    const apiUrl = process.env.API_URL || 'http://localhost:3000';
+    const isProd = process.env.NODE_ENV === 'production';
+    const defaultUrl = isProd ? 'http://127.0.0.1:3001' : 'http://localhost:3000';
+    const apiUrl = process.env.API_URL || defaultUrl;
     return {
       beforeFiles: [
         {
