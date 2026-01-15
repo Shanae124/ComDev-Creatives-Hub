@@ -2,6 +2,7 @@
 
 # dependencies
 /node_modules
+frontend/node_modules/
 
 # next.js
 /.next/
@@ -25,3 +26,19 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# uploads and large imports
+uploads/
+imscc_inspect/
+*.imscc
+
+# caches and tooling
+.turbo/
+.cache/
+coverage/
+logs/
+*.log
+
+# OS junk
+.DS_Store
+Thumbs.db
