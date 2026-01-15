@@ -6,13 +6,16 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
+  publicRuntimeConfig: {
+    API_URL: process.env.API_URL || 'http://localhost:3000',
+  },
   async rewrites() {
+    const apiUrl = process.env.API_URL || 'http://localhost:3000';
     return {
       beforeFiles: [
         {
           source: '/api/:path*',
-          // Use env-configured API URL in production; default to local dev
-          destination: `${process.env.API_URL || 'http://localhost:3000'}/:path*`,
+          destination: `${apiUrl}/:path*`,
         },
       ],
     };
