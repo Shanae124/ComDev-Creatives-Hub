@@ -8,4 +8,5 @@ cmds = ["npm ci --include=dev || npm install"]
 cmds = ["npm run build"]
 
 [start]
+cmd = "concurrently -k -s first -n api,web -c green,blue \"API_PORT=3001 node server.js\" \"next start -p $PORT\""
 cmd = "node start-production.js"
