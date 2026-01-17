@@ -4,7 +4,7 @@
   "description": "ProtexxaLearn - Professional Learning Management System",
   "private": true,
   "scripts": {
-    "build": "next build; true",
+    "build": "next build",
     "dev": "next dev -p 3001",
     "dev:backend": "node server.js",
     "dev:both": "concurrently \"npm run dev:backend\" \"npm run dev\"",
