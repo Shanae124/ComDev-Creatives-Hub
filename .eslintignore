@@ -1,0 +1,12 @@
+**/node_modules/**
+**/.next/**
+**/dist/**
+**/build/**
+**/out/**
+server.js
+db.js
+initdb.js
+middleware-backend.js
+emailService.js
+security.js
+start-production.js

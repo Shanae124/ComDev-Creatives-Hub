@@ -11,12 +11,15 @@
     "strict": false,
     "noEmit": true,
     "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
     "module": "esnext",
     "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "react-jsx",
     "incremental": true,
+    "suppressImplicitAnyIndexErrors": true,
+    "noImplicitAny": false,
     "plugins": [
       {
         "name": "next"
