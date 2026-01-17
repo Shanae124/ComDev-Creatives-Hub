@@ -6,7 +6,6 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
-  swcMinify: true,
   productionBrowserSourceMaps: false,
   async rewrites() {
     // In production (Railway): API runs on 127.0.0.1:3001 in same container
@@ -23,10 +22,6 @@ const nextConfig = {
         },
       ],
     };
-  },
-  experimental: {
-    // Skip validation of external packages
-    esmExternals: true,
   },
 }
 

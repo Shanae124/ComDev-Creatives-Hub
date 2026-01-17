@@ -2,6 +2,7 @@
   "name": "protexxalearn",
   "version": "1.0.0",
   "description": "ProtexxaLearn - Professional Learning Management System",
+  "type": "module",
   "private": true,
   "scripts": {
     "build": "next build",
