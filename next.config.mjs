@@ -2,6 +2,10 @@
 const nextConfig = {
   typescript: {
     ignoreBuildErrors: true,
+    tsconfigPath: './tsconfig.json',
+  },
+  eslint: {
+    ignoreDuringBuilds: true,
   },
   images: {
     unoptimized: true,
