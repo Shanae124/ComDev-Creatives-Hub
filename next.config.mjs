@@ -1,12 +1,16 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: 'standalone',
+  webpack: {
+    config: {
+      experiments: {
+        layers: true,
+      },
+    },
+  },
   typescript: {
     ignoreBuildErrors: true,
     tsconfigPath: './tsconfig.json',
-  },
-  experimental: {
-    typedRoutes: false,
   },
   images: {
     unoptimized: true,
