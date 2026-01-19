@@ -5,6 +5,9 @@ const nextConfig = {
     ignoreBuildErrors: true,
     tsconfigPath: './tsconfig.json',
   },
+  experimental: {
+    typedRoutes: false,
+  },
   images: {
     unoptimized: true,
   },
