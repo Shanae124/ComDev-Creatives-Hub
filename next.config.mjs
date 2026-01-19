@@ -1,13 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: 'standalone',
-  webpack: {
-    config: {
-      experiments: {
-        layers: true,
-      },
-    },
-  },
+  turbopack: {},
   typescript: {
     ignoreBuildErrors: true,
     tsconfigPath: './tsconfig.json',
