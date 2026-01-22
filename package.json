@@ -9,7 +9,7 @@
     "dev:backend": "node server.js",
     "dev:both": "concurrently \"npm run dev:backend\" \"npm run dev\"",
     "lint": "eslint .",
-    "start": "node server.js",
+    "start": "node start.js",
     "start:local": "next start -p 3001",
     "backend": "node server.js",
     "postinstall": "node -e \"process.exit(0)\"",
