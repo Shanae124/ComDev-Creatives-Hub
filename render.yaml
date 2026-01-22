@@ -1,0 +1,39 @@
+services:
+  # PostgreSQL Database
+  - type: pserv
+    name: protexxalearn-db
+    plan: free
+    env: docker
+    region: oregon
+    databaseName: protexxalearn
+    databaseUser: protexxalearn
+    ipAllowList: []
+
+  # Web Service (API + Next.js)
+  - type: web
+    name: protexxalearn
+    plan: free
+    env: node
+    region: oregon
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: API_PORT
+        value: 3001
+      - key: DB_SSL
+        value: true
+      - key: EMAIL_SERVICE
+        value: ethereal
+      - key: JWT_SECRET
+        generateValue: true
+      - key: DATABASE_URL
+        fromDatabase:
+          name: protexxalearn-db
+          property: connectionString
+      - key: BASE_URL
+        value: https://protexxalearn.onrender.com
+      - key: CORS_ORIGINS
+        value: "*"
