@@ -198,7 +198,6 @@ export default function CoursesPage() {
                     <div className="h-full flex items-center justify-center">
                       <BookOpen className="h-16 w-16 text-muted-foreground/20 group-hover:scale-110 transition-transform duration-300" />
                     </div>
-                    </div>
                   </div>
 
                   <CardHeader>
