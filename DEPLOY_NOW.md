@@ -11,6 +11,36 @@
 - ✅ Auto-HTTPS/SSL
 - ✅ GitHub auto-deploy
 
+### Option A: Single Service (API + Next.js in one)
+
+Uses the included Procfile and nixpacks.toml to run both servers in one container.
+
+1. Sign up at Railway and create a new project (Deploy from GitHub)
+2. Add PostgreSQL (New → Database → PostgreSQL)
+3. Add your repo as a new service (New → GitHub Repo)
+4. Environment Variables (Service → Variables):
+   ```env
+   NODE_ENV=production
+   DATABASE_URL=${{Postgres.DATABASE_URL}}
+   DB_SSL=true
+   JWT_SECRET=<node -e "console.log(require('crypto').randomBytes(32).toString('hex'))">
+   EMAIL_SERVICE=ethereal
+   API_PORT=3001
+   ```
+   - For real email delivery, switch EMAIL_SERVICE and add provider creds later.
+5. Start/Build: Leave defaults. Nixpacks will run `npm run build` and start both servers.
+6. Generate a domain for the service.
+7. Initialize DB schema locally or via a one-off run:
+   ```powershell
+   $env:DATABASE_URL="<paste-railway-db-url>"; node initdb.js
+   ```
+
+That’s it. Frontend is served at your Railway domain and proxies `/api/*` to the internal API at 127.0.0.1:3001.
+
+### Option B: Separate Services (API and Frontend)
+
+Recommended when you want to scale them independently.
+
 ### Steps:
 
 1. **Sign up:** https://railway.app (use GitHub login)

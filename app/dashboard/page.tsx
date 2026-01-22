@@ -1,22 +1,45 @@
 "use client"
 
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import { useAuthStore } from "@/lib/auth-store"
+import { courseAPI, enrollmentAPI } from "@/lib/api"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { BarChart3, BookOpen, Calendar, Clock, Users, TrendingUp, AlertCircle, CheckCircle2 } from "lucide-react"
+import { BarChart3, BookOpen, Calendar, Clock, Users, TrendingUp, ArrowRight, FolderTree } from "lucide-react"
+import Link from "next/link"
 
 export default function DashboardPage() {
   const router = useRouter()
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated)
   const user = useAuthStore((state) => state.user)
+  const [courses, setCourses] = useState<any[]>([])
+  const [enrollments, setEnrollments] = useState<any[]>([])
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     if (!isAuthenticated) {
       router.push("/login")
+      return
     }
+
+    const fetchData = async () => {
+      try {
+        const [coursesRes, enrollmentsRes] = await Promise.all([
+          courseAPI.getAll(),
+          enrollmentAPI.getAll(),
+        ])
+        setCourses(coursesRes.data || [])
+        setEnrollments(enrollmentsRes.data || [])
+      } catch (err) {
+        console.error("Error fetching dashboard data:", err)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchData()
   }, [isAuthenticated, router])
 
   if (!isAuthenticated) {
@@ -28,220 +51,234 @@ export default function DashboardPage() {
   }
 
   const isInstructor = user?.role === "instructor" || user?.role === "admin"
+  const myCourses = courses.filter((c) => c.created_by === user?.id)
+  const enrolledCourses = courses.filter((c) => enrollments.some((e) => e.course_id === c.id && e.user_id === user?.id))
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background to-muted/20 p-6 md:p-8">
-      <div className="max-w-7xl mx-auto space-y-8">
-        {/* Welcome Header */}
-        <div className="space-y-2">
-          <h1 className="text-4xl font-bold tracking-tight">Welcome back, {user?.name}!</h1>
-          <p className="text-muted-foreground text-lg">
-            {isInstructor ? "Manage your courses and track student progress" : "Continue your learning journey"}
-          </p>
-        </div>
+    <div className="max-w-7xl mx-auto space-y-8">
+      {/* Welcome Header */}
+      <div className="space-y-2">
+        <h1 className="text-4xl font-bold tracking-tight">Welcome back, {user?.name}!</h1>
+        <p className="text-muted-foreground text-lg">
+          {isInstructor ? "Manage your courses and track student progress" : "Continue your learning journey"}
+        </p>
+      </div>
 
-        {/* Stats Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-          <Card className="border-0 shadow-sm">
-            <CardHeader className="pb-3">
-              <CardTitle className="text-sm font-medium text-muted-foreground">Active Courses</CardTitle>
+      {/* Stats Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <Card className="border-0 shadow-sm bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-950 dark:to-blue-900">
+          <CardHeader className="pb-3">
+            <CardTitle className="text-sm font-medium text-muted-foreground flex items-center gap-2">
+              <BookOpen className="h-4 w-4" />
+              {isInstructor ? "My Courses" : "Enrolled"}
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="text-3xl font-bold">{isInstructor ? myCourses.length : enrolledCourses.length}</div>
+            <p className="text-xs text-muted-foreground mt-1">Active courses</p>
+          </CardContent>
+        </Card>
+
+        <Card className="border-0 shadow-sm bg-gradient-to-br from-green-50 to-green-100 dark:from-green-950 dark:to-green-900">
+          <CardHeader className="pb-3">
+            <CardTitle className="text-sm font-medium text-muted-foreground flex items-center gap-2">
+              <Users className="h-4 w-4" />
+              {isInstructor ? "Students" : "Progress"}
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="text-3xl font-bold">{isInstructor ? enrollments.length : "0%"}</div>
+            <p className="text-xs text-muted-foreground mt-1">{isInstructor ? "Total enrolled" : "Overall"}</p>
+          </CardContent>
+        </Card>
+
+        <Card className="border-0 shadow-sm bg-gradient-to-br from-purple-50 to-purple-100 dark:from-purple-950 dark:to-purple-900">
+          <CardHeader className="pb-3">
+            <CardTitle className="text-sm font-medium text-muted-foreground flex items-center gap-2">
+              <BarChart3 className="h-4 w-4" />
+              Completion
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="text-3xl font-bold">0%</div>
+            <p className="text-xs text-muted-foreground mt-1">Learning streak</p>
+          </CardContent>
+        </Card>
+
+        <Card className="border-0 shadow-sm bg-gradient-to-br from-orange-50 to-orange-100 dark:from-orange-950 dark:to-orange-900">
+          <CardHeader className="pb-3">
+            <CardTitle className="text-sm font-medium text-muted-foreground">Account</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <Badge className="text-xs capitalize">{user?.role}</Badge>
+            <p className="text-xs text-muted-foreground mt-1">Account type</p>
+          </CardContent>
+        </Card>
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {/* Courses Section */}
+        <div className="lg:col-span-2 space-y-6">
+          <Card>
+            <CardHeader>
+              <div className="flex items-center justify-between">
+                <div>
+                  <CardTitle className="text-xl">{isInstructor ? "My Courses" : "Your Courses"}</CardTitle>
+                  <CardDescription>
+                    {isInstructor
+                      ? "Manage and monitor your courses"
+                      : `${enrolledCourses.length} course${enrolledCourses.length !== 1 ? "s" : ""}`}
+                  </CardDescription>
+                </div>
+                <Link href="/courses">
+                  <Button variant="outline" size="sm" className="gap-2">
+                    View All <ArrowRight className="h-4 w-4" />
+                  </Button>
+                </Link>
+              </div>
             </CardHeader>
             <CardContent>
-              <div className="text-3xl font-bold">0</div>
-              <p className="text-xs text-muted-foreground mt-1">This semester</p>
+              {loading ? (
+                <div className="space-y-2">
+                  {[1, 2, 3].map((i) => (
+                    <div key={i} className="h-12 bg-muted rounded animate-pulse" />
+                  ))}
+                </div>
+              ) : (isInstructor ? myCourses : enrolledCourses).length === 0 ? (
+                <div className="text-center py-8">
+                  <BookOpen className="h-12 w-12 mx-auto text-muted-foreground/40 mb-4" />
+                  <p className="text-muted-foreground">No courses yet</p>
+                  <Button className="mt-4" asChild>
+                    <Link href="/courses">{isInstructor ? "Create a course" : "Browse courses"}</Link>
+                  </Button>
+                </div>
+              ) : (
+                <div className="space-y-3">
+                  {(isInstructor ? myCourses : enrolledCourses).slice(0, 5).map((course) => (
+                    <Link key={course.id} href={`/courses/${course.id}`}>
+                      <div className="p-4 border rounded-lg hover:bg-muted/50 transition-colors cursor-pointer group">
+                        <div className="flex items-start justify-between">
+                          <div className="flex-1">
+                            <h4 className="font-semibold group-hover:text-primary transition-colors">{course.title}</h4>
+                            <p className="text-sm text-muted-foreground line-clamp-1">{course.description}</p>
+                          </div>
+                          <Badge variant="secondary" className="capitalize text-xs">
+                            {course.status}
+                          </Badge>
+                        </div>
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* Quick Actions Sidebar */}
+        <div className="space-y-6">
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-lg">Quick Actions</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-2">
+              <Link href="/courses" className="block">
+                <Button className="w-full justify-start gap-2" variant="outline">
+                  <BookOpen className="h-4 w-4" />
+                  Browse Courses
+                </Button>
+              </Link>
+              {isInstructor && (
+                <Link href="/admin/courses" className="block">
+                  <Button className="w-full justify-start gap-2" variant="outline">
+                    <BarChart3 className="h-4 w-4" />
+                    My Dashboard
+                  </Button>
+                </Link>
+              )}
+              <Link href="/settings" className="block">
+                <Button className="w-full justify-start gap-2" variant="outline">
+                  <Clock className="h-4 w-4" />
+                  Settings
+                </Button>
+              </Link>
+
+              {/* Role-aware quick links */}
+              {isInstructor ? (
+                <>
+                  <Button
+                    variant="outline"
+                    className="w-full justify-start"
+                    onClick={() => router.push("/admin/courses")}
+                  >
+                    <FolderTree className="h-4 w-4 mr-2" />
+                    View Courses
+                  </Button>
+                  <Button
+                    variant="outline"
+                    className="w-full justify-start"
+                    onClick={() => router.push("/submissions")}
+                  >
+                    <Clock className="h-4 w-4 mr-2" />
+                    Submissions
+                  </Button>
+                  <Button
+                    variant="outline"
+                    className="w-full justify-start"
+                    onClick={() => router.push("/grading")}
+                  >
+                    <TrendingUp className="h-4 w-4 mr-2" />
+                    Grade Work
+                  </Button>
+                </>
+              ) : (
+                <>
+                  <Button
+                    variant="outline"
+                    className="w-full justify-start"
+                    onClick={() => router.push("/courses")}
+                  >
+                    <BookOpen className="h-4 w-4 mr-2" />
+                    My Courses
+                  </Button>
+                  <Button
+                    variant="outline"
+                    className="w-full justify-start"
+                    onClick={() => router.push("/assignments")}
+                  >
+                    <Clock className="h-4 w-4 mr-2" />
+                    Assignments
+                  </Button>
+                  <Button
+                    variant="outline"
+                    className="w-full justify-start"
+                    onClick={() => router.push("/grades")}
+                  >
+                    <BarChart3 className="h-4 w-4 mr-2" />
+                    Grades
+                  </Button>
+                </>
+              )}
             </CardContent>
           </Card>
 
-          <Card className="border-0 shadow-sm">
-            <CardHeader className="pb-3">
-              <CardTitle className="text-sm font-medium text-muted-foreground">
-                {isInstructor ? "Students Enrolled" : "Assignments"}
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-sm flex items-center gap-2">
+                <TrendingUp className="h-4 w-4 text-primary" />
+                Learning Tips
               </CardTitle>
             </CardHeader>
-            <CardContent>
-              <div className="text-3xl font-bold">0</div>
-              <p className="text-xs text-muted-foreground mt-1">Total</p>
+            <CardContent className="text-sm text-muted-foreground">
+              <ul className="space-y-2">
+                <li>✓ Complete lessons consistently for best results</li>
+                <li>✓ Take notes while learning</li>
+                <li>✓ Join discussion forums</li>
+              </ul>
             </CardContent>
           </Card>
-
-          <Card className="border-0 shadow-sm">
-            <CardHeader className="pb-3">
-              <CardTitle className="text-sm font-medium text-muted-foreground">Overall Progress</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="text-3xl font-bold">0%</div>
-              <p className="text-xs text-muted-foreground mt-1">Complete</p>
-            </CardContent>
-          </Card>
-
-          <Card className="border-0 shadow-sm">
-            <CardHeader className="pb-3">
-              <CardTitle className="text-sm font-medium text-muted-foreground">Role</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <Badge variant="secondary" className="capitalize text-xs font-semibold">
-                {user?.role}
-              </Badge>
-              <p className="text-xs text-muted-foreground mt-1">Account type</p>
-            </CardContent>
-          </Card>
-        </div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {/* Main Content Area */}
-          <div className="lg:col-span-2 space-y-6">
-            {/* Courses Section */}
-            <Card>
-              <CardHeader>
-                <div className="flex items-center justify-between">
-                  <div>
-                    <CardTitle className="text-xl">Courses</CardTitle>
-                    <CardDescription>
-                      {isInstructor ? "Manage and create courses" : "Your enrolled courses"}
-                    </CardDescription>
-                  </div>
-                  {isInstructor && (
-                    <Button onClick={() => router.push("/admin/courses/new")} size="sm">
-                      Create Course
-                    </Button>
-                  )}
-                </div>
-              </CardHeader>
-              <CardContent>
-                <div className="flex flex-col items-center justify-center py-12 text-center">
-                  <BookOpen className="h-12 w-12 text-muted-foreground/40 mb-4" />
-                  <p className="text-muted-foreground font-medium mb-4">
-                    {isInstructor ? "No courses yet. Create your first course!" : "No courses enrolled yet"}
-                  </p>
-                  {!isInstructor && (
-                    <Button variant="outline">Browse Courses</Button>
-                  )}
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Recent Activity */}
-            <Card>
-              <CardHeader>
-                <CardTitle>Recent Activity</CardTitle>
-                <CardDescription>Your learning updates from this week</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-4">
-                  <div className="flex items-center gap-4 p-3 rounded-lg bg-muted/40">
-                    <AlertCircle className="h-5 w-5 text-blue-500 flex-shrink-0" />
-                    <div className="flex-1 min-w-0">
-                      <p className="font-medium text-sm">Welcome to Protexxa LMS</p>
-                      <p className="text-xs text-muted-foreground">You've successfully logged in</p>
-                    </div>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-
-          {/* Sidebar Widgets */}
-          <div className="space-y-6">
-            {/* Quick Actions */}
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-base">Quick Actions</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-2">
-                {isInstructor ? (
-                  <>
-                    <Button
-                      variant="outline"
-                      className="w-full justify-start"
-                      onClick={() => router.push("/admin/courses")}
-                    >
-                      <FolderTree className="h-4 w-4 mr-2" />
-                      View Courses
-                    </Button>
-                    <Button
-                      variant="outline"
-                      className="w-full justify-start"
-                      onClick={() => router.push("/submissions")}
-                    >
-                      <Clock className="h-4 w-4 mr-2" />
-                      Submissions
-                    </Button>
-                    <Button
-                      variant="outline"
-                      className="w-full justify-start"
-                      onClick={() => router.push("/grading")}
-                    >
-                      <TrendingUp className="h-4 w-4 mr-2" />
-                      Grade Work
-                    </Button>
-                  </>
-                ) : (
-                  <>
-                    <Button
-                      variant="outline"
-                      className="w-full justify-start"
-                      onClick={() => router.push("/courses")}
-                    >
-                      <BookOpen className="h-4 w-4 mr-2" />
-                      My Courses
-                    </Button>
-                    <Button
-                      variant="outline"
-                      className="w-full justify-start"
-                      onClick={() => router.push("/assignments")}
-                    >
-                      <Clock className="h-4 w-4 mr-2" />
-                      Assignments
-                    </Button>
-                    <Button
-                      variant="outline"
-                      className="w-full justify-start"
-                      onClick={() => router.push("/grades")}
-                    >
-                      <BarChart3 className="h-4 w-4 mr-2" />
-                      Grades
-                    </Button>
-                  </>
-                )}
-              </CardContent>
-            </Card>
-
-            {/* Upcoming Events */}
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-base">Calendar</CardTitle>
-                <CardDescription>Upcoming deadlines</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="flex flex-col items-center justify-center py-8 text-center">
-                  <Calendar className="h-8 w-8 text-muted-foreground/40 mb-2" />
-                  <p className="text-xs text-muted-foreground">No upcoming deadlines</p>
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Help & Support */}
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-base">Need Help?</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-2">
-                <Button variant="ghost" className="w-full justify-start text-xs">
-                  Getting Started Guide
-                </Button>
-                <Button variant="ghost" className="w-full justify-start text-xs">
-                  Contact Support
-                </Button>
-                <Button variant="ghost" className="w-full justify-start text-xs">
-                  Documentation
-                </Button>
-              </CardContent>
-            </Card>
-          </div>
         </div>
       </div>
     </div>
   )
 }
-
-import { FolderTree } from "lucide-react"

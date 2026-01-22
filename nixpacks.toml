@@ -5,7 +5,7 @@ nixPkgs = ["nodejs_20", "postgresql"]
 cmds = ["npm ci --include=dev || npm install"]
 
 [phases.build]
-cmds = ["echo 'Skipping Next.js build - API only deployment'"]
+cmds = ["npm run build"]
 
 [start]
-cmd = "node server.js"
+cmd = "npm start"

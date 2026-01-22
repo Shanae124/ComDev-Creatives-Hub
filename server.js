@@ -881,15 +881,16 @@ app.use(notFoundHandler);
 app.use(errorHandler);
 
 // ==================== START SERVER ====================
-// Allow running API on a separate port when co-locating with Next.js
-// In Railway, Next binds to PORT; API binds to API_PORT (default 3001)
-const PORT = process.env.API_PORT || process.env.PORT || 3000;
+// Railway deployment: Always use Railway's PORT
+// Local dev: Falls back to 3001
+const PORT = process.env.PORT || 3001;
+console.log(`[Server] Starting on PORT ${PORT}`);
 
-app.listen(PORT, async () => {
+app.listen(PORT, '0.0.0.0', async () => {
   console.log('\n================================================');
   console.log('🚀 ProtexxaLearn LMS - Production Ready');
   console.log('================================================');
-  console.log(`✅ Server:        http://localhost:${PORT}`);
+  console.log(`✅ Server:        http://0.0.0.0:${PORT}`);
   console.log(`📚 Database:      ${process.env.DB_NAME || 'Protexxalearn'}@${process.env.DB_HOST || 'localhost'}`);
   console.log(`🔐 Auth:          JWT (${process.env.JWT_EXPIRY || '7d'} expiry)`);
   console.log(`📧 Email:         ${process.env.EMAIL_SERVICE || 'ethereal'}`);

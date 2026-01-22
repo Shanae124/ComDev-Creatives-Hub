@@ -1,6 +1,5 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: 'standalone',
   turbopack: {},
   typescript: {
     ignoreBuildErrors: true,
@@ -17,10 +16,13 @@ const nextConfig = {
     const defaultUrl = isProd ? 'http://127.0.0.1:3001' : 'http://localhost:3000';
     const apiUrl = process.env.API_URL || defaultUrl;
     
+    console.log('[Next.js] API proxy:', apiUrl);
+    
     return {
       beforeFiles: [
         {
           source: '/api/:path*',
+          // Backend routes are mounted at root (no /api prefix)
           destination: `${apiUrl}/:path*`,
         },
       ],

@@ -27,6 +27,7 @@ async function init() {
       description TEXT,
       content_html TEXT DEFAULT '',
       created_by INTEGER NOT NULL REFERENCES users(id),
+      instructor_id INTEGER NOT NULL REFERENCES users(id),
       status TEXT NOT NULL DEFAULT 'draft',
       thumbnail_url TEXT,
       enrollment_capacity INTEGER,
@@ -36,6 +37,21 @@ async function init() {
 
     CREATE INDEX IF NOT EXISTS idx_courses_status ON courses(status);
     CREATE INDEX IF NOT EXISTS idx_courses_created_by ON courses(created_by);
+
+    -- Backfill for existing databases where instructor_id may be missing
+    ALTER TABLE courses
+      ADD COLUMN IF NOT EXISTS instructor_id INTEGER REFERENCES users(id);
+
+    -- Set instructor_id to created_by when missing to satisfy NOT NULL
+    UPDATE courses
+    SET instructor_id = created_by
+    WHERE instructor_id IS NULL;
+
+    ALTER TABLE courses
+      ALTER COLUMN instructor_id SET NOT NULL;
+
+    -- Indexes that rely on instructor_id must be created after the column exists
+    CREATE INDEX IF NOT EXISTS idx_courses_instructor_id ON courses(instructor_id);
  
     CREATE TABLE IF NOT EXISTS enrollments (
       id SERIAL PRIMARY KEY,

@@ -41,10 +41,18 @@ export const authAPI = {
     apiClient.post('/auth/login', { email, password }),
 };
 
+// Instructor APIs
+export const instructorAPI = {
+  getFeatured: () => apiClient.get('/instructors', { headers: { Authorization: '' } }).catch(
+    () => apiClient.get('/instructors')
+  ),
+};
+
 // Course APIs
 export const courseAPI = {
   getAll: () => apiClient.get('/courses'),
-  getAllAdmin: () => apiClient.get('/admin/courses'), // For admin - shows all courses
+  // Admin view currently uses the same courses endpoint; adjust if a dedicated admin route is added.
+  getAllAdmin: () => apiClient.get('/courses'),
   getById: (id: number | string) => apiClient.get(`/courses/${id}`),
   create: (data: any) => apiClient.post('/courses', data),
   update: (id: number | string, data: any) => apiClient.put(`/courses/${id}`, data),
