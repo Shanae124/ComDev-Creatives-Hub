@@ -101,11 +101,11 @@ export default function CoursesPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background to-muted/20 p-6 md:p-8">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-950 dark:to-slate-900 p-4 md:p-8">
       <div className="max-w-7xl mx-auto space-y-8">
         {/* Header */}
         <div className="space-y-4">
-          <h1 className="text-4xl font-bold tracking-tight">
+          <h1 className="text-5xl font-bold tracking-tight bg-gradient-to-r from-blue-600 to-cyan-600 dark:from-blue-400 dark:to-cyan-400 bg-clip-text text-transparent">
             {viewMode === "enrolled" ? "My Courses" : "Browse Courses"}
           </h1>
           <p className="text-muted-foreground text-lg">
@@ -191,12 +191,13 @@ export default function CoursesPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 animate-fade-in">
             {filteredCourses.map((course) => (
               <Link key={course.id} href={`/courses/${course.id}`}>
-                <Card className="h-full hover:shadow-lg hover:border-primary/50 transition-all cursor-pointer overflow-hidden group">
+                <Card className="h-full hover:shadow-2xl hover:border-primary/50 transition-all duration-300 cursor-pointer overflow-hidden group border-0 shadow-lg backdrop-blur-sm bg-white/80 dark:bg-slate-900/80">
                   {/* Image/Placeholder */}
                   <div className="h-40 bg-gradient-to-br from-primary/20 to-secondary/20 relative overflow-hidden">
-                    <div className="absolute inset-0 bg-gradient-to-br from-primary to-secondary opacity-0 group-hover:opacity-10 transition-opacity" />
+                    <div className="absolute inset-0 bg-gradient-to-br from-primary to-secondary opacity-0 group-hover:opacity-20 transition-opacity duration-300" />
                     <div className="h-full flex items-center justify-center">
-                      <BookOpen className="h-12 w-12 text-muted-foreground/30" />
+                      <BookOpen className="h-16 w-16 text-muted-foreground/20 group-hover:scale-110 transition-transform duration-300" />
+                    </div>
                     </div>
                   </div>
 

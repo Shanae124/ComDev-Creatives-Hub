@@ -57,21 +57,21 @@ export function Sidebar() {
   }
 
   return (
-    <aside className="hidden w-72 border-r border-border bg-card lg:block">
-      <div className="flex h-full flex-col">
-        <div className="flex h-20 items-center gap-3 border-b border-border px-6">
-          <Image src="/logo.png" alt="Protexxa" width={48} height={48} className="shrink-0" />
+    <aside className="hidden w-72 border-r border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 lg:block shadow-xl">
+      <div className="flex h-full flex-col bg-gradient-to-b from-white to-slate-50 dark:from-slate-950 dark:to-slate-900">
+        <div className="flex h-20 items-center gap-3 border-b border-slate-200 dark:border-slate-800 px-6 bg-gradient-to-r from-blue-50 to-cyan-50 dark:from-blue-950/20 dark:to-cyan-950/20">
+          <Image src="/logo.png" alt="Protexxa" width={48} height={48} className="shrink-0 rounded-lg shadow-md" />
           <div className="flex flex-col">
-            <span className="text-lg font-bold leading-tight bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+            <span className="text-lg font-bold leading-tight bg-gradient-to-r from-blue-600 to-cyan-600 dark:from-blue-400 dark:to-cyan-400 bg-clip-text text-transparent">
               Protexxa
             </span>
-            <span className="text-xs text-muted-foreground font-medium">Learning Platform</span>
+            <span className="text-xs text-slate-600 dark:text-slate-400 font-medium">Learning Platform</span>
           </div>
         </div>
 
         <nav className="flex-1 space-y-6 p-4 overflow-y-auto">
           <div className="space-y-1">
-            <h3 className="px-3 text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">{sectionLabel}</h3>
+            <h3 className="px-3 text-xs font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-3 flex items-center gap-2">{sectionLabel}</h3>
             {navigationItems.map((item) => {
               const Icon = item.icon
               const isActive = activeItem === item.name
@@ -81,13 +81,13 @@ export function Sidebar() {
                   href={item.href}
                   onClick={() => setActiveItem(item.name)}
                   className={cn(
-                    "flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-all",
+                    "flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-all duration-200",
                     isActive
-                      ? "bg-gradient-to-r from-primary to-secondary text-primary-foreground shadow-sm"
-                      : "text-muted-foreground hover:bg-accent hover:text-accent-foreground",
+                      ? "bg-gradient-to-r from-blue-600 to-cyan-600 dark:from-blue-500 dark:to-cyan-500 text-white shadow-lg shadow-blue-500/30"
+                      : "text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white",
                   )}
                 >
-                  <Icon className="h-5 w-5" />
+                  <Icon className="h-5 w-5 flex-shrink-0" />
                   {item.name}
                 </Link>
               )

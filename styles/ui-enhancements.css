@@ -1,0 +1,206 @@
+/* Enhanced UI Styling for ProtexxaLearn */
+
+/* Smooth transitions and animations */
+* {
+  @apply transition-colors duration-200;
+}
+
+/* Enhanced card styles */
+.card-hover {
+  @apply transition-all duration-300 hover:shadow-lg hover:scale-105;
+}
+
+.card-base {
+  @apply rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 shadow-sm;
+}
+
+/* Professional gradients */
+.gradient-primary {
+  @apply bg-gradient-to-r from-blue-600 to-cyan-600 dark:from-blue-400 dark:to-cyan-400;
+}
+
+.gradient-secondary {
+  @apply bg-gradient-to-r from-purple-600 to-pink-600 dark:from-purple-400 dark:to-pink-400;
+}
+
+.gradient-success {
+  @apply bg-gradient-to-r from-green-600 to-emerald-600 dark:from-green-400 dark:to-emerald-400;
+}
+
+/* Enhanced buttons */
+.btn-primary {
+  @apply inline-flex items-center justify-center px-6 py-3 rounded-lg font-semibold text-white bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 transition-all duration-200 shadow-lg hover:shadow-xl hover:-translate-y-1;
+}
+
+.btn-secondary {
+  @apply inline-flex items-center justify-center px-6 py-3 rounded-lg font-semibold text-slate-900 dark:text-white bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 transition-all duration-200;
+}
+
+/* Responsive grid */
+.responsive-grid {
+  @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6;
+}
+
+/* Enhanced typography */
+.heading-xl {
+  @apply text-5xl md:text-6xl font-bold tracking-tight;
+}
+
+.heading-lg {
+  @apply text-4xl md:text-5xl font-bold tracking-tight;
+}
+
+.heading-md {
+  @apply text-2xl md:text-3xl font-bold tracking-tight;
+}
+
+.text-muted {
+  @apply text-slate-600 dark:text-slate-400;
+}
+
+/* Loading skeleton */
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+.skeleton {
+  @apply bg-slate-200 dark:bg-slate-800 rounded-lg;
+  background-image: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0,
+    rgba(255, 255, 255, 0.2) 20%,
+    rgba(255, 255, 255, 0.5) 60%,
+    rgba(255, 255, 255, 0)
+  );
+  background-size: 1000px 100%;
+  animation: shimmer 2s infinite;
+}
+
+/* Responsive padding */
+.pad-responsive {
+  @apply p-4 md:p-6 lg:p-8;
+}
+
+/* Fade in animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.5s ease-out;
+}
+
+/* Smooth scroll */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Enhanced focus states */
+button:focus-visible,
+a:focus-visible {
+  @apply outline-none ring-2 ring-offset-2 ring-blue-500 dark:ring-offset-slate-950;
+}
+
+/* Improved contrast for accessibility */
+@media (prefers-contrast: more) {
+  :root {
+    --primary: oklch(0.30 0.25 240);
+    --secondary: oklch(0.50 0.28 200);
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Dark mode optimizations */
+@media (prefers-color-scheme: dark) {
+  .light-only {
+    @apply hidden;
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  .dark-only {
+    @apply hidden;
+  }
+}
+
+/* Mobile optimization */
+@media (max-width: 640px) {
+  .responsive-grid {
+    @apply grid-cols-1 gap-4;
+  }
+
+  .pad-responsive {
+    @apply p-3;
+  }
+
+  .heading-xl {
+    @apply text-3xl;
+  }
+
+  .heading-lg {
+    @apply text-2xl;
+  }
+}
+
+/* Tooltip styling */
+.tooltip {
+  @apply relative inline-flex;
+}
+
+.tooltip-content {
+  @apply absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 text-sm text-white bg-slate-900 dark:bg-slate-100 dark:text-slate-900 rounded whitespace-nowrap opacity-0 pointer-events-none transition-opacity;
+}
+
+.tooltip:hover .tooltip-content {
+  @apply opacity-100;
+}
+
+/* Form improvements */
+input, textarea, select {
+  @apply bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all;
+}
+
+input::placeholder {
+  @apply text-slate-400 dark:text-slate-600;
+}
+
+/* Badge improvements */
+.badge {
+  @apply inline-flex items-center px-3 py-1 rounded-full text-sm font-medium;
+}
+
+.badge-primary {
+  @apply bg-blue-100 text-blue-900 dark:bg-blue-900/30 dark:text-blue-300;
+}
+
+.badge-success {
+  @apply bg-green-100 text-green-900 dark:bg-green-900/30 dark:text-green-300;
+}
+
+.badge-warning {
+  @apply bg-yellow-100 text-yellow-900 dark:bg-yellow-900/30 dark:text-yellow-300;
+}
+
+.badge-destructive {
+  @apply bg-red-100 text-red-900 dark:bg-red-900/30 dark:text-red-300;
+}
