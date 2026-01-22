@@ -1,20 +1,14 @@
-services:
-  # PostgreSQL Database
-  - type: pserv
-    name: protexxalearn-db
-    plan: free
-    env: docker
-    region: oregon
+databases:
+  - name: protexxalearn-db
     databaseName: protexxalearn
-    databaseUser: protexxalearn
-    ipAllowList: []
+    user: protexxalearn
+    plan: free
 
-  # Web Service (API + Next.js)
+services:
   - type: web
     name: protexxalearn
+    runtime: node
     plan: free
-    env: node
-    region: oregon
     buildCommand: npm install && npm run build
     startCommand: npm start
     healthCheckPath: /health
