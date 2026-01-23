@@ -1448,3 +1448,270 @@ app.get("/admin/glossary", authenticate, async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
+
+// ==================== LABS & INTERACTIVE CONTENT ====================
+
+// Get all labs for a course/module
+app.get("/labs", authenticate, async (req, res) => {
+  const { course_id, module_id } = req.query;
+  
+  try {
+    let query = `
+      SELECT l.id, l.title, l.description, l.lab_type, l.status, l.difficulty,
+             l.duration_minutes, l.sort_order, u.name as created_by_name
+      FROM labs l
+      LEFT JOIN users u ON u.id = l.created_by
+      WHERE l.status = 'published'
+    `;
+    
+    const params = [];
+    if (course_id) {
+      query += ` AND l.course_id = $${params.length + 1}`;
+      params.push(course_id);
+    }
+    if (module_id) {
+      query += ` AND l.module_id = $${params.length + 1}`;
+      params.push(module_id);
+    }
+    
+    query += ` ORDER BY l.sort_order ASC`;
+    
+    const result = await pool.query(query, params);
+    res.json(result.rows);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Get single lab with full content
+app.get("/api/labs/:id", async (req, res) => {
+  try {
+    const result = await pool.query(
+      `SELECT l.*, u.name as created_by_name
+       FROM labs l
+       LEFT JOIN users u ON u.id = l.created_by
+       WHERE l.id = $1`,
+      [req.params.id]
+    );
+    
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: "Lab not found" });
+    }
+    
+    res.json(result.rows[0]);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Create lab
+app.post("/admin/labs", authenticate, authorize("admin", "instructor"), async (req, res) => {
+  const {
+    course_id,
+    module_id,
+    title,
+    description,
+    lab_type,
+    html_content,
+    html_file_url,
+    duration_minutes,
+    difficulty,
+    objectives,
+    resources,
+    sort_order
+  } = req.body;
+
+  if (!course_id || !title) {
+    return res.status(400).json({ error: "course_id and title are required" });
+  }
+
+  try {
+    const result = await pool.query(`
+      INSERT INTO labs (course_id, module_id, title, description, lab_type, html_content,
+                       html_file_url, duration_minutes, difficulty, objectives, resources,
+                       sort_order, created_by, status)
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, 'draft')
+      RETURNING *
+    `, [
+      course_id,
+      module_id || null,
+      title,
+      description || "",
+      lab_type || "interactive",
+      html_content || "",
+      html_file_url || null,
+      duration_minutes || null,
+      difficulty || "intermediate",
+      JSON.stringify(objectives || []),
+      JSON.stringify(resources || []),
+      sort_order || 1,
+      req.user.id
+    ]);
+
+    res.json(result.rows[0]);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Update lab
+app.put("/admin/labs/:id", authenticate, authorize("admin", "instructor"), async (req, res) => {
+  const {
+    title,
+    description,
+    html_content,
+    status,
+    difficulty,
+    objectives,
+    resources,
+    duration_minutes
+  } = req.body;
+
+  try {
+    const result = await pool.query(`
+      UPDATE labs
+      SET title = COALESCE($1, title),
+          description = COALESCE($2, description),
+          html_content = COALESCE($3, html_content),
+          status = COALESCE($4, status),
+          difficulty = COALESCE($5, difficulty),
+          objectives = COALESCE($6, objectives),
+          resources = COALESCE($7, resources),
+          duration_minutes = COALESCE($8, duration_minutes),
+          updated_at = NOW()
+      WHERE id = $9
+      RETURNING *
+    `, [
+      title,
+      description,
+      html_content,
+      status,
+      difficulty,
+      JSON.stringify(objectives),
+      JSON.stringify(resources),
+      duration_minutes,
+      req.params.id
+    ]);
+
+    res.json(result.rows[0]);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Delete lab
+app.delete("/admin/labs/:id", authenticate, authorize("admin", "instructor"), async (req, res) => {
+  try {
+    const result = await pool.query("DELETE FROM labs WHERE id = $1 RETURNING *", [req.params.id]);
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: "Lab not found" });
+    }
+    res.json({ message: "Lab deleted successfully", lab: result.rows[0] });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Track lab attempt
+app.post("/labs/:id/attempt", authenticate, async (req, res) => {
+  const { completion_percent, notes } = req.body;
+
+  try {
+    const result = await pool.query(`
+      INSERT INTO lab_attempts (lab_id, user_id, completion_percent, notes, status)
+      VALUES ($1, $2, $3, $4, $5)
+      ON CONFLICT (lab_id, user_id) DO UPDATE
+      SET completion_percent = $3, notes = $4, updated_at = NOW()
+      RETURNING *
+    `, [
+      req.params.id,
+      req.user.id,
+      completion_percent || 0,
+      JSON.stringify(notes || {}),
+      completion_percent >= 100 ? 'completed' : 'in_progress'
+    ]);
+
+    res.json(result.rows[0]);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Get lab attempts
+app.get("/admin/labs/:id/attempts", authenticate, authorize("admin", "instructor"), async (req, res) => {
+  try {
+    const result = await pool.query(`
+      SELECT la.*, u.name, u.email
+      FROM lab_attempts la
+      JOIN users u ON u.id = la.user_id
+      WHERE la.lab_id = $1
+      ORDER BY la.started_at DESC
+    `, [req.params.id]);
+
+    res.json(result.rows);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Create course from HTML pages
+app.post("/admin/import-html-course", authenticate, authorize("admin"), async (req, res) => {
+  const { course_title, course_description, modules_html } = req.body;
+
+  if (!course_title || !modules_html || modules_html.length === 0) {
+    return res.status(400).json({ error: "course_title and modules_html are required" });
+  }
+
+  try {
+    // Create course
+    const courseResult = await pool.query(
+      `INSERT INTO courses (title, description, created_by, status)
+       VALUES ($1, $2, $3, 'published') RETURNING *`,
+      [course_title, course_description || "", req.user.id]
+    );
+
+    const courseId = courseResult.rows[0].id;
+    const createdModules = [];
+
+    // Create modules from HTML pages
+    for (let i = 0; i < modules_html.length; i++) {
+      const moduleData = modules_html[i];
+      
+      const moduleResult = await pool.query(
+        `INSERT INTO modules (course_id, title, description, sort_order)
+         VALUES ($1, $2, $3, $4) RETURNING *`,
+        [courseId, moduleData.title || `Module ${i + 1}`, moduleData.description || "", i + 1]
+      );
+
+      const moduleId = moduleResult.rows[0].id;
+
+      // Create lab from HTML content
+      await pool.query(
+        `INSERT INTO labs (course_id, module_id, title, description, lab_type, html_content,
+                          difficulty, objectives, created_by, status, sort_order)
+         VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, 'published', 1)`,
+        [
+          courseId,
+          moduleId,
+          moduleData.title || `Module ${i + 1}`,
+          moduleData.description || "",
+          "interactive",
+          moduleData.html_content || "",
+          "beginner",
+          JSON.stringify(moduleData.objectives || []),
+          req.user.id
+        ]
+      );
+
+      createdModules.push(moduleResult.rows[0]);
+    }
+
+    res.json({
+      message: "Course imported successfully",
+      course: courseResult.rows[0],
+      modules: createdModules
+    });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
