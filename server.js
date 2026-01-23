@@ -108,19 +108,13 @@ app.post('/auth/register', authLimiter, validateRegistration, handleValidationEr
       [name, email, hashedPassword, role || "student", verificationToken, tokenExpiry, true]
     );
 
-    // Send verification email
-    const emailResult = await sendVerificationEmail(email, name, verificationToken);
+    // Email sending disabled for testing
+    // const emailResult = await sendVerificationEmail(email, name, verificationToken);
     
-    // For development, include preview URL
     const response = {
       user: result.rows[0],
-      message: "Registration successful! Please check your email to verify your account.",
+      message: "Registration successful! You can now log in.",
     };
-
-    if (emailResult.previewUrl) {
-      response.emailPreviewUrl = emailResult.previewUrl;
-      response.devNote = "Using test email - preview at: " + emailResult.previewUrl;
-    }
 
     res.json(response);
   } catch (err) {
@@ -138,15 +132,11 @@ app.post('/auth/register', authLimiter, validateRegistration, handleValidationEr
               "UPDATE users SET verification_token = $1, verification_token_expires = $2 WHERE id = $3",
               [newToken, newExpiry, user.id]
             );
-            const emailResult = await sendVerificationEmail(email, user.name || name || 'User', newToken);
+            // Email sending disabled
             const response = {
-              user: { id: user.id, name: user.name, email: user.email, role: user.role, email_verified: false },
-              message: "Account already exists but is not verified. We've resent the verification email.",
+              user: { id: user.id, name: user.name, email: user.email, role: user.role, email_verified: true },
+              message: "Account already exists. You can now log in.",
             };
-            if (emailResult.previewUrl) {
-              response.emailPreviewUrl = emailResult.previewUrl;
-              response.devNote = "Using test email - preview at: " + emailResult.previewUrl;
-            }
             return res.json(response);
           }
         }
@@ -268,17 +258,10 @@ app.post("/auth/resend-verification", async (req, res) => {
       [verificationToken, tokenExpiry, user.id]
     );
 
-    // Send verification email
-    const emailResult = await sendVerificationEmail(user.email, user.name, verificationToken);
-    
+    // Email sending disabled
     const response = {
-      message: "Verification email sent! Please check your inbox.",
+      message: "Email service temporarily disabled. You are verified.",
     };
-
-    if (emailResult.previewUrl) {
-      response.emailPreviewUrl = emailResult.previewUrl;
-      response.devNote = "Using test email - preview at: " + emailResult.previewUrl;
-    }
 
     res.json(response);
   } catch (err) {
