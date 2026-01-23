@@ -8,9 +8,7 @@ import "@/styles/ui-enhancements.css"
 import { AuthProvider } from "@/components/auth-provider"
 import { useAuthStore } from "@/lib/auth-store"
 import { usePathname } from "next/navigation"
-import { Header } from "@/components/header"
-import { Sidebar } from "@/components/sidebar"
-import { BottomNav } from "@/components/bottom-nav"
+import { NavHeader } from "@/components/nav-header"
 
 const geistSans = Geist({ subsets: ["latin"] })
 const geistMono = Geist_Mono({ subsets: ["latin"] })
@@ -46,14 +44,12 @@ export default function RootLayout({
         <AuthProvider>
           {isAuthenticated && !isAuthPage ? (
             <div className="min-h-screen flex flex-col">
-              <Header />
-              <div className="flex-1 w-full">
-                <div className="mx-auto max-w-7xl px-4 md:px-6 py-6 lg:flex lg:gap-6">
-                  <Sidebar />
-                  <main className="flex-1 min-w-0">{children}</main>
+              <NavHeader />
+              <main className="flex-1 w-full">
+                <div className="mx-auto max-w-7xl px-4 md:px-6 py-6">
+                  {children}
                 </div>
-              </div>
-              <BottomNav />
+              </main>
             </div>
           ) : (
             children
