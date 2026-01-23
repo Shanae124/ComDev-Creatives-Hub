@@ -199,6 +199,53 @@ async function init() {
 
     CREATE INDEX IF NOT EXISTS idx_audit_logs_user_id ON audit_logs(user_id);
     CREATE INDEX IF NOT EXISTS idx_audit_logs_created_at ON audit_logs(created_at);
+
+    CREATE TABLE IF NOT EXISTS labs (
+      id SERIAL PRIMARY KEY,
+      course_id INTEGER NOT NULL REFERENCES courses(id) ON DELETE CASCADE,
+      module_id INTEGER REFERENCES modules(id) ON DELETE CASCADE,
+      title TEXT NOT NULL,
+      description TEXT,
+      lab_type TEXT DEFAULT 'interactive',
+      html_content TEXT,
+      status TEXT DEFAULT 'draft',
+      difficulty TEXT DEFAULT 'intermediate',
+      estimated_time INTEGER,
+      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+      updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    );
+
+    CREATE INDEX IF NOT EXISTS idx_labs_course_id ON labs(course_id);
+    CREATE INDEX IF NOT EXISTS idx_labs_module_id ON labs(module_id);
+    CREATE INDEX IF NOT EXISTS idx_labs_status ON labs(status);
+
+    CREATE TABLE IF NOT EXISTS lab_attempts (
+      id SERIAL PRIMARY KEY,
+      lab_id INTEGER NOT NULL REFERENCES labs(id) ON DELETE CASCADE,
+      user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+      attempt_number INTEGER DEFAULT 1,
+      score INTEGER,
+      status TEXT DEFAULT 'in_progress',
+      started_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+      completed_at TIMESTAMP,
+      time_spent_seconds INTEGER DEFAULT 0,
+      notes TEXT,
+      UNIQUE (lab_id, user_id, attempt_number)
+    );
+
+    CREATE INDEX IF NOT EXISTS idx_lab_attempts_lab_id ON lab_attempts(lab_id);
+    CREATE INDEX IF NOT EXISTS idx_lab_attempts_user_id ON lab_attempts(user_id);
+    CREATE INDEX IF NOT EXISTS idx_lab_attempts_status ON lab_attempts(status);
+
+    CREATE TABLE IF NOT EXISTS system_settings (
+      id SERIAL PRIMARY KEY,
+      key TEXT UNIQUE NOT NULL,
+      value TEXT,
+      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+      updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    );
+
+    CREATE INDEX IF NOT EXISTS idx_system_settings_key ON system_settings(key);
   `);
  
   console.log("✅ Database schema updated successfully");

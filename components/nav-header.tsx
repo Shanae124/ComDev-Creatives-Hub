@@ -6,7 +6,7 @@ import { usePathname, useRouter } from "next/navigation"
 import Link from "next/link"
 import { 
   Bell, Search, Moon, Sun, Menu, LogOut, Settings, Users, X,
-  LayoutDashboard, BookOpen, Calendar, Shield, Eye, Eye as EyeOff, MessageSquare, ClipboardList, Award, TrendingUp, Video
+  LayoutDashboard, BookOpen, Calendar, Shield, Eye, Eye as EyeOff, MessageSquare, ClipboardList, Award, TrendingUp, Video, Zap
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -53,6 +53,7 @@ export function NavHeader() {
   const instructorNav = [
     { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
     { href: "/admin/courses", label: "Courses", icon: BookOpen },
+    { href: "/admin/labs", label: "Labs", icon: Zap },
     { href: "/admin/impersonate", label: "Impersonate", icon: Eye },
     { href: "/admin/settings/external-tools", label: "Meetings", icon: Video },
     { href: "/submissions", label: "Submissions", icon: ClipboardList },
