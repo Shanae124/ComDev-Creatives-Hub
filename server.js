@@ -967,3 +967,484 @@ app.post("/upload", authenticate, authorize("admin", "instructor"), upload.singl
 
 // Serve uploaded files statically
 app.use('/uploads', express.static(uploadsDir));
+
+// ==================== ADMIN ENDPOINTS ====================
+
+// System Statistics
+app.get("/admin/stats", authenticate, authorize("admin"), async (req, res) => {
+  try {
+    const stats = await pool.query(`
+      SELECT 
+        (SELECT COUNT(*) FROM users) as total_users,
+        (SELECT COUNT(*) FROM users WHERE role = 'student') as total_students,
+        (SELECT COUNT(*) FROM users WHERE role = 'instructor') as total_instructors,
+        (SELECT COUNT(*) FROM courses) as total_courses,
+        (SELECT COUNT(*) FROM courses WHERE status = 'published') as published_courses,
+        (SELECT COUNT(*) FROM enrollments) as total_enrollments,
+        (SELECT COUNT(*) FROM assignments) as total_assignments,
+        (SELECT COUNT(*) FROM submissions) as total_submissions,
+        (SELECT COUNT(*) FROM announcements) as total_announcements
+    `);
+    res.json(stats.rows[0]);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// User Management - Get all users with detailed info
+app.get("/admin/users", authenticate, authorize("admin"), async (req, res) => {
+  try {
+    const result = await pool.query(`
+      SELECT u.id, u.name, u.email, u.role, u.email_verified, u.created_at,
+        (SELECT COUNT(*) FROM enrollments WHERE user_id = u.id) as courses_enrolled,
+        (SELECT MAX(created_at) FROM submissions WHERE user_id = u.id) as last_activity
+      FROM users u
+      ORDER BY u.created_at DESC
+    `);
+    res.json(result.rows);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Update user role
+app.put("/admin/users/:id/role", authenticate, authorize("admin"), async (req, res) => {
+  const { role } = req.body;
+  
+  if (!['student', 'instructor', 'admin'].includes(role)) {
+    return res.status(400).json({ error: "Invalid role" });
+  }
+
+  try {
+    const result = await pool.query(
+      "UPDATE users SET role = $1, updated_at = NOW() WHERE id = $2 RETURNING id, name, email, role",
+      [role, req.params.id]
+    );
+    res.json(result.rows[0]);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Suspend/Activate user
+app.put("/admin/users/:id/status", authenticate, authorize("admin"), async (req, res) => {
+  const { status } = req.body; // 'active' or 'suspended'
+  
+  try {
+    // You can add a status column to users table, for now we'll just respond
+    res.json({ message: `User ${status}`, userId: req.params.id, status });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Delete user
+app.delete("/admin/users/:id", authenticate, authorize("admin"), async (req, res) => {
+  try {
+    const result = await pool.query("DELETE FROM users WHERE id = $1 RETURNING name, email", [req.params.id]);
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: "User not found" });
+    }
+    res.json({ message: "User deleted successfully", user: result.rows[0] });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Attendance Management
+app.get("/admin/courses/:course_id/attendance", authenticate, authorize("admin", "instructor"), async (req, res) => {
+  try {
+    const { date } = req.query;
+    const result = await pool.query(`
+      SELECT u.id, u.name, u.email, 
+        e.enrolled_at,
+        COALESCE(a.status, 'not_recorded') as status,
+        a.notes
+      FROM enrollments e
+      JOIN users u ON u.id = e.user_id
+      LEFT JOIN attendance a ON a.user_id = u.id AND a.course_id = e.course_id AND DATE(a.date) = $2
+      WHERE e.course_id = $1 AND e.status = 'active'
+      ORDER BY u.name ASC
+    `, [req.params.course_id, date || new Date().toISOString().split('T')[0]]);
+    res.json(result.rows);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.post("/admin/attendance", authenticate, authorize("admin", "instructor"), async (req, res) => {
+  const { user_id, course_id, date, status, notes } = req.body;
+
+  if (!user_id || !course_id || !status) {
+    return res.status(400).json({ error: "user_id, course_id, and status are required" });
+  }
+
+  try {
+    const result = await pool.query(`
+      INSERT INTO attendance (user_id, course_id, date, status, notes, recorded_by)
+      VALUES ($1, $2, $3, $4, $5, $6)
+      ON CONFLICT (user_id, course_id, date) DO UPDATE
+      SET status = $4, notes = $5, recorded_by = $6, updated_at = NOW()
+      RETURNING *
+    `, [user_id, course_id, date || new Date().toISOString().split('T')[0], status, notes || '', req.user.id]);
+    res.json(result.rows[0]);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Student Groups
+app.post("/admin/groups", authenticate, authorize("admin", "instructor"), async (req, res) => {
+  const { course_id, name, description } = req.body;
+
+  if (!course_id || !name) {
+    return res.status(400).json({ error: "course_id and name are required" });
+  }
+
+  try {
+    const result = await pool.query(
+      "INSERT INTO groups (course_id, name, description, created_by) VALUES ($1, $2, $3, $4) RETURNING *",
+      [course_id, name, description || '', req.user.id]
+    );
+    res.json(result.rows[0]);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.get("/admin/courses/:course_id/groups", authenticate, async (req, res) => {
+  try {
+    const result = await pool.query(`
+      SELECT g.*, u.name as created_by_name,
+        (SELECT COUNT(*) FROM group_members WHERE group_id = g.id) as member_count
+      FROM groups g
+      LEFT JOIN users u ON u.id = g.created_by
+      WHERE g.course_id = $1
+      ORDER BY g.created_at DESC
+    `, [req.params.course_id]);
+    res.json(result.rows);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.post("/admin/groups/:group_id/members", authenticate, authorize("admin", "instructor"), async (req, res) => {
+  const { user_id } = req.body;
+
+  if (!user_id) {
+    return res.status(400).json({ error: "user_id is required" });
+  }
+
+  try {
+    const result = await pool.query(
+      "INSERT INTO group_members (group_id, user_id) VALUES ($1, $2) ON CONFLICT DO NOTHING RETURNING *",
+      [req.params.group_id, user_id]
+    );
+    res.json(result.rows[0] || { message: "Already a member" });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Quizzes Management
+app.post("/admin/quizzes", authenticate, authorize("admin", "instructor"), async (req, res) => {
+  const { course_id, title, description, duration_minutes, due_date, attempts_allowed } = req.body;
+
+  if (!course_id || !title) {
+    return res.status(400).json({ error: "course_id and title are required" });
+  }
+
+  try {
+    const result = await pool.query(`
+      INSERT INTO quizzes (course_id, title, description, duration_minutes, due_date, attempts_allowed, created_by)
+      VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *
+    `, [course_id, title, description || '', duration_minutes || 30, due_date, attempts_allowed || 3, req.user.id]);
+    res.json(result.rows[0]);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.get("/admin/courses/:course_id/quizzes", authenticate, async (req, res) => {
+  try {
+    const result = await pool.query(`
+      SELECT q.*, u.name as created_by_name,
+        (SELECT COUNT(*) FROM quiz_questions WHERE quiz_id = q.id) as question_count,
+        (SELECT COUNT(DISTINCT user_id) FROM quiz_attempts WHERE quiz_id = q.id) as attempt_count
+      FROM quizzes q
+      LEFT JOIN users u ON u.id = q.created_by
+      WHERE q.course_id = $1
+      ORDER BY q.created_at DESC
+    `, [req.params.course_id]);
+    res.json(result.rows);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Rubrics Management
+app.post("/admin/rubrics", authenticate, authorize("admin", "instructor"), async (req, res) => {
+  const { course_id, title, description, criteria } = req.body;
+
+  if (!course_id || !title) {
+    return res.status(400).json({ error: "course_id and title are required" });
+  }
+
+  try {
+    const result = await pool.query(`
+      INSERT INTO rubrics (course_id, title, description, criteria, created_by)
+      VALUES ($1, $2, $3, $4, $5) RETURNING *
+    `, [course_id, title, description || '', JSON.stringify(criteria || []), req.user.id]);
+    res.json(result.rows[0]);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.get("/admin/courses/:course_id/rubrics", authenticate, async (req, res) => {
+  try {
+    const result = await pool.query(`
+      SELECT r.*, u.name as created_by_name
+      FROM rubrics r
+      LEFT JOIN users u ON u.id = r.created_by
+      WHERE r.course_id = $1
+      ORDER BY r.created_at DESC
+    `, [req.params.course_id]);
+    res.json(result.rows);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Surveys Management
+app.post("/admin/surveys", authenticate, authorize("admin", "instructor"), async (req, res) => {
+  const { course_id, title, description, questions, due_date } = req.body;
+
+  if (!course_id || !title) {
+    return res.status(400).json({ error: "course_id and title are required" });
+  }
+
+  try {
+    const result = await pool.query(`
+      INSERT INTO surveys (course_id, title, description, questions, due_date, created_by)
+      VALUES ($1, $2, $3, $4, $5, $6) RETURNING *
+    `, [course_id, title, description || '', JSON.stringify(questions || []), due_date, req.user.id]);
+    res.json(result.rows[0]);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// System Settings
+app.get("/admin/settings", authenticate, authorize("admin"), async (req, res) => {
+  try {
+    const result = await pool.query("SELECT * FROM system_settings ORDER BY key ASC");
+    
+    // Convert to key-value object
+    const settings = {};
+    result.rows.forEach(row => {
+      settings[row.key] = row.value;
+    });
+    
+    res.json(settings);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.put("/admin/settings", authenticate, authorize("admin"), async (req, res) => {
+  const settings = req.body;
+
+  try {
+    for (const [key, value] of Object.entries(settings)) {
+      await pool.query(`
+        INSERT INTO system_settings (key, value)
+        VALUES ($1, $2)
+        ON CONFLICT (key) DO UPDATE SET value = $2, updated_at = NOW()
+      `, [key, value]);
+    }
+    res.json({ message: "Settings updated successfully" });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Analytics
+app.get("/admin/analytics/overview", authenticate, authorize("admin"), async (req, res) => {
+  try {
+    const [userGrowth, courseEngagement, assignmentStats] = await Promise.all([
+      pool.query(`
+        SELECT DATE(created_at) as date, COUNT(*) as count
+        FROM users
+        WHERE created_at > NOW() - INTERVAL '30 days'
+        GROUP BY DATE(created_at)
+        ORDER BY date ASC
+      `),
+      pool.query(`
+        SELECT c.title, COUNT(e.id) as enrollment_count
+        FROM courses c
+        LEFT JOIN enrollments e ON e.course_id = c.id
+        WHERE c.status = 'published'
+        GROUP BY c.id, c.title
+        ORDER BY enrollment_count DESC
+        LIMIT 10
+      `),
+      pool.query(`
+        SELECT 
+          COUNT(*) as total_assignments,
+          COUNT(DISTINCT s.user_id) as students_submitted,
+          ROUND(AVG(g.points_earned), 2) as avg_score
+        FROM assignments a
+        LEFT JOIN submissions s ON s.assignment_id = a.id
+        LEFT JOIN grades g ON g.assignment_id = a.id
+      `)
+    ]);
+
+    res.json({
+      userGrowth: userGrowth.rows,
+      courseEngagement: courseEngagement.rows,
+      assignmentStats: assignmentStats.rows[0]
+    });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Class Progress Report
+app.get("/admin/courses/:course_id/progress-report", authenticate, authorize("admin", "instructor"), async (req, res) => {
+  try {
+    const result = await pool.query(`
+      SELECT 
+        u.id, u.name, u.email,
+        COUNT(DISTINCT lp.lesson_id) FILTER (WHERE lp.status = 'completed') as completed_lessons,
+        COUNT(DISTINCT l.id) as total_lessons,
+        ROUND(AVG(lp.progress_percent), 2) as avg_progress,
+        COUNT(DISTINCT s.id) as submissions_count,
+        ROUND(AVG(g.points_earned), 2) as avg_grade
+      FROM enrollments e
+      JOIN users u ON u.id = e.user_id
+      LEFT JOIN lesson_progress lp ON lp.user_id = u.id
+      LEFT JOIN lessons l ON l.id = lp.lesson_id
+      LEFT JOIN modules m ON m.id = l.module_id AND m.course_id = e.course_id
+      LEFT JOIN submissions s ON s.user_id = u.id
+      LEFT JOIN assignments a ON a.id = s.assignment_id AND a.course_id = e.course_id
+      LEFT JOIN grades g ON g.user_id = u.id AND g.course_id = e.course_id
+      WHERE e.course_id = $1 AND e.status = 'active'
+      GROUP BY u.id, u.name, u.email
+      ORDER BY u.name ASC
+    `, [req.params.course_id]);
+    res.json(result.rows);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Bulk Email (placeholder - integrate with email service)
+app.post("/admin/bulk-email", authenticate, authorize("admin", "instructor"), async (req, res) => {
+  const { recipients, subject, message, course_id } = req.body;
+
+  if (!subject || !message) {
+    return res.status(400).json({ error: "subject and message are required" });
+  }
+
+  try {
+    // Log the email intent
+    const result = await pool.query(`
+      INSERT INTO email_logs (sent_by, recipients, subject, message, course_id)
+      VALUES ($1, $2, $3, $4, $5) RETURNING *
+    `, [req.user.id, JSON.stringify(recipients || []), subject, message, course_id || null]);
+    
+    // TODO: Actually send emails using emailService
+    res.json({ message: "Emails queued for delivery", log: result.rows[0] });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// FAQ Management
+app.post("/admin/faq", authenticate, authorize("admin", "instructor"), async (req, res) => {
+  const { course_id, question, answer, category } = req.body;
+
+  if (!question || !answer) {
+    return res.status(400).json({ error: "question and answer are required" });
+  }
+
+  try {
+    const result = await pool.query(`
+      INSERT INTO faq (course_id, question, answer, category, created_by)
+      VALUES ($1, $2, $3, $4, $5) RETURNING *
+    `, [course_id || null, question, answer, category || 'general', req.user.id]);
+    res.json(result.rows[0]);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.get("/admin/faq", authenticate, async (req, res) => {
+  const { course_id } = req.query;
+  
+  try {
+    let query = `
+      SELECT f.*, u.name as created_by_name
+      FROM faq f
+      LEFT JOIN users u ON u.id = f.created_by
+    `;
+    
+    const params = [];
+    if (course_id) {
+      query += ` WHERE f.course_id = $1 OR f.course_id IS NULL`;
+      params.push(course_id);
+    }
+    
+    query += ` ORDER BY f.created_at DESC`;
+    
+    const result = await pool.query(query, params);
+    res.json(result.rows);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Glossary Management
+app.post("/admin/glossary", authenticate, authorize("admin", "instructor"), async (req, res) => {
+  const { course_id, term, definition } = req.body;
+
+  if (!term || !definition) {
+    return res.status(400).json({ error: "term and definition are required" });
+  }
+
+  try {
+    const result = await pool.query(`
+      INSERT INTO glossary (course_id, term, definition, created_by)
+      VALUES ($1, $2, $3, $4) RETURNING *
+    `, [course_id || null, term, definition, req.user.id]);
+    res.json(result.rows[0]);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.get("/admin/glossary", authenticate, async (req, res) => {
+  const { course_id } = req.query;
+  
+  try {
+    let query = `
+      SELECT g.*, u.name as created_by_name
+      FROM glossary g
+      LEFT JOIN users u ON u.id = g.created_by
+    `;
+    
+    const params = [];
+    if (course_id) {
+      query += ` WHERE g.course_id = $1 OR g.course_id IS NULL`;
+      params.push(course_id);
+    }
+    
+    query += ` ORDER BY g.term ASC`;
+    
+    const result = await pool.query(query, params);
+    res.json(result.rows);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
