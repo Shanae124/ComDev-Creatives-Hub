@@ -15,6 +15,10 @@ interface AuthStore {
   setAuth: (user: User, token: string) => void;
   logout: () => void;
   restoreSession: () => void;
+  impersonating: boolean;
+  originalUser: User | null;
+  startImpersonation: (impersonated: User, token: string) => void;
+  stopImpersonation: (token: string) => void;
 }
 
 export const useAuthStore = create<AuthStore>()(
@@ -23,13 +27,21 @@ export const useAuthStore = create<AuthStore>()(
       user: null,
       token: null,
       isAuthenticated: false,
+      impersonating: false,
+      originalUser: null,
 
       setAuth: (user: User, token: string) => {
+        if (typeof window !== 'undefined') {
+          try { localStorage.setItem('token', token); } catch {}
+        }
         set({ user, token, isAuthenticated: true });
       },
 
       logout: () => {
-        set({ user: null, token: null, isAuthenticated: false });
+        if (typeof window !== 'undefined') {
+          try { localStorage.removeItem('token'); } catch {}
+        }
+        set({ user: null, token: null, isAuthenticated: false, impersonating: false, originalUser: null });
       },
 
       restoreSession: () => {
@@ -39,6 +51,22 @@ export const useAuthStore = create<AuthStore>()(
             set({ token, isAuthenticated: true });
           }
         }
+      },
+
+      startImpersonation: (impersonated: User, token: string) => {
+        const currentUser = get().user;
+        if (typeof window !== 'undefined') {
+          try { localStorage.setItem('token', token); } catch {}
+        }
+        set({ user: impersonated, token, isAuthenticated: true, impersonating: true, originalUser: currentUser || null });
+      },
+
+      stopImpersonation: (token: string) => {
+        const original = get().originalUser;
+        if (typeof window !== 'undefined') {
+          try { localStorage.setItem('token', token); } catch {}
+        }
+        set({ user: original, token, isAuthenticated: true, impersonating: false, originalUser: null });
       },
     }),
     {

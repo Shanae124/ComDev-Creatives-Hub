@@ -7,7 +7,7 @@ import { courseAPI, enrollmentAPI } from "@/lib/api"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { BarChart3, BookOpen, Calendar, Clock, Users, TrendingUp, ArrowRight, FolderTree } from "lucide-react"
+import { BarChart3, BookOpen, Calendar, Clock, Users, TrendingUp, ArrowRight, FolderTree, Shield, Eye } from "lucide-react"
 import Link from "next/link"
 
 export default function DashboardPage() {
@@ -171,6 +171,42 @@ export default function DashboardPage() {
                   ))}
                 </div>
               )}
+            </CardContent>
+          </Card>
+
+          {/* Navigation Hub */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-lg">Navigation Hub</CardTitle>
+              <CardDescription>Jump to key areas quickly</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                {[
+                  { href: '/courses', label: 'Courses', icon: <BookOpen className="h-4 w-4" /> },
+                  { href: '/calendar', label: 'Calendar', icon: <Calendar className="h-4 w-4" /> },
+                  { href: '/announcements', label: 'Announcements', icon: <Users className="h-4 w-4" /> },
+                  { href: '/assignments', label: 'Assignments', icon: <Clock className="h-4 w-4" /> },
+                  { href: '/grades', label: 'Grades', icon: <BarChart3 className="h-4 w-4" /> },
+                  { href: '/submissions', label: 'Submissions', icon: <TrendingUp className="h-4 w-4" /> },
+                  { href: '/portal/student', label: 'Student Portal', icon: <Users className="h-4 w-4" /> },
+                  ...(isInstructor
+                    ? [
+                        { href: '/admin', label: 'Admin', icon: <Shield className="h-4 w-4" /> },
+                        { href: '/admin/impersonate', label: 'Impersonate', icon: <Eye className="h-4 w-4" /> },
+                        { href: '/portal/admin', label: 'Admin Portal', icon: <Shield className="h-4 w-4" /> },
+                        { href: '/admin/settings/external-tools', label: 'Meetings & Boards', icon: <Calendar className="h-4 w-4" /> },
+                      ]
+                    : []),
+                ].map((item) => (
+                  <Link key={item.href} href={item.href}>
+                    <div className="p-3 border rounded-lg hover:border-primary hover:bg-muted/50 transition-colors flex items-center gap-2">
+                      {item.icon}
+                      <span className="font-medium text-sm">{item.label}</span>
+                    </div>
+                  </Link>
+                ))}
+              </div>
             </CardContent>
           </Card>
         </div>

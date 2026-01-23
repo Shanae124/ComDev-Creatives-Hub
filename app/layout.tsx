@@ -6,6 +6,11 @@ import { Analytics } from "@vercel/analytics/next"
 import "./globals.css"
 import "@/styles/ui-enhancements.css"
 import { AuthProvider } from "@/components/auth-provider"
+import { useAuthStore } from "@/lib/auth-store"
+import { usePathname } from "next/navigation"
+import { Header } from "@/components/header"
+import { Sidebar } from "@/components/sidebar"
+import { BottomNav } from "@/components/bottom-nav"
 
 const geistSans = Geist({ subsets: ["latin"] })
 const geistMono = Geist_Mono({ subsets: ["latin"] })
@@ -15,6 +20,11 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
+  const isAuthenticated = useAuthStore((s) => s.isAuthenticated)
+  const pathname = usePathname()
+
+  const isAuthPage = pathname?.startsWith("/login") || pathname?.startsWith("/register") || pathname?.startsWith("/verify-email")
+
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
@@ -33,7 +43,22 @@ export default function RootLayout({
         <meta name="theme-color" content="#3b82f6" media="(prefers-color-scheme: dark)" />
       </head>
       <body className={`${geistSans.className} font-sans antialiased bg-white dark:bg-slate-950 text-slate-900 dark:text-white`}>
-        <AuthProvider>{children}</AuthProvider>
+        <AuthProvider>
+          {isAuthenticated && !isAuthPage ? (
+            <div className="min-h-screen flex flex-col">
+              <Header />
+              <div className="flex-1 w-full">
+                <div className="mx-auto max-w-7xl px-4 md:px-6 py-6 lg:flex lg:gap-6">
+                  <Sidebar />
+                  <main className="flex-1 min-w-0">{children}</main>
+                </div>
+              </div>
+              <BottomNav />
+            </div>
+          ) : (
+            children
+          )}
+        </AuthProvider>
         <Analytics />
       </body>
     </html>

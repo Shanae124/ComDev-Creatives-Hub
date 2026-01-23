@@ -26,6 +26,8 @@ const {
 require('dotenv').config();
 
 const app = express();
+// Trust the proxy (Railway/Nginx) so rate-limit and IP detection work
+app.set('trust proxy', 1);
 
 // Security Middleware
 console.log('[Security] Applying security middleware...');
@@ -294,6 +296,34 @@ app.get("/users/:id", authenticate, async (req, res) => {
   }
 });
 
+// Public: Featured instructors for homepage
+app.get("/instructors", async (req, res) => {
+  try {
+    const result = await pool.query(`
+      SELECT 
+        u.id,
+        u.name,
+        u.email,
+        COALESCE(u.bio, '') AS bio,
+        COALESCE(u.avatar_url, '') AS avatar_url,
+        (SELECT COUNT(*) FROM courses c WHERE c.created_by = u.id) AS course_count,
+        (
+          SELECT COUNT(DISTINCT e.user_id)
+          FROM enrollments e
+          JOIN courses c ON c.id = e.course_id
+          WHERE c.created_by = u.id
+        ) AS student_count
+      FROM users u
+      WHERE u.role = 'instructor'
+      ORDER BY u.created_at DESC
+      LIMIT 12
+    `);
+    res.json(result.rows);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 app.put("/users/:id", authenticate, async (req, res) => {
   const { name, bio, avatar_url } = req.body;
 
@@ -439,19 +469,23 @@ app.delete("/courses/:id", authenticate, authorize("admin", "instructor"), async
 
 // ==================== ENROLLMENTS ====================
 app.post("/enroll", authenticate, async (req, res) => {
-  const { user_id, course_id } = req.body;
+  let { user_id, course_id } = req.body;
 
-  if (!user_id || !course_id) {
-    return res.status(400).json({ error: "user_id and course_id are required" });
+  // Default to authenticated user when user_id not provided
+  user_id = user_id || req.user.id;
+
+  if (!course_id) {
+    return res.status(400).json({ error: "course_id is required" });
   }
 
+  // Prevent enrolling other users unless admin
   if (req.user.id !== user_id && req.user.role !== "admin") {
     return res.status(403).json({ error: "Cannot enroll other users" });
   }
 
   try {
     const result = await pool.query(
-      `INSERT INTO enrollments (user_id, course_id, status) 
+      `INSERT INTO enrollments (user_id, course_id, status)
        VALUES ($1, $2, 'active')
        ON CONFLICT (user_id, course_id) DO UPDATE SET status='active', updated_at=NOW()
        RETURNING *`,
@@ -845,52 +879,6 @@ app.get("/courses/:course_id/announcements", async (req, res) => {
   }
 });
 
-// ==================== ERROR HANDLING ====================
-app.use((err, req, res, next) => {
-  console.error(`[ERROR] ${new Date().toISOString()} - ${err.message}`);
-  res.status(err.status || 500).json({ error: err.message || "Internal server error" });
-});
-
-// ==================== START SERVER ====================
-// 404 Handler (must be after all routes)
-app.use(notFoundHandler);
-
-// Error Handler (must be last)
-app.use(errorHandler);
-
-// ==================== START SERVER ====================
-// Railway deployment: Always use Railway's PORT
-// Local dev: Falls back to 3001
-const PORT = process.env.PORT || 3001;
-console.log(`[Server] Starting on PORT ${PORT}`);
-
-app.listen(PORT, '0.0.0.0', async () => {
-  console.log('\n================================================');
-  console.log('🚀 ProtexxaLearn LMS - Production Ready');
-  console.log('================================================');
-  console.log(`✅ Server:        http://0.0.0.0:${PORT}`);
-  console.log(`📚 Database:      ${process.env.DB_NAME || 'Protexxalearn'}@${process.env.DB_HOST || 'localhost'}`);
-  console.log(`🔐 Auth:          JWT (${process.env.JWT_EXPIRY || '7d'} expiry)`);
-  console.log(`📧 Email:         ${process.env.EMAIL_SERVICE || 'ethereal'}`);
-  console.log(`🌍 Environment:   ${process.env.NODE_ENV || 'development'}`);
-  console.log(`🔒 Security:      Helmet, Rate Limiting, Input Validation`);
-  console.log('================================================\n');
-  
-  // Verify email configuration
-  const emailConfigured = await verifyEmailConfig();
-  if (!emailConfigured) {
-    console.warn('⚠️  Email service not fully configured. Set EMAIL_SERVICE and credentials in .env');
-  }
-  
-  // Database health check
-  try {
-    await pool.query('SELECT 1');
-    console.log('✓ Database connection verified\n');
-  } catch (err) {
-    console.error('✗ Database connection failed:', err.message);
-  }
-});
-
 // ==================== IMPORT IMSCC (Upload and Migrate) ====================
 app.post("/import-course", authenticate, authorize("admin", "instructor"), upload.single('imscc'), async (req, res) => {
   if (!req.file) return res.status(400).json({ error: 'No file uploaded (field name: imscc)' });
@@ -1002,6 +990,69 @@ app.get("/admin/users", authenticate, authorize("admin"), async (req, res) => {
       ORDER BY u.created_at DESC
     `);
     res.json(result.rows);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Impersonation: issue a token to act as another user
+app.post("/admin/impersonate", authenticate, authorize("admin", "instructor"), async (req, res) => {
+  const { user_id } = req.body;
+
+  if (!user_id) {
+    return res.status(400).json({ error: "user_id is required" });
+  }
+
+  try {
+    const result = await pool.query("SELECT id, name, email, role FROM users WHERE id = $1", [user_id]);
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    const target = result.rows[0];
+
+    if (req.user.role === "instructor" && target.role !== "student") {
+      return res.status(403).json({ error: "Instructors may only impersonate students" });
+    }
+
+    const original_id = req.user.impersonator_id || req.user.id;
+    const original_role = req.user.impersonator_role || req.user.role;
+
+    const token = jwt.sign(
+      {
+        id: target.id,
+        role: target.role,
+        impersonating: true,
+        impersonator_id: original_id,
+        impersonator_role: original_role,
+      },
+      JWT_SECRET,
+      { expiresIn: "7d" }
+    );
+
+    res.json({
+      token,
+      impersonated: { id: target.id, name: target.name, email: target.email, role: target.role },
+      original: { id: original_id, role: original_role },
+    });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Stop impersonation: return to original identity
+app.post("/admin/impersonate/stop", authenticate, authorize("admin", "instructor"), async (req, res) => {
+  try {
+    const original_id = req.user.impersonator_id || req.user.id;
+    const original_role = req.user.impersonator_role || req.user.role;
+
+    const token = jwt.sign(
+      { id: original_id, role: original_role },
+      JWT_SECRET,
+      { expiresIn: "7d" }
+    );
+
+    res.json({ token, user: { id: original_id, role: original_role } });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -1252,6 +1303,27 @@ app.get("/admin/settings", authenticate, authorize("admin"), async (req, res) =>
   }
 });
 
+// Read-only external tools for authenticated users (students/instructors/admin)
+app.get("/settings/external-tools", authenticate, async (req, res) => {
+  try {
+    const result = await pool.query(
+      "SELECT key, value FROM system_settings WHERE key = ANY($1)",
+      [[
+        'zoom_meeting_url',
+        'google_meet_url',
+        'whiteboard_url',
+        'boards_provider'
+      ]]
+    );
+
+    const out = {};
+    result.rows.forEach(row => { out[row.key] = row.value; });
+    res.json(out);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 app.put("/admin/settings", authenticate, authorize("admin"), async (req, res) => {
   const settings = req.body;
 
@@ -1452,7 +1524,7 @@ app.get("/admin/glossary", authenticate, async (req, res) => {
 // ==================== LABS & INTERACTIVE CONTENT ====================
 
 // Get all labs for a course/module
-app.get("/labs", authenticate, async (req, res) => {
+const listLabs = async (req, res) => {
   const { course_id, module_id } = req.query;
   
   try {
@@ -1481,10 +1553,13 @@ app.get("/labs", authenticate, async (req, res) => {
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
-});
+};
+
+app.get("/labs", listLabs);
+app.get("/api/labs", listLabs);
 
 // Get single lab with full content
-app.get("/api/labs/:id", async (req, res) => {
+const getLabById = async (req, res) => {
   try {
     const result = await pool.query(
       `SELECT l.*, u.name as created_by_name
@@ -1502,7 +1577,10 @@ app.get("/api/labs/:id", async (req, res) => {
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
-});
+};
+
+app.get("/api/labs/:id", getLabById);
+app.get("/labs/:id", getLabById);
 
 // Create lab
 app.post("/admin/labs", authenticate, authorize("admin", "instructor"), async (req, res) => {
@@ -1713,5 +1791,50 @@ app.post("/admin/import-html-course", authenticate, authorize("admin"), async (r
     });
   } catch (err) {
     res.status(500).json({ error: err.message });
+  }
+});
+
+// ==================== ERROR HANDLING ====================
+app.use((err, req, res, next) => {
+  console.error(`[ERROR] ${new Date().toISOString()} - ${err.message}`);
+  res.status(err.status || 500).json({ error: err.message || "Internal server error" });
+});
+
+// 404 Handler (must be after all routes)
+app.use(notFoundHandler);
+
+// Error Handler (must be last)
+app.use(errorHandler);
+
+// ==================== START SERVER ====================
+// Railway deployment: Always use Railway's PORT
+// Local dev: Falls back to 3001
+const PORT = process.env.PORT || 3001;
+console.log(`[Server] Starting on PORT ${PORT}`);
+
+app.listen(PORT, '0.0.0.0', async () => {
+  console.log('\n================================================');
+  console.log('🚀 ProtexxaLearn LMS - Production Ready');
+  console.log('================================================');
+  console.log(`✅ Server:        http://0.0.0.0:${PORT}`);
+  console.log(`📚 Database:      ${process.env.DB_NAME || 'Protexxalearn'}@${process.env.DB_HOST || 'localhost'}`);
+  console.log(`🔐 Auth:          JWT (${process.env.JWT_EXPIRY || '7d'} expiry)`);
+  console.log(`📧 Email:         ${process.env.EMAIL_SERVICE || 'ethereal'}`);
+  console.log(`🌍 Environment:   ${process.env.NODE_ENV || 'development'}`);
+  console.log(`🔒 Security:      Helmet, Rate Limiting, Input Validation`);
+  console.log('================================================\n');
+  
+  // Verify email configuration
+  const emailConfigured = await verifyEmailConfig();
+  if (!emailConfigured) {
+    console.warn('⚠️  Email service not fully configured. Set EMAIL_SERVICE and credentials in .env');
+  }
+  
+  // Database health check
+  try {
+    await pool.query('SELECT 1');
+    console.log('✓ Database connection verified\n');
+  } catch (err) {
+    console.error('✗ Database connection failed:', err.message);
   }
 });

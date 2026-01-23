@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   Eye,
   Search,
@@ -12,11 +12,15 @@ import {
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
+import apiClient, { adminAPI } from '@/lib/api'
+import { useAuthStore } from '@/lib/auth-store'
 
 export default function ImpersonatePage() {
   const [searchQuery, setSearchQuery] = useState('')
   const [selectedUser, setSelectedUser] = useState(null)
   const [isImpersonating, setIsImpersonating] = useState(false)
+  const { startImpersonation, user } = useAuthStore()
+  const [users, setUsers] = useState<any[]>([])
   const [impersonationLog, setImpersonationLog] = useState([
     {
       id: 1,
@@ -38,13 +42,18 @@ export default function ImpersonatePage() {
     },
   ])
 
-  const users = [
-    { id: 1, name: 'Alice Johnson', email: 'alice@example.com', role: 'student', status: 'active' },
-    { id: 2, name: 'Bob Smith', email: 'bob@example.com', role: 'instructor', status: 'active' },
-    { id: 3, name: 'Carol White', email: 'carol@example.com', role: 'student', status: 'active' },
-    { id: 4, name: 'David Brown', email: 'david@example.com', role: 'student', status: 'inactive' },
-    { id: 5, name: 'Emma Davis', email: 'emma@example.com', role: 'instructor', status: 'active' },
-  ]
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const { data } = await apiClient.get('/users')
+        const normalized = (data || []).map((u: any) => ({ id: u.id, name: u.name, email: u.email, role: u.role, status: 'active' }))
+        setUsers(normalized)
+      } catch (e) {
+        console.error('Failed to load users', e)
+      }
+    }
+    fetchUsers()
+  }, [])
 
   const filteredUsers = users.filter(
     (u) =>
@@ -52,14 +61,27 @@ export default function ImpersonatePage() {
       u.email.toLowerCase().includes(searchQuery.toLowerCase())
   )
 
-  const handleImpersonate = (user) => {
-    setSelectedUser(user)
-    setIsImpersonating(true)
+  const handleImpersonate = async (targetUser: any) => {
+    try {
+      const { data } = await adminAPI.impersonate(targetUser.id)
+      setSelectedUser(targetUser)
+      setIsImpersonating(true)
+      startImpersonation({ id: targetUser.id, name: targetUser.name, email: targetUser.email, role: targetUser.role }, data.token)
+    } catch (e) {
+      console.error('Failed to impersonate user', e)
+      alert('Failed to impersonate user')
+    }
   }
 
-  const handleEndImpersonation = () => {
-    setIsImpersonating(false)
-    setSelectedUser(null)
+  const handleEndImpersonation = async () => {
+    try {
+      const { data } = await adminAPI.stopImpersonation()
+      setIsImpersonating(false)
+      setSelectedUser(null)
+      // Nav bar banner handles store update on stop
+    } catch (e) {
+      console.error('Failed to end impersonation', e)
+    }
   }
 
   return (
@@ -69,6 +91,7 @@ export default function ImpersonatePage() {
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-slate-900 dark:text-white mb-2">Impersonate User</h1>
           <p className="text-slate-600 dark:text-slate-400">Login as another user to provide support or troubleshoot issues</p>
+          <p className="text-xs text-slate-500 mt-1">Your role: {user?.role}</p>
         </div>
 
         {isImpersonating ? (
@@ -86,6 +109,14 @@ export default function ImpersonatePage() {
                 <p className="text-sm text-amber-600 dark:text-amber-500 mt-1">
                   All actions will be attributed to this user. Be careful!
                 </p>
+                <div className="mt-4 flex gap-2">
+                  <a href="/courses" className="inline-flex items-center gap-2 px-3 py-2 rounded-md bg-blue-600 text-white hover:bg-blue-700 text-sm">
+                    <Eye className="w-4 h-4" /> View My Courses
+                  </a>
+                  <a href="/dashboard" className="inline-flex items-center gap-2 px-3 py-2 rounded-md bg-slate-900 text-white hover:bg-slate-800 text-sm dark:bg-slate-700 dark:hover:bg-slate-600">
+                    Go to Dashboard
+                  </a>
+                </div>
               </div>
               <Button onClick={handleEndImpersonation} className="gap-2 bg-amber-600 hover:bg-amber-700">
                 <LogOut className="w-4 h-4" />

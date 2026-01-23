@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS labs (
   title VARCHAR(255) NOT NULL,
   description TEXT,
   lab_type VARCHAR(50) DEFAULT 'interactive' CHECK (lab_type IN ('interactive', 'simulation', 'practice', 'hands-on')),
-  html_content LONGTEXT, -- Full HTML with embedded CSS and JS
+    html_content TEXT, -- Full HTML with embedded CSS and JS
   html_file_url VARCHAR(500), -- Alternative: URL to hosted HTML
   status VARCHAR(20) DEFAULT 'draft' CHECK (status IN ('draft', 'published', 'archived')),
   sort_order INTEGER DEFAULT 1,
@@ -52,7 +52,7 @@ CREATE TABLE IF NOT EXISTS lab_submissions (
   id SERIAL PRIMARY KEY,
   lab_id INTEGER REFERENCES labs(id) ON DELETE CASCADE,
   user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
-  submission_data JSONB, -- Lab completion data/results
+  submission_data TEXT, -- Lab completion data/results
   grade INTEGER,
   feedback TEXT,
   submitted_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,

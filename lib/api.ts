@@ -123,4 +123,15 @@ export const announcementAPI = {
   create: (data: any) => apiClient.post('/announcements', data),
 };
 
+// Admin APIs
+export const adminAPI = {
+  impersonate: (userId: number | string) => apiClient.post('/admin/impersonate', { user_id: userId }),
+  stopImpersonation: () => apiClient.post('/admin/impersonate/stop', {}),
+};
+
+// Settings APIs
+export const settingsAPI = {
+  getExternalTools: () => apiClient.get('/settings/external-tools'),
+};
+
 export default apiClient;

@@ -25,6 +25,7 @@ import {
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { useAuthStore } from '@/lib/auth-store'
+import { adminAPI } from '@/lib/api'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -35,7 +36,7 @@ import {
 
 export default function NavEnhanced() {
   const router = useRouter()
-  const { user, logout } = useAuthStore()
+  const { user, logout, impersonating, stopImpersonation } = useAuthStore()
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [notificationCount] = useState(3)
 
@@ -49,6 +50,30 @@ export default function NavEnhanced() {
 
   return (
     <nav className="sticky top-0 z-50 border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 shadow-sm">
+      {impersonating && (
+        <div className="bg-amber-50 dark:bg-amber-900/30 text-amber-900 dark:text-amber-200 px-4 py-2 border-b border-amber-200 dark:border-amber-800">
+          <div className="max-w-7xl mx-auto flex items-center justify-between">
+            <span className="text-sm font-medium flex items-center gap-2">
+              <Eye className="w-4 h-4" />
+              You are impersonating another user. Actions reflect the impersonated account.
+            </span>
+            <Button
+              size="sm"
+              className="bg-amber-600 hover:bg-amber-700"
+              onClick={async () => {
+                try {
+                  const { data } = await adminAPI.stopImpersonation()
+                  stopImpersonation(data.token)
+                } catch (e) {
+                  console.error('Failed to stop impersonation', e)
+                }
+              }}
+            >
+              End Impersonation
+            </Button>
+          </div>
+        </div>
+      )}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo & Brand */}
@@ -81,8 +106,11 @@ export default function NavEnhanced() {
                   <NavLink href="/admin" icon={<Shield className="w-4 h-4" />} label="Admin" />
                   <NavLink href="/admin/users" icon={<Users className="w-4 h-4" />} label="Users" />
                   <NavLink href="/admin/plugins" icon={<Puzzle className="w-4 h-4" />} label="Plugins" />
+                  <NavLink href="/portal/admin" icon={<Shield className="w-4 h-4" />} label="Admin Portal" />
                 </>
               )}
+
+              <NavLink href="/portal/student" icon={<Briefcase className="w-4 h-4" />} label="Student Portal" />
 
               <NavLink href="/support" icon={<HelpCircle className="w-4 h-4" />} label="Help" />
             </div>
@@ -209,7 +237,9 @@ export default function NavEnhanced() {
                 </>
               )}
 
-              <MobileNavLink href="/support" icon={<HelpCircle className="w-4 h-4" />} label="Help" />
+                  <MobileNavLink href="/support" icon={<HelpCircle className="w-4 h-4" />} label="Help" />
+                  <MobileNavLink href="/portal/student" icon={<Briefcase className="w-4 h-4" />} label="Student Portal" />
+                  {isAdmin && <MobileNavLink href="/portal/admin" icon={<Shield className="w-4 h-4" />} label="Admin Portal" />}
               <MobileNavLink href="/settings" icon={<Settings className="w-4 h-4" />} label="Settings" />
             </div>
           </div>

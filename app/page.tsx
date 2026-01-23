@@ -38,11 +38,6 @@ export default function HomePage() {
   const [loadingInstructors, setLoadingInstructors] = useState(true)
 
   useEffect(() => {
-    if (isAuthenticated) {
-      router.push("/courses")
-      return
-    }
-
     const fetchInstructors = async () => {
       try {
         const response = await axios.get("/instructors")
