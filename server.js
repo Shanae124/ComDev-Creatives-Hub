@@ -104,8 +104,8 @@ app.post('/auth/register', authLimiter, validateRegistration, handleValidationEr
     const tokenExpiry = new Date(Date.now() + 24 * 60 * 60 * 1000); // 24 hours
 
     const result = await pool.query(
-      "INSERT INTO users (name, email, password_hash, role, verification_token, verification_token_expires) VALUES ($1, $2, $3, $4, $5, $6) RETURNING id, name, email, role, email_verified",
-      [name, email, hashedPassword, role || "student", verificationToken, tokenExpiry]
+      "INSERT INTO users (name, email, password_hash, role, verification_token, verification_token_expires, email_verified) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING id, name, email, role, email_verified",
+      [name, email, hashedPassword, role || "student", verificationToken, tokenExpiry, true]
     );
 
     // Send verification email
@@ -180,13 +180,8 @@ app.post('/auth/login', authLimiter, validateLogin, handleValidationErrors, asyn
       return res.status(401).json({ error: "Invalid credentials" });
     }
 
-    // Check if email is verified
-    if (!user.email_verified) {
-      return res.status(403).json({ 
-        error: "Please verify your email before logging in. Check your inbox for the verification link.",
-        emailVerified: false 
-      });
-    }
+    // Email verification temporarily disabled for development
+    // Users can now log in without email verification
 
     const token = jwt.sign(
       { id: user.id, role: user.role },
