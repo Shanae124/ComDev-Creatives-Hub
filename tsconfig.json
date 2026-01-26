@@ -18,7 +18,6 @@
     "isolatedModules": true,
     "jsx": "react-jsx",
     "incremental": true,
-    "suppressImplicitAnyIndexErrors": true,
     "noImplicitAny": false,
     "plugins": [
       {

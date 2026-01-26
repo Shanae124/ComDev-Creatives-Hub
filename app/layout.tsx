@@ -6,6 +6,7 @@ import { Analytics } from "@vercel/analytics/next"
 import "./globals.css"
 import "@/styles/ui-enhancements.css"
 import { AuthProvider } from "@/components/auth-provider"
+import { ThemeProvider } from "@/components/theme-provider"
 import { useAuthStore } from "@/lib/auth-store"
 import { usePathname } from "next/navigation"
 import { NavHeader } from "@/components/nav-header"
@@ -42,20 +43,22 @@ export default function RootLayout({
         <script src="/course-content-init.js" defer></script>
       </head>
       <body className={`${geistSans.className} font-sans antialiased bg-white dark:bg-slate-950 text-slate-900 dark:text-white`}>
-        <AuthProvider>
-          {isAuthenticated && !isAuthPage ? (
-            <div className="min-h-screen flex flex-col">
-              <NavHeader />
-              <main className="flex-1 w-full">
-                <div className="mx-auto max-w-7xl px-4 md:px-6 py-6">
-                  {children}
-                </div>
-              </main>
-            </div>
-          ) : (
-            children
-          )}
-        </AuthProvider>
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          <AuthProvider>
+            {isAuthenticated && !isAuthPage ? (
+              <div className="min-h-screen flex flex-col">
+                <NavHeader />
+                <main className="flex-1 w-full">
+                  <div className="mx-auto max-w-7xl px-4 md:px-6 py-6">
+                    {children}
+                  </div>
+                </main>
+              </div>
+            ) : (
+              children
+            )}
+          </AuthProvider>
+        </ThemeProvider>
         <Analytics />
       </body>
     </html>

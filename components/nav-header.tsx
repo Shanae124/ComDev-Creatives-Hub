@@ -53,6 +53,7 @@ export function NavHeader() {
   const instructorNav = [
     { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
     { href: "/admin/courses", label: "Courses", icon: BookOpen },
+    { href: "/admin/users", label: "Users", icon: Users },
     { href: "/admin/labs", label: "Labs", icon: Zap },
     { href: "/admin/impersonate", label: "Impersonate", icon: Eye },
     { href: "/admin/settings/external-tools", label: "Meetings", icon: Video },
