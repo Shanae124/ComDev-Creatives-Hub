@@ -239,3 +239,39 @@
 a, button {
   @apply transition-colors duration-200;
 }
+
+/* Course content interactive elements */
+.course-content button,
+.module-content button,
+.course-content [onclick],
+.module-content [onclick] {
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.course-content button:hover,
+.module-content button:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+.course-content button:active,
+.module-content button:active {
+  transform: translateY(0);
+}
+
+/* Ensure embedded iframes are responsive */
+.course-content iframe,
+.module-content iframe {
+  max-width: 100%;
+  border-radius: 0.5rem;
+}
+
+/* Make sure all interactive elements have pointer cursor */
+.course-content [onclick],
+.module-content [onclick],
+.course-content a,
+.module-content a {
+  cursor: pointer;
+  user-select: none;
+}

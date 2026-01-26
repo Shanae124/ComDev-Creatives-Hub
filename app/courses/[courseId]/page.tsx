@@ -47,18 +47,44 @@ export default function CoursePage() {
 
   useEffect(() => {
     // Execute scripts in HTML content after render
-    if (contentRef.current && course?.content_html) {
-      const scripts = contentRef.current.querySelectorAll('script')
-      scripts.forEach((oldScript) => {
-        const newScript = document.createElement('script')
-        Array.from(oldScript.attributes).forEach((attr) => {
-          newScript.setAttribute(attr.name, attr.value)
+    if (contentRef.current && (course?.content_html || activeTab.startsWith('module-'))) {
+      // Small delay to ensure DOM is ready
+      const timer = setTimeout(() => {
+        if (!contentRef.current) return
+        
+        // Re-execute all scripts
+        const scripts = contentRef.current.querySelectorAll('script')
+        scripts.forEach((oldScript) => {
+          const newScript = document.createElement('script')
+          Array.from(oldScript.attributes).forEach((attr) => {
+            newScript.setAttribute(attr.name, attr.value)
+          })
+          newScript.textContent = oldScript.textContent
+          oldScript.parentNode?.replaceChild(newScript, oldScript)
         })
-        newScript.textContent = oldScript.textContent
-        oldScript.parentNode?.replaceChild(newScript, oldScript)
-      })
+
+        // Also execute any inline onclick handlers by converting them to actual event listeners
+        const elementsWithOnClick = contentRef.current.querySelectorAll('[onclick]')
+        elementsWithOnClick.forEach((element) => {
+          const onclickAttr = element.getAttribute('onclick')
+          if (onclickAttr) {
+            element.removeAttribute('onclick')
+            element.addEventListener('click', function() {
+              try {
+                // Execute the onclick code
+                const func = new Function(onclickAttr)
+                func.call(element)
+              } catch (e) {
+                console.error('Error executing onclick:', e)
+              }
+            })
+          }
+        })
+      }, 100)
+
+      return () => clearTimeout(timer)
     }
-  }, [course?.content_html])
+  }, [course?.content_html, activeTab])
 
   const loadCourse = async () => {
     setLoading(true)
@@ -408,6 +434,7 @@ export default function CoursePage() {
                 <CardContent>
                   {module.content_html ? (
                     <div 
+                      ref={contentRef}
                       className="module-content prose prose-slate dark:prose-invert max-w-none
                                 prose-headings:font-bold prose-h1:text-3xl prose-h2:text-2xl prose-h3:text-xl
                                 prose-p:text-muted-foreground prose-p:leading-relaxed
