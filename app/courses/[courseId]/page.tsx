@@ -46,103 +46,90 @@ export default function CoursePage() {
   }, [courseId])
 
   useEffect(() => {
-    // Execute scripts and attach event handlers in HTML content after render
-    const executeScriptsAndAttachHandlers = () => {
-      // Find all content containers
+    // Wait for content to be fully rendered
+    const initializeContent = () => {
+      // Find all course content containers
       const containers = document.querySelectorAll('.course-content, .module-content')
       
-      containers.forEach((container) => {
-        if (!container) return
+      if (containers.length === 0) return
 
-        // 1. Execute all script tags
-        const scripts = container.querySelectorAll('script')
-        scripts.forEach((oldScript) => {
-          const newScript = document.createElement('script')
-          
-          // Copy all attributes
-          Array.from(oldScript.attributes).forEach((attr) => {
-            newScript.setAttribute(attr.name, attr.value)
-          })
-          
-          // Copy script content
-          if (oldScript.src) {
-            newScript.src = oldScript.src
-          } else {
-            newScript.textContent = oldScript.textContent
-          }
-          
-          // Replace old script with new one to force execution
-          if (oldScript.parentNode) {
-            oldScript.parentNode.replaceChild(newScript, oldScript)
+      containers.forEach((container) => {
+        // 1. Execute all inline scripts
+        const inlineScripts = container.querySelectorAll('script:not([src])')
+        inlineScripts.forEach((script) => {
+          try {
+            const scriptContent = script.textContent || script.innerHTML
+            if (scriptContent && scriptContent.trim()) {
+              // Execute in global scope
+              (new Function(scriptContent))()
+            }
+          } catch (e) {
+            console.error('Error executing inline script:', e)
           }
         })
 
-        // 2. Handle ALL inline event handlers (onclick, onchange, onsubmit, etc.)
-        const eventAttributes = ['onclick', 'onchange', 'onsubmit', 'onload', 'oninput', 'onmouseover', 'onmouseout', 'onfocus', 'onblur']
-        
-        eventAttributes.forEach((eventAttr) => {
-          const eventName = eventAttr.substring(2) // Remove 'on' prefix
-          const elements = container.querySelectorAll(`[${eventAttr}]`)
-          
-          elements.forEach((element) => {
-            const handlerCode = element.getAttribute(eventAttr)
-            if (handlerCode) {
-              // Remove the attribute to prevent double execution
-              element.removeAttribute(eventAttr)
-              
-              // Add proper event listener
-              element.addEventListener(eventName, function(event) {
+        // 2. Load external scripts
+        const externalScripts = container.querySelectorAll('script[src]')
+        externalScripts.forEach((oldScript) => {
+          const newScript = document.createElement('script')
+          newScript.src = oldScript.getAttribute('src') || ''
+          document.head.appendChild(newScript)
+        })
+
+        // 3. Convert ALL inline event handlers to real event listeners
+        // Get all elements with any onclick/onchange/etc attributes
+        const allElements = container.querySelectorAll('*')
+        allElements.forEach((element) => {
+          // Check for onclick
+          if (element.hasAttribute('onclick')) {
+            const onclickCode = element.getAttribute('onclick')
+            element.removeAttribute('onclick')
+            if (onclickCode) {
+              element.addEventListener('click', function(e) {
                 try {
-                  // Create function with 'event' and 'this' context
-                  const func = new Function('event', handlerCode)
-                  func.call(element, event)
-                } catch (e) {
-                  console.error(`Error executing ${eventAttr}:`, e, handlerCode)
+                  (new Function('event', onclickCode)).call(this, e)
+                } catch (err) {
+                  console.error('Error in onclick:', err)
                 }
               })
             }
-          })
-        })
+          }
 
-        // 3. Make sure all buttons and links are clickable
-        const buttons = container.querySelectorAll('button, .btn, [role="button"]')
-        buttons.forEach((btn) => {
-          btn.style.cursor = 'pointer'
-          btn.style.pointerEvents = 'auto'
-        })
+          // Check for onchange  
+          if (element.hasAttribute('onchange')) {
+            const onchangeCode = element.getAttribute('onchange')
+            element.removeAttribute('onchange')
+            if (onchangeCode) {
+              element.addEventListener('change', function(e) {
+                try {
+                  (new Function('event', onchangeCode)).call(this, e)
+                } catch (err) {
+                  console.error('Error in onchange:', err)
+                }
+              })
+            }
+          }
 
-        const links = container.querySelectorAll('a')
-        links.forEach((link) => {
-          link.style.cursor = 'pointer'
-          link.style.pointerEvents = 'auto'
-        })
-
-        // 4. Handle any forms
-        const forms = container.querySelectorAll('form')
-        forms.forEach((form) => {
-          // Prevent default form submission if no action
-          if (!form.getAttribute('action')) {
-            form.addEventListener('submit', (e) => {
-              e.preventDefault()
-            })
+          // Make everything clickable
+          if (element.tagName === 'BUTTON' || element.classList.contains('btn') || element.getAttribute('role') === 'button') {
+            element.style.cursor = 'pointer'
+            element.style.pointerEvents = 'auto'
           }
         })
+
+        // 4. Make sure no prose class is blocking
+        container.style.pointerEvents = 'auto'
       })
+
+      console.log('✅ Course content initialized:', containers.length, 'containers')
     }
 
-    // Execute immediately
-    executeScriptsAndAttachHandlers()
+    // Initialize multiple times to catch all content
+    setTimeout(initializeContent, 50)
+    setTimeout(initializeContent, 200)
+    setTimeout(initializeContent, 500)
+    setTimeout(initializeContent, 1000)
 
-    // Also execute after a short delay to catch dynamically loaded content
-    const timer1 = setTimeout(executeScriptsAndAttachHandlers, 100)
-    const timer2 = setTimeout(executeScriptsAndAttachHandlers, 300)
-    const timer3 = setTimeout(executeScriptsAndAttachHandlers, 500)
-
-    return () => {
-      clearTimeout(timer1)
-      clearTimeout(timer2)
-      clearTimeout(timer3)
-    }
   }, [course?.content_html, activeTab, modules])
 
   const loadCourse = async () => {
@@ -430,6 +417,7 @@ export default function CoursePage() {
                               prose-ul:list-disc prose-ol:list-decimal
                               prose-img:rounded-lg prose-img:shadow-lg"
                     dangerouslySetInnerHTML={{ __html: course.content_html }}
+                    style={{ position: 'relative', zIndex: 1 }}
                   />
                 </CardContent>
               </Card>

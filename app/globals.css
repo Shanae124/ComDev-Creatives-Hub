@@ -241,6 +241,18 @@ a, button {
 }
 
 /* Course content interactive elements */
+.course-content,
+.module-content {
+  position: relative !important;
+  pointer-events: auto !important;
+  z-index: 1 !important;
+}
+
+.course-content *,
+.module-content * {
+  pointer-events: auto !important;
+}
+
 .course-content button,
 .module-content button,
 .course-content [onclick],
@@ -253,21 +265,22 @@ a, button {
   pointer-events: auto !important;
   transition: all 0.2s ease;
   user-select: none;
+  position: relative !important;
+  z-index: 10 !important;
 }
 
 .course-content button:hover,
 .module-content button:hover,
 .course-content .btn:hover,
 .module-content .btn:hover {
-  opacity: 0.9;
-  transform: translateY(-1px);
+  opacity: 0.85 !important;
 }
 
 .course-content button:active,
 .module-content button:active,
 .course-content .btn:active,
 .module-content .btn:active {
-  transform: translateY(0);
+  transform: scale(0.98);
 }
 
 /* Ensure all links are clickable */
@@ -275,6 +288,7 @@ a, button {
 .module-content a {
   cursor: pointer !important;
   pointer-events: auto !important;
+  z-index: 10 !important;
 }
 
 /* Ensure embedded iframes are responsive */
@@ -282,18 +296,6 @@ a, button {
 .module-content iframe {
   max-width: 100%;
   border-radius: 0.5rem;
-  pointer-events: auto !important;
-}
-
-/* Make sure no overlay is blocking interactions */
-.course-content,
-.module-content {
-  position: relative;
-  pointer-events: auto !important;
-}
-
-.course-content *,
-.module-content * {
   pointer-events: auto !important;
 }
 
@@ -306,11 +308,22 @@ a, button {
 .module-content textarea {
   pointer-events: auto !important;
   cursor: text;
+  z-index: 10 !important;
 }
 
 .course-content input[type="submit"],
 .module-content input[type="submit"],
 .course-content input[type="button"],
 .module-content input[type="button"] {
+  cursor: pointer !important;
+}
+
+/* Remove prose restrictions on pointer events */
+.prose button,
+.prose [onclick],
+.prose .btn,
+.prose [role="button"],
+.prose a {
+  pointer-events: auto !important;
   cursor: pointer !important;
 }
