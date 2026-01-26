@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
 import { authAPI } from "@/lib/api"
 import { useAuthStore } from "@/lib/auth-store"
@@ -14,11 +14,20 @@ import Link from "next/link"
 export default function LoginPage() {
   const router = useRouter()
   const setAuth = useAuthStore((state) => state.setAuth)
+  const isAuthenticated = useAuthStore((state) => state.isAuthenticated)
+  const user = useAuthStore((state) => state.user)
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [error, setError] = useState("")
   const [loading, setLoading] = useState(false)
   const [needsVerification, setNeedsVerification] = useState(false)
+
+  // Redirect if already authenticated
+  useEffect(() => {
+    if (isAuthenticated && user) {
+      router.replace("/dashboard")
+    }
+  }, [isAuthenticated, user, router])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -37,7 +46,7 @@ export default function LoginPage() {
       setAuth(user, token)
 
       // Redirect to dashboard
-      router.push("/dashboard")
+      router.replace("/dashboard")
     } catch (err: any) {
       const errorData = err.response?.data
       if (errorData?.emailVerified === false) {

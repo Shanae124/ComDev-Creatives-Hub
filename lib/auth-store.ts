@@ -45,10 +45,15 @@ export const useAuthStore = create<AuthStore>()(
       },
 
       restoreSession: () => {
+        // Session is restored from persist storage automatically
+        // This just syncs localStorage token with store
         if (typeof window !== 'undefined') {
-          const token = localStorage.getItem('token');
-          if (token) {
-            set({ token, isAuthenticated: true });
+          const storedToken = localStorage.getItem('token');
+          const storeState = get();
+          
+          // If store has user but localStorage has different token, sync them
+          if (storeState.user && storedToken && storedToken !== storeState.token) {
+            set({ token: storedToken, isAuthenticated: true });
           }
         }
       },
