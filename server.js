@@ -370,7 +370,7 @@ app.get("/courses", authenticate, async (req, res) => {
 
     let query = `
       SELECT c.*, u.name as instructor_name,
-        (SELECT COUNT(*) FROM enrollments e WHERE e.course_id = c.id AND e.user_id = $1) as enrolled,
+        EXISTS(SELECT 1 FROM enrollments e WHERE e.course_id = c.id AND e.user_id = $1) as enrolled,
         (SELECT COUNT(*) FROM enrollments e WHERE e.course_id = c.id) as total_enrollments,
         (SELECT COUNT(*) FROM modules m WHERE m.course_id = c.id) as module_count
       FROM courses c 
