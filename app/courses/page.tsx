@@ -8,7 +8,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
-import { BookOpen, Search, Star, Users, Clock, ArrowRight, Settings } from "lucide-react"
+import { BookOpen, Search, Star, Users, Clock, ArrowRight, Settings, Eye } from "lucide-react"
 import Link from "next/link"
 
 interface Course {
@@ -190,19 +190,21 @@ export default function CoursesPage() {
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 animate-fade-in">
             {filteredCourses.map((course) => (
-              <Link key={course.id} href={`/courses/${course.id}`}>
-                <Card className="h-full hover:shadow-2xl hover:border-primary/50 transition-all duration-300 cursor-pointer overflow-hidden group border-0 shadow-lg backdrop-blur-sm bg-white/80 dark:bg-slate-900/80">
-                  {/* Image/Placeholder */}
+              <Card key={course.id} className="h-full hover:shadow-2xl hover:border-primary/50 transition-all duration-300 cursor-pointer overflow-hidden group border-0 shadow-lg backdrop-blur-sm bg-white/80 dark:bg-slate-900/80">
+                {/* Image/Placeholder - clickable */}
+                <Link href={`/courses/${course.id}`}>
                   <div className="h-40 bg-gradient-to-br from-primary/20 to-secondary/20 relative overflow-hidden">
                     <div className="absolute inset-0 bg-gradient-to-br from-primary to-secondary opacity-0 group-hover:opacity-20 transition-opacity duration-300" />
                     <div className="h-full flex items-center justify-center">
                       <BookOpen className="h-16 w-16 text-muted-foreground/20 group-hover:scale-110 transition-transform duration-300" />
                     </div>
                   </div>
+                </Link>
 
-                  <CardHeader>
+                <CardHeader>
+                  <Link href={`/courses/${course.id}`}>
                     <div className="flex items-start justify-between gap-2">
-                      <CardTitle className="line-clamp-2">{course.title}</CardTitle>
+                      <CardTitle className="line-clamp-2 hover:text-primary transition-colors">{course.title}</CardTitle>
                       {course.level && (
                         <Badge
                           variant={
@@ -218,74 +220,86 @@ export default function CoursesPage() {
                         </Badge>
                       )}
                     </div>
-                    <CardDescription className="line-clamp-2">
-                      {course.description}
-                    </CardDescription>
-                  </CardHeader>
+                  </Link>
+                  <CardDescription className="line-clamp-2">
+                    {course.description}
+                  </CardDescription>
+                </CardHeader>
 
-                  <CardContent className="space-y-4">
-                    {course.instructor_name && (
-                      <p className="text-sm text-muted-foreground">by {course.instructor_name}</p>
-                    )}
+                <CardContent className="space-y-4">
+                  {course.instructor_name && (
+                    <p className="text-sm text-muted-foreground">by {course.instructor_name}</p>
+                  )}
 
-                    {/* Progress Bar - for enrolled courses */}
-                    {course.enrolled && course.progress !== undefined && (
-                      <div className="space-y-2">
-                        <div className="flex items-center justify-between text-sm">
-                          <span className="text-muted-foreground">Progress</span>
-                          <span className="font-semibold">{Math.round(course.progress)}%</span>
-                        </div>
-                        <div className="h-2 bg-muted rounded-full overflow-hidden">
-                          <div
-                            className="h-full bg-gradient-to-r from-primary to-secondary transition-all"
-                            style={{ width: `${course.progress}%` }}
-                          />
-                        </div>
+                  {/* Progress Bar - for enrolled courses */}
+                  {course.enrolled && course.progress !== undefined && (
+                    <div className="space-y-2">
+                      <div className="flex items-center justify-between text-sm">
+                        <span className="text-muted-foreground">Progress</span>
+                        <span className="font-semibold">{Math.round(course.progress)}%</span>
+                      </div>
+                      <div className="h-2 bg-muted rounded-full overflow-hidden">
+                        <div
+                          className="h-full bg-gradient-to-r from-primary to-secondary transition-all"
+                          style={{ width: `${course.progress}%` }}
+                        />
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Stats */}
+                  <div className="flex flex-wrap gap-3 text-sm text-muted-foreground">
+                    {course.rating && (
+                      <div className="flex items-center gap-1">
+                        <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+                        {course.rating}
                       </div>
                     )}
+                    {typeof course.total_enrollments === "number" && (
+                      <div className="flex items-center gap-1">
+                        <Users className="h-4 w-4" />
+                        {course.total_enrollments || 0}
+                      </div>
+                    )}
+                    {course.duration && (
+                      <div className="flex items-center gap-1">
+                        <Clock className="h-4 w-4" />
+                        {course.duration}
+                      </div>
+                    )}
+                  </div>
 
-                    {/* Stats */}
-                    <div className="flex flex-wrap gap-3 text-sm text-muted-foreground">
-                      {course.rating && (
-                        <div className="flex items-center gap-1">
-                          <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-                          {course.rating}
-                        </div>
-                      )}
-                      {typeof course.total_enrollments === "number" && (
-                        <div className="flex items-center gap-1">
-                          <Users className="h-4 w-4" />
-                          {course.total_enrollments || 0}
-                        </div>
-                      )}
-                      {course.duration && (
-                        <div className="flex items-center gap-1">
-                          <Clock className="h-4 w-4" />
-                          {course.duration}
-                        </div>
-                      )}
-                    </div>
-
-                    {/* CTA Button */}
-                    <Button
-                      className="w-full mt-2"
-                      onClick={(e) => {
-                        if (!course.enrolled) {
-                          handleEnroll(course, e)
-                        }
-                      }}
-                      disabled={enrollingId === course.id}
-                    >
-                      {course.enrolled
-                        ? "Continue Learning"
-                        : enrollingId === course.id
-                          ? "Enrolling..."
-                          : "Enroll Now"}
-                      <ArrowRight className="ml-2 h-4 w-4" />
-                    </Button>
-                  </CardContent>
-                </Card>
-              </Link>
+                  {/* CTA Buttons */}
+                  <div className="flex gap-2">
+                    {course.enrolled ? (
+                      <Link href={`/courses/${course.id}`} className="flex-1">
+                        <Button className="w-full">
+                          View Course
+                          <ArrowRight className="ml-2 h-4 w-4" />
+                        </Button>
+                      </Link>
+                    ) : (
+                      <>
+                        <Button
+                          className="flex-1"
+                          onClick={(e) => {
+                            e.preventDefault()
+                            handleEnroll(course, e)
+                          }}
+                          disabled={enrollingId === course.id}
+                        >
+                          {enrollingId === course.id ? "Enrolling..." : "Enroll"}
+                        </Button>
+                        <Link href={`/courses/${course.id}`}>
+                          <Button variant="outline" size="icon">
+                            <Eye className="h-4 w-4" />
+                          </Button>
+                        </Link>
+                      </>
+                    )}
+                  </div>
+                </CardContent>
+              </Card>
             ))}
           </div>
         )}
