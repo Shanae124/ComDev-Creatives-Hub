@@ -35,10 +35,13 @@ export default function CoursePage() {
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated)
   const user = useAuthStore((state) => state.user)
   const contentRef = useRef<HTMLDivElement>(null)
+  const [modules, setModules] = useState<any[]>([])
+  const [activeTab, setActiveTab] = useState("overview")
 
   useEffect(() => {
     if (courseId) {
       loadCourse()
+      loadModules()
     }
   }, [courseId])
 
@@ -68,6 +71,18 @@ export default function CoursePage() {
       console.error(err)
     } finally {
       setLoading(false)
+    }
+  }
+
+  const loadModules = async () => {
+    try {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001'}/courses/${courseId}/modules`)
+      if (response.ok) {
+        const data = await response.json()
+        setModules(data)
+      }
+    } catch (err) {
+      console.error("Failed to load modules:", err)
     }
   }
 
@@ -221,7 +236,29 @@ export default function CoursePage() {
 
       {/* Main Content */}
       <div className="max-w-7xl mx-auto px-6 py-12">
-        <Tabs defaultValue="overview" className="space-y-6">
+        {/* Module Navigation - Show if enrolled */}
+        {enrolled && modules.length > 0 && (
+          <div className="mb-8 p-6 bg-gradient-to-r from-slate-900 to-slate-800 rounded-xl shadow-lg">
+            <h3 className="text-white font-semibold mb-4 text-lg">Course Modules</h3>
+            <div className="flex flex-wrap gap-3">
+              {modules.map((module: any, index: number) => (
+                <button
+                  key={module.id}
+                  onClick={() => setActiveTab(`module-${module.id}`)}
+                  className={`px-4 py-2 rounded-lg font-medium transition-all ${
+                    activeTab === `module-${module.id}`
+                      ? 'bg-blue-500 text-white shadow-lg'
+                      : 'bg-slate-700/50 text-slate-300 hover:bg-slate-700'
+                  }`}
+                >
+                  {module.title || `Module ${index + 1}`}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
           <TabsList className="grid w-full max-w-md grid-cols-3">
             <TabsTrigger value="overview">Overview</TabsTrigger>
             <TabsTrigger value="content">Content</TabsTrigger>
@@ -345,6 +382,29 @@ export default function CoursePage() {
               </CardContent>
             </Card>
           </TabsContent>
+
+          {/* Module Tabs */}
+          {modules.map((module: any) => (
+            <TabsContent key={module.id} value={`module-${module.id}`} className="space-y-6">
+              <Card>
+                <CardHeader>
+                  <CardTitle>{module.title}</CardTitle>
+                  <CardDescription>{module.description}</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  {module.content_html ? (
+                    <div 
+                      ref={contentRef}
+                      className="prose prose-slate dark:prose-invert max-w-none"
+                      dangerouslySetInnerHTML={{ __html: module.content_html }}
+                    />
+                  ) : (
+                    <p className="text-muted-foreground">No content available for this module yet.</p>
+                  )}
+                </CardContent>
+              </Card>
+            </TabsContent>
+          ))}
         </Tabs>
       </div>
     </div>

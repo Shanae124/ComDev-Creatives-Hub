@@ -269,11 +269,18 @@ export function AdminDashboard() {
                               View
                             </DropdownMenuItem>
                             <DropdownMenuItem 
+                              onClick={() => window.location.href = `/admin/courses/${course.id}/edit`}
+                              className="text-slate-300 focus:bg-slate-700"
+                            >
+                              <Edit2 className="w-4 h-4 mr-2" />
+                              Edit Content
+                            </DropdownMenuItem>
+                            <DropdownMenuItem 
                               onClick={() => window.location.href = `/admin/courses/${course.id}`}
                               className="text-slate-300 focus:bg-slate-700"
                             >
                               <Edit2 className="w-4 h-4 mr-2" />
-                              Edit
+                              Manage Details
                             </DropdownMenuItem>
                             <DropdownMenuItem className="text-slate-300 focus:bg-slate-700">
                               <Users className="w-4 h-4 mr-2" />
