@@ -418,12 +418,22 @@ app.get("/admin/courses", authenticate, authorize("admin", "instructor"), async 
   }
 });
 
-app.get("/courses/:id", async (req, res) => {
+app.get("/courses/:id", authenticate, async (req, res) => {
   try {
-    const result = await pool.query(
-      "SELECT c.*, u.name as instructor_name FROM courses c LEFT JOIN users u ON u.id = c.created_by WHERE c.id = $1",
-      [req.params.id]
-    );
+    const userId = req.user?.id;
+    let query = `
+      SELECT c.*, u.name as instructor_name
+    `;
+    
+    if (userId) {
+      query += `, EXISTS(SELECT 1 FROM enrollments e WHERE e.course_id = c.id AND e.user_id = $2) as enrolled`;
+    }
+    
+    query += ` FROM courses c LEFT JOIN users u ON u.id = c.created_by WHERE c.id = $1`;
+    
+    const params = userId ? [req.params.id, userId] : [req.params.id];
+    const result = await pool.query(query, params);
+    
     if (result.rows.length === 0) {
       return res.status(404).json({ error: "Course not found" });
     }

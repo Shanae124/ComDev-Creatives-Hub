@@ -1,8 +1,8 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect, useState, useRef } from "react"
 import { useParams, useRouter } from "next/navigation"
-import { courseAPI } from "@/lib/api"
+import { courseAPI, enrollmentAPI } from "@/lib/api"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
@@ -20,6 +20,7 @@ interface Course {
   instructor_name: string
   created_at: string
   thumbnail_url?: string
+  enrolled?: boolean
 }
 
 export default function CoursePage() {
@@ -29,7 +30,11 @@ export default function CoursePage() {
   const [course, setCourse] = useState<Course | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState("")
+  const [enrolling, setEnrolling] = useState(false)
+  const [enrolled, setEnrolled] = useState(false)
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated)
+  const user = useAuthStore((state) => state.user)
+  const contentRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     if (courseId) {
@@ -37,16 +42,47 @@ export default function CoursePage() {
     }
   }, [courseId])
 
+  useEffect(() => {
+    // Execute scripts in HTML content after render
+    if (contentRef.current && course?.content_html) {
+      const scripts = contentRef.current.querySelectorAll('script')
+      scripts.forEach((oldScript) => {
+        const newScript = document.createElement('script')
+        Array.from(oldScript.attributes).forEach((attr) => {
+          newScript.setAttribute(attr.name, attr.value)
+        })
+        newScript.textContent = oldScript.textContent
+        oldScript.parentNode?.replaceChild(newScript, oldScript)
+      })
+    }
+  }, [course?.content_html])
+
   const loadCourse = async () => {
     setLoading(true)
     try {
       const response = await courseAPI.getById(courseId as string)
       setCourse(response.data)
+      setEnrolled(Boolean(response.data.enrolled))
     } catch (err: any) {
       setError("Failed to load course")
       console.error(err)
     } finally {
       setLoading(false)
+    }
+  }
+
+  const handleEnroll = async () => {
+    if (!user?.id || !courseId) return
+    setEnrolling(true)
+    try {
+      await enrollmentAPI.enroll(user.id, Number(courseId))
+      setEnrolled(true)
+      setCourse((prev) => prev ? { ...prev, enrolled: true } : null)
+    } catch (err: any) {
+      console.error("Enrollment failed:", err)
+      setError("Failed to enroll. Please try again.")
+    } finally {
+      setEnrolling(false)
     }
   }
 
@@ -129,12 +165,26 @@ export default function CoursePage() {
                 <CardContent className="pt-6 space-y-4">
                   {isAuthenticated ? (
                     <>
-                      <Button className="w-full" size="lg">
-                        Enroll Now
+                      <Button 
+                        className="w-full" 
+                        size="lg"
+                        onClick={handleEnroll}
+                        disabled={enrolling || enrolled}
+                      >
+                        {enrolling ? "Enrolling..." : enrolled ? "Enrolled ✓" : "Enroll Now"}
                       </Button>
-                      <Button variant="outline" className="w-full">
-                        Add to Wishlist
-                      </Button>
+                      {enrolled && (
+                        <Button 
+                          variant="outline" 
+                          className="w-full"
+                          onClick={() => {
+                            const contentTab = document.querySelector('[data-state="inactive"][value="content"]') as HTMLElement
+                            if (contentTab) contentTab.click()
+                          }}
+                        >
+                          View Course Content
+                        </Button>
+                      )}
                     </>
                   ) : (
                     <Button 
@@ -221,11 +271,25 @@ export default function CoursePage() {
             <Card>
               <CardHeader>
                 <CardTitle>Course Content</CardTitle>
-                <CardDescription>Full HTML content with custom styling</CardDescription>
+                <CardDescription>
+                  {enrolled ? "Full HTML content with interactive features" : "Enroll to access course content"}
+                </CardDescription>
               </CardHeader>
               <CardContent>
-                {course.content_html ? (
+                {!enrolled ? (
+                  <div className="text-center py-12">
+                    <FileText className="w-12 h-12 mx-auto mb-4 text-muted-foreground/50" />
+                    <p className="text-lg font-semibold mb-2">Enroll to Access Content</p>
+                    <p className="text-muted-foreground mb-4">
+                      Click the "Enroll Now" button to access this course's content
+                    </p>
+                    <Button onClick={handleEnroll} disabled={enrolling}>
+                      {enrolling ? "Enrolling..." : "Enroll Now"}
+                    </Button>
+                  </div>
+                ) : course.content_html ? (
                   <div 
+                    ref={contentRef}
                     className="prose prose-slate dark:prose-invert max-w-none 
                               prose-headings:font-bold prose-h1:text-3xl prose-h2:text-2xl prose-h3:text-xl
                               prose-p:text-muted-foreground prose-p:leading-relaxed
