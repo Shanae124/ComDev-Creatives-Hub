@@ -54,7 +54,6 @@ export function NavHeader() {
     { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
     { href: "/admin/courses", label: "Courses", icon: BookOpen },
     { href: "/admin/labs", label: "Labs", icon: Zap },
-    { href: "/admin/data-import", label: "Data Import", icon: TrendingUp },
     { href: "/admin/impersonate", label: "Impersonate", icon: Eye },
     { href: "/admin/settings/external-tools", label: "Meetings", icon: Video },
     { href: "/submissions", label: "Submissions", icon: ClipboardList },
