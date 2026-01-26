@@ -244,20 +244,37 @@ a, button {
 .course-content button,
 .module-content button,
 .course-content [onclick],
-.module-content [onclick] {
-  cursor: pointer;
+.module-content [onclick],
+.course-content .btn,
+.module-content .btn,
+.course-content [role="button"],
+.module-content [role="button"] {
+  cursor: pointer !important;
+  pointer-events: auto !important;
   transition: all 0.2s ease;
+  user-select: none;
 }
 
 .course-content button:hover,
-.module-content button:hover {
+.module-content button:hover,
+.course-content .btn:hover,
+.module-content .btn:hover {
   opacity: 0.9;
   transform: translateY(-1px);
 }
 
 .course-content button:active,
-.module-content button:active {
+.module-content button:active,
+.course-content .btn:active,
+.module-content .btn:active {
   transform: translateY(0);
+}
+
+/* Ensure all links are clickable */
+.course-content a,
+.module-content a {
+  cursor: pointer !important;
+  pointer-events: auto !important;
 }
 
 /* Ensure embedded iframes are responsive */
@@ -265,13 +282,35 @@ a, button {
 .module-content iframe {
   max-width: 100%;
   border-radius: 0.5rem;
+  pointer-events: auto !important;
 }
 
-/* Make sure all interactive elements have pointer cursor */
-.course-content [onclick],
-.module-content [onclick],
-.course-content a,
-.module-content a {
-  cursor: pointer;
-  user-select: none;
+/* Make sure no overlay is blocking interactions */
+.course-content,
+.module-content {
+  position: relative;
+  pointer-events: auto !important;
+}
+
+.course-content *,
+.module-content * {
+  pointer-events: auto !important;
+}
+
+/* Ensure forms and inputs work */
+.course-content input,
+.module-content input,
+.course-content select,
+.module-content select,
+.course-content textarea,
+.module-content textarea {
+  pointer-events: auto !important;
+  cursor: text;
+}
+
+.course-content input[type="submit"],
+.module-content input[type="submit"],
+.course-content input[type="button"],
+.module-content input[type="button"] {
+  cursor: pointer !important;
 }

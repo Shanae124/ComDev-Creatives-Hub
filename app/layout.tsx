@@ -39,6 +39,7 @@ export default function RootLayout({
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
         <meta name="theme-color" content="#0066cc" media="(prefers-color-scheme: light)" />
         <meta name="theme-color" content="#3b82f6" media="(prefers-color-scheme: dark)" />
+        <script src="/course-content-init.js" defer></script>
       </head>
       <body className={`${geistSans.className} font-sans antialiased bg-white dark:bg-slate-950 text-slate-900 dark:text-white`}>
         <AuthProvider>

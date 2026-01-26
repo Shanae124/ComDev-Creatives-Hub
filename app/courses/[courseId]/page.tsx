@@ -46,45 +46,104 @@ export default function CoursePage() {
   }, [courseId])
 
   useEffect(() => {
-    // Execute scripts in HTML content after render
-    if (contentRef.current && (course?.content_html || activeTab.startsWith('module-'))) {
-      // Small delay to ensure DOM is ready
-      const timer = setTimeout(() => {
-        if (!contentRef.current) return
-        
-        // Re-execute all scripts
-        const scripts = contentRef.current.querySelectorAll('script')
+    // Execute scripts and attach event handlers in HTML content after render
+    const executeScriptsAndAttachHandlers = () => {
+      // Find all content containers
+      const containers = document.querySelectorAll('.course-content, .module-content')
+      
+      containers.forEach((container) => {
+        if (!container) return
+
+        // 1. Execute all script tags
+        const scripts = container.querySelectorAll('script')
         scripts.forEach((oldScript) => {
           const newScript = document.createElement('script')
+          
+          // Copy all attributes
           Array.from(oldScript.attributes).forEach((attr) => {
             newScript.setAttribute(attr.name, attr.value)
           })
-          newScript.textContent = oldScript.textContent
-          oldScript.parentNode?.replaceChild(newScript, oldScript)
+          
+          // Copy script content
+          if (oldScript.src) {
+            newScript.src = oldScript.src
+          } else {
+            newScript.textContent = oldScript.textContent
+          }
+          
+          // Replace old script with new one to force execution
+          if (oldScript.parentNode) {
+            oldScript.parentNode.replaceChild(newScript, oldScript)
+          }
         })
 
-        // Also execute any inline onclick handlers by converting them to actual event listeners
-        const elementsWithOnClick = contentRef.current.querySelectorAll('[onclick]')
-        elementsWithOnClick.forEach((element) => {
-          const onclickAttr = element.getAttribute('onclick')
-          if (onclickAttr) {
-            element.removeAttribute('onclick')
-            element.addEventListener('click', function() {
-              try {
-                // Execute the onclick code
-                const func = new Function(onclickAttr)
-                func.call(element)
-              } catch (e) {
-                console.error('Error executing onclick:', e)
-              }
+        // 2. Handle ALL inline event handlers (onclick, onchange, onsubmit, etc.)
+        const eventAttributes = ['onclick', 'onchange', 'onsubmit', 'onload', 'oninput', 'onmouseover', 'onmouseout', 'onfocus', 'onblur']
+        
+        eventAttributes.forEach((eventAttr) => {
+          const eventName = eventAttr.substring(2) // Remove 'on' prefix
+          const elements = container.querySelectorAll(`[${eventAttr}]`)
+          
+          elements.forEach((element) => {
+            const handlerCode = element.getAttribute(eventAttr)
+            if (handlerCode) {
+              // Remove the attribute to prevent double execution
+              element.removeAttribute(eventAttr)
+              
+              // Add proper event listener
+              element.addEventListener(eventName, function(event) {
+                try {
+                  // Create function with 'event' and 'this' context
+                  const func = new Function('event', handlerCode)
+                  func.call(element, event)
+                } catch (e) {
+                  console.error(`Error executing ${eventAttr}:`, e, handlerCode)
+                }
+              })
+            }
+          })
+        })
+
+        // 3. Make sure all buttons and links are clickable
+        const buttons = container.querySelectorAll('button, .btn, [role="button"]')
+        buttons.forEach((btn) => {
+          btn.style.cursor = 'pointer'
+          btn.style.pointerEvents = 'auto'
+        })
+
+        const links = container.querySelectorAll('a')
+        links.forEach((link) => {
+          link.style.cursor = 'pointer'
+          link.style.pointerEvents = 'auto'
+        })
+
+        // 4. Handle any forms
+        const forms = container.querySelectorAll('form')
+        forms.forEach((form) => {
+          // Prevent default form submission if no action
+          if (!form.getAttribute('action')) {
+            form.addEventListener('submit', (e) => {
+              e.preventDefault()
             })
           }
         })
-      }, 100)
-
-      return () => clearTimeout(timer)
+      })
     }
-  }, [course?.content_html, activeTab])
+
+    // Execute immediately
+    executeScriptsAndAttachHandlers()
+
+    // Also execute after a short delay to catch dynamically loaded content
+    const timer1 = setTimeout(executeScriptsAndAttachHandlers, 100)
+    const timer2 = setTimeout(executeScriptsAndAttachHandlers, 300)
+    const timer3 = setTimeout(executeScriptsAndAttachHandlers, 500)
+
+    return () => {
+      clearTimeout(timer1)
+      clearTimeout(timer2)
+      clearTimeout(timer3)
+    }
+  }, [course?.content_html, activeTab, modules])
 
   const loadCourse = async () => {
     setLoading(true)
