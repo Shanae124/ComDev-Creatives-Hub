@@ -45,93 +45,6 @@ export default function CoursePage() {
     }
   }, [courseId])
 
-  useEffect(() => {
-    // Wait for content to be fully rendered
-    const initializeContent = () => {
-      // Find all course content containers
-      const containers = document.querySelectorAll('.course-content, .module-content')
-      
-      if (containers.length === 0) return
-
-      containers.forEach((container) => {
-        // 1. Execute all inline scripts
-        const inlineScripts = container.querySelectorAll('script:not([src])')
-        inlineScripts.forEach((script) => {
-          try {
-            const scriptContent = script.textContent || script.innerHTML
-            if (scriptContent && scriptContent.trim()) {
-              // Execute in global scope
-              (new Function(scriptContent))()
-            }
-          } catch (e) {
-            console.error('Error executing inline script:', e)
-          }
-        })
-
-        // 2. Load external scripts
-        const externalScripts = container.querySelectorAll('script[src]')
-        externalScripts.forEach((oldScript) => {
-          const newScript = document.createElement('script')
-          newScript.src = oldScript.getAttribute('src') || ''
-          document.head.appendChild(newScript)
-        })
-
-        // 3. Convert ALL inline event handlers to real event listeners
-        // Get all elements with any onclick/onchange/etc attributes
-        const allElements = container.querySelectorAll('*')
-        allElements.forEach((element) => {
-          // Check for onclick
-          if (element.hasAttribute('onclick')) {
-            const onclickCode = element.getAttribute('onclick')
-            element.removeAttribute('onclick')
-            if (onclickCode) {
-              element.addEventListener('click', function(e) {
-                try {
-                  (new Function('event', onclickCode)).call(this, e)
-                } catch (err) {
-                  console.error('Error in onclick:', err)
-                }
-              })
-            }
-          }
-
-          // Check for onchange  
-          if (element.hasAttribute('onchange')) {
-            const onchangeCode = element.getAttribute('onchange')
-            element.removeAttribute('onchange')
-            if (onchangeCode) {
-              element.addEventListener('change', function(e) {
-                try {
-                  (new Function('event', onchangeCode)).call(this, e)
-                } catch (err) {
-                  console.error('Error in onchange:', err)
-                }
-              })
-            }
-          }
-
-          // Make everything clickable
-          if (element.tagName === 'BUTTON' || element.classList.contains('btn') || element.getAttribute('role') === 'button') {
-            element.style.cursor = 'pointer'
-            element.style.pointerEvents = 'auto'
-          }
-        })
-
-        // 4. Make sure no prose class is blocking
-        container.style.pointerEvents = 'auto'
-      })
-
-      console.log('✅ Course content initialized:', containers.length, 'containers')
-    }
-
-    // Initialize multiple times to catch all content
-    setTimeout(initializeContent, 50)
-    setTimeout(initializeContent, 200)
-    setTimeout(initializeContent, 500)
-    setTimeout(initializeContent, 1000)
-
-  }, [course?.content_html, activeTab, modules])
-
   const loadCourse = async () => {
     setLoading(true)
     try {
@@ -404,20 +317,17 @@ export default function CoursePage() {
                   <CardDescription>Interactive course materials and resources</CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <div 
-                    ref={contentRef}
-                    className="course-content prose prose-slate dark:prose-invert max-w-none 
-                              prose-headings:font-bold prose-h1:text-3xl prose-h2:text-2xl prose-h3:text-xl
-                              prose-p:text-muted-foreground prose-p:leading-relaxed
-                              prose-a:text-primary prose-a:no-underline hover:prose-a:underline
-                              prose-strong:text-foreground prose-strong:font-semibold
-                              prose-code:bg-muted prose-code:px-1 prose-code:py-0.5 prose-code:rounded
-                              prose-pre:bg-muted prose-pre:border prose-pre:border-border
-                              prose-blockquote:border-l-4 prose-blockquote:border-primary prose-blockquote:pl-4
-                              prose-ul:list-disc prose-ol:list-decimal
-                              prose-img:rounded-lg prose-img:shadow-lg"
-                    dangerouslySetInnerHTML={{ __html: course.content_html }}
-                    style={{ position: 'relative', zIndex: 1 }}
+                  <iframe
+                    srcDoc={course.content_html}
+                    className="w-full border-0 rounded-lg"
+                    style={{ 
+                      minHeight: '800px',
+                      height: '100vh',
+                      border: 'none',
+                      backgroundColor: 'white'
+                    }}
+                    sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-modals"
+                    title="Course Content"
                   />
                 </CardContent>
               </Card>
@@ -480,18 +390,17 @@ export default function CoursePage() {
                 </CardHeader>
                 <CardContent>
                   {module.content_html ? (
-                    <div 
-                      ref={contentRef}
-                      className="module-content prose prose-slate dark:prose-invert max-w-none
-                                prose-headings:font-bold prose-h1:text-3xl prose-h2:text-2xl prose-h3:text-xl
-                                prose-p:text-muted-foreground prose-p:leading-relaxed
-                                prose-a:text-primary prose-a:no-underline hover:prose-a:underline
-                                prose-strong:text-foreground prose-strong:font-semibold
-                                prose-code:bg-muted prose-code:px-1 prose-code:py-0.5 prose-code:rounded
-                                prose-pre:bg-muted prose-pre:border prose-pre:border-border
-                                prose-ul:list-disc prose-ol:list-decimal
-                                prose-img:rounded-lg prose-img:shadow-lg"
-                      dangerouslySetInnerHTML={{ __html: module.content_html }}
+                    <iframe
+                      srcDoc={module.content_html}
+                      className="w-full border-0 rounded-lg"
+                      style={{ 
+                        minHeight: '800px',
+                        height: '100vh',
+                        border: 'none',
+                        backgroundColor: 'white'
+                      }}
+                      sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-modals"
+                      title={`Module: ${module.title}`}
                     />
                   ) : (
                     <div className="text-center py-8 text-muted-foreground">
