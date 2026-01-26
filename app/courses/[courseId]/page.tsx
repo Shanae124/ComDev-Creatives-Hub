@@ -192,10 +192,7 @@ export default function CoursePage() {
                         <Button 
                           variant="outline" 
                           className="w-full"
-                          onClick={() => {
-                            const contentTab = document.querySelector('[data-state="inactive"][value="content"]') as HTMLElement
-                            if (contentTab) contentTab.click()
-                          }}
+                          onClick={() => setActiveTab("content")}
                         >
                           View Course Content
                         </Button>
@@ -238,24 +235,34 @@ export default function CoursePage() {
       <div className="max-w-7xl mx-auto px-6 py-12">
         {/* Module Navigation - Show if enrolled */}
         {enrolled && modules.length > 0 && (
-          <div className="mb-8 p-6 bg-gradient-to-r from-slate-900 to-slate-800 rounded-xl shadow-lg">
-            <h3 className="text-white font-semibold mb-4 text-lg">Course Modules</h3>
-            <div className="flex flex-wrap gap-3">
-              {modules.map((module: any, index: number) => (
-                <button
-                  key={module.id}
-                  onClick={() => setActiveTab(`module-${module.id}`)}
-                  className={`px-4 py-2 rounded-lg font-medium transition-all ${
-                    activeTab === `module-${module.id}`
-                      ? 'bg-blue-500 text-white shadow-lg'
-                      : 'bg-slate-700/50 text-slate-300 hover:bg-slate-700'
-                  }`}
-                >
-                  {module.title || `Module ${index + 1}`}
-                </button>
-              ))}
-            </div>
-          </div>
+          <Card className="mb-8 border-2 border-primary/20">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <BookOpen className="w-5 h-5" />
+                Course Modules
+              </CardTitle>
+              <CardDescription>Click any module to view its content</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+                {modules.map((module: any, index: number) => (
+                  <Button
+                    key={module.id}
+                    onClick={() => setActiveTab(`module-${module.id}`)}
+                    variant={activeTab === `module-${module.id}` ? "default" : "outline"}
+                    className="w-full justify-start h-auto py-3 px-4"
+                  >
+                    <div className="flex items-center gap-2 w-full">
+                      <span className="flex-shrink-0 w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center text-xs font-bold">
+                        {index + 1}
+                      </span>
+                      <span className="text-left truncate">{module.title || `Module ${index + 1}`}</span>
+                    </div>
+                  </Button>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
         )}
 
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
@@ -305,29 +312,29 @@ export default function CoursePage() {
           </TabsContent>
 
           <TabsContent value="content" className="space-y-6">
-            <Card>
-              <CardHeader>
-                <CardTitle>Course Content</CardTitle>
-                <CardDescription>
-                  {enrolled ? "Full HTML content with interactive features" : "Enroll to access course content"}
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                {!enrolled ? (
-                  <div className="text-center py-12">
-                    <FileText className="w-12 h-12 mx-auto mb-4 text-muted-foreground/50" />
-                    <p className="text-lg font-semibold mb-2">Enroll to Access Content</p>
-                    <p className="text-muted-foreground mb-4">
-                      Click the "Enroll Now" button to access this course's content
-                    </p>
-                    <Button onClick={handleEnroll} disabled={enrolling}>
-                      {enrolling ? "Enrolling..." : "Enroll Now"}
-                    </Button>
-                  </div>
-                ) : course.content_html ? (
+            {!enrolled ? (
+              <Card>
+                <CardContent className="text-center py-12">
+                  <FileText className="w-16 h-16 mx-auto mb-4 text-muted-foreground/50" />
+                  <h3 className="text-xl font-semibold mb-2">Enroll to Access Content</h3>
+                  <p className="text-muted-foreground mb-6">
+                    Click the "Enroll Now" button to access this course's full content
+                  </p>
+                  <Button onClick={handleEnroll} disabled={enrolling} size="lg">
+                    {enrolling ? "Enrolling..." : "Enroll Now"}
+                  </Button>
+                </CardContent>
+              </Card>
+            ) : course.content_html ? (
+              <Card>
+                <CardHeader>
+                  <CardTitle>Course Content</CardTitle>
+                  <CardDescription>Interactive course materials and resources</CardDescription>
+                </CardHeader>
+                <CardContent>
                   <div 
                     ref={contentRef}
-                    className="prose prose-slate dark:prose-invert max-w-none 
+                    className="course-content prose prose-slate dark:prose-invert max-w-none 
                               prose-headings:font-bold prose-h1:text-3xl prose-h2:text-2xl prose-h3:text-xl
                               prose-p:text-muted-foreground prose-p:leading-relaxed
                               prose-a:text-primary prose-a:no-underline hover:prose-a:underline
@@ -339,15 +346,17 @@ export default function CoursePage() {
                               prose-img:rounded-lg prose-img:shadow-lg"
                     dangerouslySetInnerHTML={{ __html: course.content_html }}
                   />
-                ) : (
-                  <div className="text-center py-12 text-muted-foreground">
-                    <FileText className="w-12 h-12 mx-auto mb-4 opacity-50" />
-                    <p>No course content available yet.</p>
-                    <p className="text-sm mt-2">Check back later for updates!</p>
-                  </div>
-                )}
-              </CardContent>
-            </Card>
+                </CardContent>
+              </Card>
+            ) : (
+              <Card>
+                <CardContent className="text-center py-12">
+                  <FileText className="w-16 h-16 mx-auto mb-4 opacity-50" />
+                  <p className="text-lg font-semibold mb-2">No Content Yet</p>
+                  <p className="text-muted-foreground">Check back later for course materials!</p>
+                </CardContent>
+              </Card>
+            )}
           </TabsContent>
 
           <TabsContent value="instructor" className="space-y-6">
@@ -388,18 +397,33 @@ export default function CoursePage() {
             <TabsContent key={module.id} value={`module-${module.id}`} className="space-y-6">
               <Card>
                 <CardHeader>
-                  <CardTitle>{module.title}</CardTitle>
-                  <CardDescription>{module.description}</CardDescription>
+                  <CardTitle className="flex items-center gap-2">
+                    <BookOpen className="w-5 h-5" />
+                    {module.title}
+                  </CardTitle>
+                  {module.description && (
+                    <CardDescription>{module.description}</CardDescription>
+                  )}
                 </CardHeader>
                 <CardContent>
                   {module.content_html ? (
                     <div 
-                      ref={contentRef}
-                      className="prose prose-slate dark:prose-invert max-w-none"
+                      className="module-content prose prose-slate dark:prose-invert max-w-none
+                                prose-headings:font-bold prose-h1:text-3xl prose-h2:text-2xl prose-h3:text-xl
+                                prose-p:text-muted-foreground prose-p:leading-relaxed
+                                prose-a:text-primary prose-a:no-underline hover:prose-a:underline
+                                prose-strong:text-foreground prose-strong:font-semibold
+                                prose-code:bg-muted prose-code:px-1 prose-code:py-0.5 prose-code:rounded
+                                prose-pre:bg-muted prose-pre:border prose-pre:border-border
+                                prose-ul:list-disc prose-ol:list-decimal
+                                prose-img:rounded-lg prose-img:shadow-lg"
                       dangerouslySetInnerHTML={{ __html: module.content_html }}
                     />
                   ) : (
-                    <p className="text-muted-foreground">No content available for this module yet.</p>
+                    <div className="text-center py-8 text-muted-foreground">
+                      <FileText className="w-12 h-12 mx-auto mb-3 opacity-50" />
+                      <p>No content available for this module yet.</p>
+                    </div>
                   )}
                 </CardContent>
               </Card>
