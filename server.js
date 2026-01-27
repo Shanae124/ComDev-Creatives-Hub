@@ -890,7 +890,11 @@ app.get("/courses/:course_id/announcements", async (req, res) => {
 });
 
 // ==================== IMPORT IMSCC (Upload and Migrate) ====================
+// Note: Temporarily disabled due to encoding issues with brightspaceMigrator.js
 app.post("/import-course", authenticate, authorize("admin", "instructor"), upload.single('imscc'), async (req, res) => {
+  return res.status(503).json({ error: 'IMSCC import temporarily unavailable - feature under maintenance' });
+  
+  /* Disabled code:
   if (!req.file) return res.status(400).json({ error: 'No file uploaded (field name: imscc)' });
 
   const BrightspaceMigrator = require('./brightspaceMigrator');
@@ -936,6 +940,7 @@ app.post("/import-course", authenticate, authorize("admin", "instructor"), uploa
     try { fs.unlinkSync(filePath); } catch (e) { /* ignore */ }
     res.status(500).json({ error: err.message });
   }
+  */
 });
 
 // ==================== FILE UPLOAD ====================
