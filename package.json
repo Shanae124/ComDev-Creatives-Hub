@@ -109,7 +109,7 @@
     "tw-animate-css": "1.3.3",
     "typescript": "^5"
   },
-  "main": "brightspaceMigrator.js",
+  "main": "server.js",
   "directories": {
     "lib": "lib"
   },
