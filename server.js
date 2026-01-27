@@ -1804,6 +1804,56 @@ app.post("/admin/import-html-course", authenticate, authorize("admin"), async (r
   }
 });
 
+// ==================== PHASE 2: ENTERPRISE LMS API ROUTES ====================
+console.log('[Phase 2] Loading enterprise LMS routes...');
+
+// Organizations & Multi-tenancy
+const organizationsRouter = require('./routes/organizations')(pool);
+app.use('/api/organizations', organizationsRouter);
+
+// SCORM Content
+const scormRouter = require('./routes/scorm')(pool);
+app.use('/api/scorm', scormRouter);
+
+// xAPI / Tin Can Learning Record Store
+const xapiRouter = require('./routes/xapi')(pool);
+app.use('/api/xapi', xapiRouter);
+
+// Programs & Learning Paths
+const programsRouter = require('./routes/programs')(pool);
+app.use('/api/programs', programsRouter);
+
+// Question Bank
+const questionsRouter = require('./routes/questions')(pool);
+app.use('/api/questions', questionsRouter);
+
+// Assessments & Quizzes
+const assessmentsRouter = require('./routes/assessments')(pool);
+app.use('/api/assessments', assessmentsRouter);
+
+// Gradebook
+const gradebookRouter = require('./routes/gradebook')(pool);
+app.use('/api/gradebook', gradebookRouter);
+
+// SSO Authentication
+const ssoRouter = require('./routes/sso')(pool);
+app.use('/api/auth/sso', ssoRouter);
+
+// System Settings
+const settingsRouter = require('./routes/settings')(pool);
+app.use('/api/settings', settingsRouter);
+
+console.log('[Phase 2] ✓ Enterprise routes loaded');
+console.log('  - /api/organizations (Multi-tenant org management)');
+console.log('  - /api/scorm (SCORM 1.2/2004 content)');
+console.log('  - /api/xapi (Learning Record Store)');
+console.log('  - /api/programs (Learning paths)');
+console.log('  - /api/questions (Question bank)');
+console.log('  - /api/assessments (Quiz engine)');
+console.log('  - /api/gradebook (Grading system)');
+console.log('  - /api/auth/sso (SSO providers)');
+console.log('  - /api/settings (System settings)');
+
 // ==================== ERROR HANDLING ====================
 app.use((err, req, res, next) => {
   console.error(`[ERROR] ${new Date().toISOString()} - ${err.message}`);

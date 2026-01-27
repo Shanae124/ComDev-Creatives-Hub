@@ -1,53 +1,129 @@
-# ProtexxaLearn - Professional Learning Management System
+# ProtexxaLearn - Enterprise Learning Management System
 
-A complete, production-ready Learning Management System built with **Node.js + Express + PostgreSQL + Next.js + TypeScript**.
+A complete, **enterprise-grade** Learning Management System built with **Node.js + Express + PostgreSQL + Next.js 15 + React 19 + TypeScript**.
 
 ![Status](https://img.shields.io/badge/status-production_ready-green)
 ![Node.js](https://img.shields.io/badge/node.js-22.x-green)
-![Next.js](https://img.shields.io/badge/Next.js-16-black)
+![Next.js](https://img.shields.io/badge/Next.js-15-black)
 ![Database](https://img.shields.io/badge/database-PostgreSQL-blue)
+![Version](https://img.shields.io/badge/version-2.0.0_Enterprise-blue)
+
+---
+
+## 🎉 What's New in Version 2.0 (Enterprise Edition)
+
+**Phase 2-4 Complete!** - 24 files, 8,400+ lines of production code added
+
+### NEW: Advanced Enterprise Features
+
+- ✅ **Multi-Tenant Organizations** - Custom branding, roles, and permissions per organization
+- ✅ **SCORM 1.2/2004 Support** - Upload and track SCORM packages
+- ✅ **xAPI/Tin Can API** - Learning Record Store (LRS) implementation
+- ✅ **Learning Paths & Programs** - Sequential learning with prerequisites and drip content
+- ✅ **Advanced Question Bank** - QTI import/export, question pools, randomization
+- ✅ **Assessment Engine** - Auto-grading, timed tests, partial credit
+- ✅ **Enterprise Gradebook** - Weighted categories, rubrics, CSV export
+- ✅ **SSO Authentication** - SAML 2.0, OIDC, Google, Microsoft
+
+**📚 Documentation:**
+- [PHASE_2-4_IMPLEMENTATION_COMPLETE.md](./PHASE_2-4_IMPLEMENTATION_COMPLETE.md) - Full implementation details
+- [PHASE_2-4_QUICK_START.md](./PHASE_2-4_QUICK_START.md) - Testing guide
+- [API_REFERENCE.md](./API_REFERENCE.md) - Complete REST API documentation (100+ endpoints)
+
+---
 
 ## ✨ Features
 
-### Core LMS
+### Core LMS (Phase 1)
 - 📚 **Courses** - Create, organize, and manage courses
 - 📖 **Modules & Lessons** - Hierarchical content structure
 - 👥 **User Management** - Students, Instructors, Admins
 - 📝 **Enrollments** - Easy course enrollment
 - 🎯 **Progress Tracking** - Real-time student progress
 
+### Enterprise Features (Phase 2-4)
+
+#### Multi-Tenancy
+- 🏢 **Organizations** - Isolated tenants with custom branding
+- 🎨 **Custom Branding** - Logo, colors, domain per organization
+- 👤 **Custom Roles** - Granular permission system
+- 👥 **Cohorts** - Learner grouping and bulk enrollment
+
+#### Content Standards
+- 📦 **SCORM Support** - SCORM 1.2 and SCORM 2004 packages
+- 🎓 **xAPI/Tin Can** - Learning Record Store (xAPI 1.0.3)
+- 📊 **xAPI Analytics** - Actor summaries, activity statistics
+
+#### Learning Paths
+- 🛤️ **Programs** - Sequential learning paths
+- 🔒 **Prerequisites** - Course dependencies
+- ⏰ **Drip Content** - Time-based unlocking
+- 📈 **Progress Tracking** - Multi-course completion
+
+#### Assessments
+- ❓ **Question Bank** - Multiple choice, T/F, short answer, essay
+- 🎲 **Question Pools** - Random selection
+- ⏱️ **Timed Tests** - Auto-submit on expiry
+- ✅ **Auto-Grading** - Immediate results with partial credit
+- 💾 **Auto-Save** - Progress saved every 30 seconds
+- 📤 **QTI Import/Export** - Interoperability standard
+
+#### Gradebook
+- 📊 **Weighted Categories** - Assignments, quizzes, exams
+- 📏 **Rubric Grading** - Criteria-based assessment
+- 📝 **Letter Grades** - Automatic conversion (A-F)
+- 📈 **Statistics** - Average, median, std deviation
+- 💾 **CSV Export** - Downloadable reports
+
+#### Single Sign-On
+- 🔐 **SAML 2.0** - Enterprise SSO
+- 🔑 **OpenID Connect** - Modern OAuth2-based SSO
+- 🚀 **Quick Setup** - Google and Microsoft integration
+- 📋 **Audit Logging** - Complete SSO activity trail
+
 ### Content Management
 - 🌐 **Rich HTML Editor** - TinyMCE integration for course content
 - 📄 **Lesson Types** - Reading, Video, Quiz, Assignment
 - ⏱️ **Duration Tracking** - Lesson time tracking
-
-### Assignments & Grading
-- ✏️ **Assignments** - Create assignments with due dates
-- 📤 **Submissions** - Student submission handling
-- ⭐ **Grading** - Instructor grading with feedback
-- 📊 **Grade Tracking** - Comprehensive grade reports
 
 ### Additional Features
 - 📢 **Announcements** - Course-wide announcements
 - 🔐 **Authentication** - JWT-based auth with bcrypt
 - 🔑 **Role-Based Access** - Admin, Instructor, Student roles
 - 📱 **Responsive Design** - Works on desktop and mobile
-- 🎨 **Modern UI** - Clean, intuitive interface
+- 🎨 **Modern UI** - shadcn/ui components with Tailwind CSS
+
+---
 
 ## 🏗️ Architecture
 
-### Backend
-- **Framework**: Express.js (Node.js)
-- **Database**: PostgreSQL
+### Backend (Express REST API)
+- **Framework**: Express.js 5.2.1 (Node.js 22.x)
+- **Database**: PostgreSQL (Railway production)
 - **Authentication**: JWT + bcrypt
-- **APIs**: RESTful with comprehensive endpoints
+- **APIs**: RESTful with 100+ endpoints
+- **Services**: 8 enterprise services (3,500+ lines)
+- **Routes**: 8 API route files (2,500+ lines)
 
-### Frontend
-- **Framework**: React 18
-- **Build Tool**: Vite
+### Frontend (Next.js 15 + React 19)
+- **Framework**: Next.js 15 (App Router)
+- **UI Library**: React 19
+- **TypeScript**: Full type safety
+- **Components**: shadcn/ui + Tailwind CSS
 - **State Management**: Zustand
 - **Styling**: Tailwind CSS
 - **Editor**: TinyMCE
+
+### Database Schema (50+ Tables)
+- Core LMS tables (users, courses, modules, lessons, enrollments)
+- Organizations (multi-tenant isolation)
+- SCORM (packages, SCOs, tracking)
+- xAPI (statements, actors, verbs, activities)
+- Programs (learning paths, sequences, progress)
+- Question Bank (questions, pools)
+- Assessments (quizzes, attempts, answers)
+- Gradebook (categories, items, grades, rubrics)
+- SSO (providers, mappings, sessions, logs)
 - **HTTP Client**: Axios
 
 ## 🚀 Quick Start

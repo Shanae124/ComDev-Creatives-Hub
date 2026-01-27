@@ -130,6 +130,15 @@ export default function EditCoursePage() {
             Back to Courses
           </Button>
           <div className="flex gap-2">
+            <Button variant="outline" onClick={() => router.push(`/admin/courses/${courseId}/structure`)}>
+              Course Structure
+            </Button>
+            <Button variant="outline" onClick={() => router.push(`/admin/courses/${courseId}/lessons`)}>
+              Manage Lessons
+            </Button>
+            <Button variant="outline" onClick={() => router.push(`/admin/courses/${courseId}/videos`)}>
+              Add Videos
+            </Button>
             <Button variant="outline" onClick={() => router.push(`/courses/${courseId}`)}>
               <Eye className="w-4 h-4 mr-2" />
               Preview

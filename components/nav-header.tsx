@@ -56,7 +56,7 @@ export function NavHeader() {
     { href: "/admin/users", label: "Users", icon: Users },
     { href: "/admin/labs", label: "Labs", icon: Zap },
     { href: "/admin/impersonate", label: "Impersonate", icon: Eye },
-    { href: "/admin/settings/external-tools", label: "Meetings", icon: Video },
+    { href: "/meetings", label: "Meetings", icon: Video },
     { href: "/submissions", label: "Submissions", icon: ClipboardList },
     { href: "/grading", label: "Grading", icon: Award },
   ]

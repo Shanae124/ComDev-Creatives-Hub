@@ -11,6 +11,7 @@ import { useAuthStore } from "@/lib/auth-store"
 const studentNavigation = [
   { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
   { name: "My Courses", href: "/courses", icon: BookOpen },
+  { name: "Learning Paths", href: "/programs", icon: GraduationCap },
   { name: "Assignments", href: "/assignments", icon: ClipboardList },
   { name: "Grades", href: "/grades", icon: Award },
   { name: "Calendar", href: "/calendar", icon: Calendar },
@@ -20,6 +21,8 @@ const instructorNavigation = [
   { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
   { name: "Courses", href: "/admin/courses", icon: FolderTree },
   { name: "Create Course", href: "/admin/courses/new", icon: Plus },
+  { name: "Question Bank", href: "/admin/questions", icon: ClipboardList },
+  { name: "SCORM Content", href: "/admin/scorm", icon: BookOpen },
   { name: "Announcements", href: "/announcements", icon: MessageSquare },
   { name: "Student Submissions", href: "/submissions", icon: ClipboardList },
   { name: "Grading", href: "/grading", icon: Award },
@@ -29,7 +32,10 @@ const instructorNavigation = [
 
 const adminNavigation = [
   { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
+  { name: "Organizations", href: "/admin/organizations", icon: Users },
   { name: "Course Management", href: "/admin/courses", icon: FolderTree },
+  { name: "Question Bank", href: "/admin/questions", icon: ClipboardList },
+  { name: "SCORM Content", href: "/admin/scorm", icon: BookOpen },
   { name: "All Users", href: "/admin/users", icon: Users },
   { name: "Analytics", href: "/admin/analytics", icon: BarChart3 },
   { name: "System Settings", href: "/admin/settings", icon: Settings },

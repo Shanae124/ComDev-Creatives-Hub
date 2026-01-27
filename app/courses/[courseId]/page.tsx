@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Separator } from "@/components/ui/separator"
-import { BookOpen, User, Calendar, ArrowLeft, FileText, Users, Clock } from "lucide-react"
+import { BookOpen, User, Calendar, ArrowLeft, FileText } from "lucide-react"
 import { useAuthStore } from "@/lib/auth-store"
 
 interface Course {
@@ -17,10 +17,37 @@ interface Course {
   description: string
   content_html: string
   status: string
-  instructor_name: string
-  created_at: string
+  instructor_name?: string
+  created_at?: string
   thumbnail_url?: string
   enrolled?: boolean
+}
+
+interface Module {
+  id: number
+  title: string
+  description?: string
+  sort_order: number
+  content_html?: string
+  lessons?: Lesson[]
+}
+
+interface Lesson {
+  id: number
+  title: string
+  content_html: string
+  lesson_type: string
+  sort_order: number
+  duration_minutes?: number
+}
+
+interface ContentPage {
+  id: string
+  title: string
+  type: "html" | "video" | "page"
+  content?: string
+  videoUrl?: string
+  duration?: number
 }
 
 export default function CoursePage() {
@@ -30,20 +57,18 @@ export default function CoursePage() {
   const [course, setCourse] = useState<Course | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState("")
-  const [enrolling, setEnrolling] = useState(false)
-  const [enrolled, setEnrolled] = useState(false)
-  const isAuthenticated = useAuthStore((state) => state.isAuthenticated)
-  const user = useAuthStore((state) => state.user)
-  const contentRef = useRef<HTMLDivElement>(null)
-  const [modules, setModules] = useState<any[]>([])
-  const [activeTab, setActiveTab] = useState("overview")
 
   useEffect(() => {
+    if (!isAuthenticated) {
+      router.push("/login")
+      return
+    }
+    
     if (courseId) {
       loadCourse()
       loadModules()
     }
-  }, [courseId])
+  }, [courseId, isAuthenticated])
 
   const loadCourse = async () => {
     setLoading(true)
@@ -61,10 +86,21 @@ export default function CoursePage() {
 
   const loadModules = async () => {
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001'}/courses/${courseId}/modules`)
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001'}/courses/${courseId}/modules`
+      )
       if (response.ok) {
         const data = await response.json()
         setModules(data)
+        // Initialize first module content
+        if (data.length > 0 && enrolled) {
+          setSelectedContent({
+            id: `module-${data[0].id}`,
+            title: data[0].title,
+            type: "page",
+            content: data[0].description || data[0].content_html,
+          })
+        }
       }
     } catch (err) {
       console.error("Failed to load modules:", err)
@@ -77,13 +113,37 @@ export default function CoursePage() {
     try {
       await enrollmentAPI.enroll(user.id, Number(courseId))
       setEnrolled(true)
-      setCourse((prev) => prev ? { ...prev, enrolled: true } : null)
+      setCourse((prev) => (prev ? { ...prev, enrolled: true } : null))
+      loadModules()
     } catch (err: any) {
       console.error("Enrollment failed:", err)
       setError("Failed to enroll. Please try again.")
     } finally {
       setEnrolling(false)
     }
+  }
+
+  const toggleModule = (moduleId: number) => {
+    setExpandedModules((prev) => {
+      const next = new Set(prev)
+      if (next.has(moduleId)) {
+        next.delete(moduleId)
+      } else {
+        next.add(moduleId)
+      }
+      return next
+    })
+  }
+
+  const handleSelectLesson = (lesson: Lesson, moduleName: string) => {
+    setSelectedContent({
+      id: `lesson-${lesson.id}`,
+      title: lesson.title,
+      type: lesson.lesson_type === "video" ? "video" : "html",
+      content: lesson.content_html,
+      duration: lesson.duration_minutes,
+    })
+    setActiveTab("content-view")
   }
 
   if (loading) {
@@ -131,7 +191,6 @@ export default function CoursePage() {
           </Button>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            {/* Course Info */}
             <div className="lg:col-span-2">
               <Badge className="mb-4">{course.status}</Badge>
               <h1 className="text-4xl font-bold mb-4">{course.title}</h1>
@@ -140,56 +199,38 @@ export default function CoursePage() {
               <div className="flex flex-wrap gap-6 text-sm text-muted-foreground">
                 <div className="flex items-center gap-2">
                   <User className="w-4 h-4" />
-                  <span>{course.instructor_name || "System"}</span>
+                  <span>Instructor</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <Calendar className="w-4 h-4" />
-                  <span>{new Date(course.created_at).toLocaleDateString()}</span>
+                  <span>{new Date(course.created_at || Date.now()).toLocaleDateString()}</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <BookOpen className="w-4 h-4" />
-                  <span>Self-paced</span>
+                  <span>{modules.length} Modules</span>
                 </div>
               </div>
             </div>
 
-            {/* Sidebar Card */}
+            {/* Enrollment Card */}
             <div>
               <Card>
-                {course.thumbnail_url && (
-                  <div 
-                    className="h-48 bg-cover bg-center rounded-t-lg"
-                    style={{ backgroundImage: `url(${course.thumbnail_url})` }}
-                  />
-                )}
                 <CardContent className="pt-6 space-y-4">
-                  {isAuthenticated ? (
-                    <>
-                      <Button 
-                        className="w-full" 
-                        size="lg"
-                        onClick={handleEnroll}
-                        disabled={enrolling || enrolled}
-                      >
-                        {enrolling ? "Enrolling..." : enrolled ? "Enrolled ✓" : "Enroll Now"}
-                      </Button>
-                      {enrolled && (
-                        <Button 
-                          variant="outline" 
-                          className="w-full"
-                          onClick={() => setActiveTab("content")}
-                        >
-                          View Course Content
-                        </Button>
-                      )}
-                    </>
-                  ) : (
+                  <Button 
+                    className="w-full" 
+                    size="lg"
+                    onClick={handleEnroll}
+                    disabled={enrolling || enrolled}
+                  >
+                    {enrolling ? "Enrolling..." : enrolled ? "Enrolled ✓" : "Enroll Now"}
+                  </Button>
+                  {enrolled && (
                     <Button 
-                      className="w-full" 
-                      size="lg"
-                      onClick={() => router.push("/register")}
+                      variant="outline" 
+                      className="w-full"
+                      onClick={() => setActiveTab("content-view")}
                     >
-                      Sign Up to Enroll
+                      Start Learning
                     </Button>
                   )}
                   
@@ -197,8 +238,8 @@ export default function CoursePage() {
                   
                   <div className="space-y-3 text-sm">
                     <div className="flex justify-between">
-                      <span className="text-muted-foreground">Duration</span>
-                      <span className="font-medium">Self-paced</span>
+                      <span className="text-muted-foreground">Modules</span>
+                      <span className="font-medium">{modules.length}</span>
                     </div>
                     <div className="flex justify-between">
                       <span className="text-muted-foreground">Level</span>
@@ -216,44 +257,12 @@ export default function CoursePage() {
         </div>
       </div>
 
-      {/* Main Content */}
+      {/* Main Content with Sidebar */}
       <div className="max-w-7xl mx-auto px-6 py-12">
-        {/* Module Navigation - Show if enrolled */}
-        {enrolled && modules.length > 0 && (
-          <Card className="mb-8 border-2 border-primary/20">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <BookOpen className="w-5 h-5" />
-                Course Modules
-              </CardTitle>
-              <CardDescription>Click any module to view its content</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
-                {modules.map((module: any, index: number) => (
-                  <Button
-                    key={module.id}
-                    onClick={() => setActiveTab(`module-${module.id}`)}
-                    variant={activeTab === `module-${module.id}` ? "default" : "outline"}
-                    className="w-full justify-start h-auto py-3 px-4"
-                  >
-                    <div className="flex items-center gap-2 w-full">
-                      <span className="flex-shrink-0 w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center text-xs font-bold">
-                        {index + 1}
-                      </span>
-                      <span className="text-left truncate">{module.title || `Module ${index + 1}`}</span>
-                    </div>
-                  </Button>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-        )}
-
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
           <TabsList className="grid w-full max-w-md grid-cols-3">
             <TabsTrigger value="overview">Overview</TabsTrigger>
-            <TabsTrigger value="content">Content</TabsTrigger>
+            <TabsTrigger value="content-view" disabled={!enrolled}>Content</TabsTrigger>
             <TabsTrigger value="instructor">Instructor</TabsTrigger>
           </TabsList>
 
@@ -271,75 +280,129 @@ export default function CoursePage() {
 
             <Card>
               <CardHeader>
-                <CardTitle>What You'll Learn</CardTitle>
+                <CardTitle>Course Structure</CardTitle>
+                <CardDescription>{modules.length} modules to master</CardDescription>
               </CardHeader>
               <CardContent>
-                <ul className="space-y-2">
-                  <li className="flex items-start gap-2">
-                    <span className="text-primary mt-1">✓</span>
-                    <span>Master the fundamentals and advanced concepts</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-primary mt-1">✓</span>
-                    <span>Build real-world projects and applications</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-primary mt-1">✓</span>
-                    <span>Gain hands-on experience through practical exercises</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-primary mt-1">✓</span>
-                    <span>Receive certification upon completion</span>
-                  </li>
-                </ul>
+                <div className="space-y-2">
+                  {modules.map((module, index) => (
+                    <div key={module.id} className="border rounded-lg p-3 hover:bg-accent/50 transition-colors">
+                      <div className="flex items-center gap-2">
+                        <BookOpen className="w-4 h-4 text-primary" />
+                        <span className="font-medium">{index + 1}. {module.title}</span>
+                      </div>
+                      {module.description && (
+                        <p className="text-sm text-muted-foreground mt-1 ml-6">{module.description}</p>
+                      )}
+                    </div>
+                  ))}
+                </div>
               </CardContent>
             </Card>
           </TabsContent>
 
-          <TabsContent value="content" className="space-y-6">
-            {!enrolled ? (
-              <Card>
-                <CardContent className="text-center py-12">
-                  <FileText className="w-16 h-16 mx-auto mb-4 text-muted-foreground/50" />
-                  <h3 className="text-xl font-semibold mb-2">Enroll to Access Content</h3>
-                  <p className="text-muted-foreground mb-6">
-                    Click the "Enroll Now" button to access this course's full content
-                  </p>
-                  <Button onClick={handleEnroll} disabled={enrolling} size="lg">
-                    {enrolling ? "Enrolling..." : "Enroll Now"}
-                  </Button>
-                </CardContent>
-              </Card>
-            ) : course.content_html ? (
-              <Card>
-                <CardHeader>
-                  <CardTitle>Course Content</CardTitle>
-                  <CardDescription>Interactive course materials and resources</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <iframe
-                    srcDoc={course.content_html}
-                    className="w-full border-0 rounded-lg"
-                    style={{ 
-                      minHeight: '800px',
-                      height: '100vh',
-                      border: 'none',
-                      backgroundColor: 'white'
-                    }}
-                    sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-modals"
-                    title="Course Content"
-                  />
-                </CardContent>
-              </Card>
-            ) : (
-              <Card>
-                <CardContent className="text-center py-12">
-                  <FileText className="w-16 h-16 mx-auto mb-4 opacity-50" />
-                  <p className="text-lg font-semibold mb-2">No Content Yet</p>
-                  <p className="text-muted-foreground">Check back later for course materials!</p>
-                </CardContent>
-              </Card>
-            )}
+          <TabsContent value="content-view" className="space-y-6">
+            <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+              {/* Sidebar Navigation */}
+              <div className="lg:col-span-1">
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="text-lg">Course Content</CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-2 max-h-96 overflow-y-auto">
+                    {modules.map((module) => (
+                      <div key={module.id} className="space-y-1">
+                        <button
+                          onClick={() => toggleModule(module.id)}
+                          className="w-full flex items-center gap-2 p-2 rounded hover:bg-accent/50 transition-colors text-left"
+                        >
+                          {expandedModules.has(module.id) ? (
+                            <ChevronDown className="w-4 h-4" />
+                          ) : (
+                            <ChevronRight className="w-4 h-4" />
+                          )}
+                          <span className="text-sm font-medium truncate">{module.title}</span>
+                        </button>
+
+                        {expandedModules.has(module.id) && module.lessons && (
+                          <div className="ml-6 space-y-1">
+                            {module.lessons.map((lesson) => (
+                              <button
+                                key={lesson.id}
+                                onClick={() => handleSelectLesson(lesson, module.title)}
+                                className="w-full flex items-center gap-2 p-2 rounded text-left text-sm hover:bg-primary/10 transition-colors"
+                              >
+                                {lesson.lesson_type === "video" ? (
+                                  <Play className="w-3 h-3 text-primary" />
+                                ) : (
+                                  <FileText className="w-3 h-3 text-muted-foreground" />
+                                )}
+                                <span className="truncate text-xs">{lesson.title}</span>
+                              </button>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    ))}
+                  </CardContent>
+                </Card>
+              </div>
+
+              {/* Content Area */}
+              <div className="lg:col-span-3">
+                {selectedContent ? (
+                  <Card>
+                    <CardHeader>
+                      <div className="flex items-start justify-between gap-4">
+                        <div>
+                          <CardTitle>{selectedContent.title}</CardTitle>
+                          {selectedContent.duration && (
+                            <CardDescription className="flex items-center gap-1 mt-2">
+                              <Clock className="w-4 h-4" />
+                              {selectedContent.duration} minutes
+                            </CardDescription>
+                          )}
+                        </div>
+                        <Badge variant="outline">{selectedContent.type}</Badge>
+                      </div>
+                    </CardHeader>
+                    <CardContent>
+                      {selectedContent.type === "video" && selectedContent.videoUrl ? (
+                        <div className="relative bg-black rounded-lg overflow-hidden" style={{ paddingBottom: "56.25%", height: 0 }}>
+                          <iframe
+                            src={selectedContent.videoUrl}
+                            className="absolute top-0 left-0 w-full h-full"
+                            frameBorder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowFullScreen
+                            title={selectedContent.title}
+                          />
+                        </div>
+                      ) : selectedContent.content ? (
+                        <iframe
+                          srcDoc={selectedContent.content}
+                          className="w-full border-0 rounded-lg"
+                          style={{ minHeight: "600px", height: "100vh" }}
+                          sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-modals"
+                          title={selectedContent.title}
+                        />
+                      ) : (
+                        <p className="text-muted-foreground">No content available</p>
+                      )}
+                    </CardContent>
+                  </Card>
+                ) : (
+                  <Card>
+                    <CardContent className="flex flex-col items-center justify-center py-12">
+                      <BookOpen className="w-12 h-12 text-muted-foreground/50 mb-4" />
+                      <p className="text-muted-foreground text-center">
+                        Select a module or lesson from the sidebar to view content
+                      </p>
+                    </CardContent>
+                  </Card>
+                )}
+              </div>
+            </div>
           </TabsContent>
 
           <TabsContent value="instructor" className="space-y-6">
@@ -350,11 +413,11 @@ export default function CoursePage() {
               <CardContent>
                 <div className="flex items-start gap-4">
                   <div className="w-16 h-16 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-white text-xl font-bold">
-                    {course.instructor_name?.[0] || "?"}
+                    {user?.name?.[0] || "?"}
                   </div>
                   <div className="flex-1">
-                    <h3 className="font-semibold text-lg">{course.instructor_name || "Unknown"}</h3>
-                    <p className="text-sm text-muted-foreground">Professional Instructor</p>
+                    <h3 className="font-semibold text-lg">Professional Instructor</h3>
+                    <p className="text-sm text-muted-foreground">Expert in cybersecurity training</p>
                     <div className="flex gap-4 mt-4 text-sm">
                       <div>
                         <p className="font-semibold">15</p>
@@ -374,44 +437,6 @@ export default function CoursePage() {
               </CardContent>
             </Card>
           </TabsContent>
-
-          {/* Module Tabs */}
-          {modules.map((module: any) => (
-            <TabsContent key={module.id} value={`module-${module.id}`} className="space-y-6">
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <BookOpen className="w-5 h-5" />
-                    {module.title}
-                  </CardTitle>
-                  {module.description && (
-                    <CardDescription>{module.description}</CardDescription>
-                  )}
-                </CardHeader>
-                <CardContent>
-                  {module.content_html ? (
-                    <iframe
-                      srcDoc={module.content_html}
-                      className="w-full border-0 rounded-lg"
-                      style={{ 
-                        minHeight: '800px',
-                        height: '100vh',
-                        border: 'none',
-                        backgroundColor: 'white'
-                      }}
-                      sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-modals"
-                      title={`Module: ${module.title}`}
-                    />
-                  ) : (
-                    <div className="text-center py-8 text-muted-foreground">
-                      <FileText className="w-12 h-12 mx-auto mb-3 opacity-50" />
-                      <p>No content available for this module yet.</p>
-                    </div>
-                  )}
-                </CardContent>
-              </Card>
-            </TabsContent>
-          ))}
         </Tabs>
       </div>
     </div>

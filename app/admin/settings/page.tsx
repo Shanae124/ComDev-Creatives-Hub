@@ -90,12 +90,26 @@ export default function AdminSettingsPage() {
         <TabsContent value="site" className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             
-            {/* Site Configuration */}
+            {/* System Settings */}
             <Card className="hover:shadow-lg transition-shadow">
               <CardHeader>
                 <Settings className="h-6 w-6 mb-2 text-blue-500" />
+                <CardTitle>System Settings</CardTitle>
+                <CardDescription>Configure global system settings and preferences</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <Button className="w-full" onClick={() => router.push('/admin/settings/system')}>
+                  Configure
+                </Button>
+              </CardContent>
+            </Card>
+
+            {/* Site Configuration */}
+            <Card className="hover:shadow-lg transition-shadow">
+              <CardHeader>
+                <Globe className="h-6 w-6 mb-2 text-green-500" />
                 <CardTitle>Site Configuration</CardTitle>
-                <CardDescription>Basic site settings and information</CardDescription>
+                <CardDescription>Basic site settings and branding</CardDescription>
               </CardHeader>
               <CardContent>
                 <Button className="w-full" onClick={() => router.push('/admin/settings/site-config')}>
