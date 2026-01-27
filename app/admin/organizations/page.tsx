@@ -28,7 +28,7 @@ export default function OrganizationsPage() {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [selectedOrg, setSelectedOrg] = useState<Organization | null>(null);
   const { toast } = useToast();
-  const user = authStore.getState().user;
+  const { user, token } = useAuthStore();
 
   const [formData, setFormData] = useState({
     name: '',
@@ -46,7 +46,6 @@ export default function OrganizationsPage() {
 
   const fetchOrganizations = async () => {
     try {
-      const token = authStore.getState().token;
       const response = await fetch('http://localhost:3001/api/organizations', {
         headers: { 'Authorization': `Bearer ${token}` }
       });
@@ -70,7 +69,6 @@ export default function OrganizationsPage() {
     e.preventDefault();
     
     try {
-      const token = authStore.getState().token;
       const response = await fetch('http://localhost:3001/api/organizations', {
         method: 'POST',
         headers: {
@@ -128,7 +126,6 @@ export default function OrganizationsPage() {
     if (!confirm('Are you sure? This will delete all data for this organization.')) return;
 
     try {
-      const token = authStore.getState().token;
       const response = await fetch(`http://localhost:3001/api/organizations/${id}`, {
         method: 'DELETE',
         headers: { 'Authorization': `Bearer ${token}` }

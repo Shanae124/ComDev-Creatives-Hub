@@ -8,7 +8,7 @@ import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/hooks/use-toast';
-import { authStore } from '@/lib/auth-store';
+import { useAuthStore } from '@/lib/auth-store';
 import { Clock, CheckCircle2, AlertCircle, ArrowLeft, ArrowRight } from 'lucide-react';
 import { Progress } from '@/components/ui/progress';
 

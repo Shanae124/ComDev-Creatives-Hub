@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { useToast } from '@/hooks/use-toast';
-import { authStore } from '@/lib/auth-store';
+import { useAuthStore } from '@/lib/auth-store';
 import { Download, TrendingUp, TrendingDown, Award, Filter } from 'lucide-react';
 import {
   Table,
