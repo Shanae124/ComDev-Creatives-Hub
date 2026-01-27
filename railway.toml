@@ -2,6 +2,9 @@
 builder = "nixpacks"
 buildCommand = "npm install && npm run build"
 
+[build.nixpacksConfig]
+packageManager = "npm"
+
 [deploy]
 startCommand = "node start.js"
 restartPolicyType = "on_failure"
