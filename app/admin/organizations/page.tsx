@@ -8,7 +8,7 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, Di
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/hooks/use-toast';
-import { authStore } from '@/lib/auth-store';
+import { useAuthStore } from '@/lib/auth-store';
 import { Building2, Users, Settings, Plus, Search, Edit, Trash2 } from 'lucide-react';
 
 interface Organization {

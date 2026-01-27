@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
-import { authStore } from '@/lib/auth-store';
+import { useAuthStore } from '@/lib/auth-store';
 import { GraduationCap, Play, Lock, CheckCircle2, Clock, BookOpen } from 'lucide-react';
 import { Progress } from '@/components/ui/progress';
 import { Badge } from '@/components/ui/badge';

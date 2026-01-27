@@ -10,7 +10,7 @@ import { Switch } from '@/components/ui/switch';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useToast } from '@/hooks/use-toast';
-import { authStore } from '@/lib/auth-store';
+import { useAuthStore } from '@/lib/auth-store';
 import { 
   Globe, Mail, Shield, Bell, Palette, Database, 
   Zap, Lock, FileText, Download, Upload, Trash2,
