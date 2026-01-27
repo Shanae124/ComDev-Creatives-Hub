@@ -7,7 +7,12 @@ import { courseAPI, enrollmentAPI } from "@/lib/api"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { BarChart3, BookOpen, Calendar, Clock, Users, TrendingUp, ArrowRight, FolderTree, Shield, Eye } from "lucide-react"
+import { Progress } from "@/components/ui/progress"
+import { Skeleton } from "@/components/ui/skeleton"
+import { QuickActions } from "@/components/quick-actions"
+import { EmptyState } from "@/components/empty-state"
+import { CourseProgressRing } from "@/components/course-progress-ring"
+import { BarChart3, BookOpen, Calendar, Clock, Users, TrendingUp, ArrowRight, FolderTree, Shield, Eye, Target, Award } from "lucide-react"
 import Link from "next/link"
 
 export default function DashboardPage() {
@@ -54,6 +59,34 @@ export default function DashboardPage() {
   const myCourses = courses.filter((c) => c.created_by === user?.id)
   const enrolledCourses = courses.filter((c) => enrollments.some((e) => e.course_id === c.id && e.user_id === user?.id))
 
+  // Calculate aggregate stats
+  const totalProgress = enrolledCourses.length > 0
+    ? Math.round(enrolledCourses.reduce((sum, c) => sum + (c.progress || 0), 0) / enrolledCourses.length)
+    : 0
+  const completedCourses = enrolledCourses.filter((c) => (c.progress || 0) >= 100).length
+  const inProgressCourses = enrolledCourses.filter((c) => (c.progress || 0) > 0 && (c.progress || 0) < 100).length
+
+  if (loading) {
+    return (
+      <div className="max-w-7xl mx-auto space-y-8">
+        <Skeleton className="h-16 w-3/4" />
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          {[...Array(4)].map((_, i) => (
+            <Card key={i}>
+              <CardHeader className="pb-3">
+                <Skeleton className="h-4 w-24" />
+              </CardHeader>
+              <CardContent>
+                <Skeleton className="h-10 w-16 mb-2" />
+                <Skeleton className="h-3 w-32" />
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div className="max-w-7xl mx-auto space-y-8">
       {/* Welcome Header */}
@@ -95,27 +128,69 @@ export default function DashboardPage() {
         <Card className="border-0 shadow-sm bg-gradient-to-br from-purple-50 to-purple-100 dark:from-purple-950 dark:to-purple-900">
           <CardHeader className="pb-3">
             <CardTitle className="text-sm font-medium text-muted-foreground flex items-center gap-2">
-              <BarChart3 className="h-4 w-4" />
-              Completion
+              <Target className="h-4 w-4" />
+              {isInstructor ? "Total Students" : "In Progress"}
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-3xl font-bold">0%</div>
-            <p className="text-xs text-muted-foreground mt-1">Learning streak</p>
+            <div className="text-3xl font-bold">{isInstructor ? enrollments.length : inProgressCourses}</div>
+            <p className="text-xs text-muted-foreground mt-1">{isInstructor ? "Across all courses" : "Active courses"}</p>
           </CardContent>
         </Card>
 
         <Card className="border-0 shadow-sm bg-gradient-to-br from-orange-50 to-orange-100 dark:from-orange-950 dark:to-orange-900">
           <CardHeader className="pb-3">
-            <CardTitle className="text-sm font-medium text-muted-foreground">Account</CardTitle>
+            <CardTitle className="text-sm font-medium text-muted-foreground flex items-center gap-2">
+              <Award className="h-4 w-4" />
+              Completed
+            </CardTitle>
           </CardHeader>
           <CardContent>
-            <Badge className="text-xs capitalize">{user?.role}</Badge>
-            <p className="text-xs text-muted-foreground mt-1">Account type</p>
+            <div className="text-3xl font-bold">{completedCourses}</div>
+            <p className="text-xs text-muted-foreground mt-1">{isInstructor ? "Published courses" : "Courses finished"}</p>
           </CardContent>
         </Card>
       </div>
 
+      {/* Progress Overview for Students */}
+      {!isInstructor && enrolledCourses.length > 0 && (
+        <Card>
+          <CardHeader>
+            <CardTitle>Your Learning Progress</CardTitle>
+            <CardDescription>Overall completion across all enrolled courses</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="flex items-center gap-8">
+              <CourseProgressRing progress={totalProgress} size="lg" />
+              <div className="flex-1 space-y-4">
+                <div>
+                  <div className="flex justify-between text-sm mb-2">
+                    <span className="text-muted-foreground">Completed</span>
+                    <span className="font-semibold">{completedCourses} of {enrolledCourses.length} courses</span>
+                  </div>
+                  <Progress value={(completedCourses / enrolledCourses.length) * 100} className="h-2" />
+                </div>
+                <div className="grid grid-cols-3 gap-4 pt-4 border-t">
+                  <div className="text-center">
+                    <div className="text-2xl font-bold text-green-600">{completedCourses}</div>
+                    <div className="text-xs text-muted-foreground">Completed</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-2xl font-bold text-blue-600">{inProgressCourses}</div>
+                    <div className="text-xs text-muted-foreground">In Progress</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-2xl font-bold text-gray-600">{enrolledCourses.length - completedCourses - inProgressCourses}</div>
+                    <div className="text-xs text-muted-foreground">Not Started</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      )}
+
+      {/* Courses and Quick Actions Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Courses Section */}
         <div className="lg:col-span-2 space-y-6">
@@ -213,90 +288,7 @@ export default function DashboardPage() {
 
         {/* Quick Actions Sidebar */}
         <div className="space-y-6">
-          <Card>
-            <CardHeader>
-              <CardTitle className="text-lg">Quick Actions</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-2">
-              <Link href="/courses" className="block">
-                <Button className="w-full justify-start gap-2" variant="outline">
-                  <BookOpen className="h-4 w-4" />
-                  Browse Courses
-                </Button>
-              </Link>
-              {isInstructor && (
-                <Link href="/admin/courses" className="block">
-                  <Button className="w-full justify-start gap-2" variant="outline">
-                    <BarChart3 className="h-4 w-4" />
-                    My Dashboard
-                  </Button>
-                </Link>
-              )}
-              <Link href="/settings" className="block">
-                <Button className="w-full justify-start gap-2" variant="outline">
-                  <Clock className="h-4 w-4" />
-                  Settings
-                </Button>
-              </Link>
-
-              {/* Role-aware quick links */}
-              {isInstructor ? (
-                <>
-                  <Button
-                    variant="outline"
-                    className="w-full justify-start"
-                    onClick={() => router.push("/admin/courses")}
-                  >
-                    <FolderTree className="h-4 w-4 mr-2" />
-                    View Courses
-                  </Button>
-                  <Button
-                    variant="outline"
-                    className="w-full justify-start"
-                    onClick={() => router.push("/submissions")}
-                  >
-                    <Clock className="h-4 w-4 mr-2" />
-                    Submissions
-                  </Button>
-                  <Button
-                    variant="outline"
-                    className="w-full justify-start"
-                    onClick={() => router.push("/grading")}
-                  >
-                    <TrendingUp className="h-4 w-4 mr-2" />
-                    Grade Work
-                  </Button>
-                </>
-              ) : (
-                <>
-                  <Button
-                    variant="outline"
-                    className="w-full justify-start"
-                    onClick={() => router.push("/courses")}
-                  >
-                    <BookOpen className="h-4 w-4 mr-2" />
-                    My Courses
-                  </Button>
-                  <Button
-                    variant="outline"
-                    className="w-full justify-start"
-                    onClick={() => router.push("/assignments")}
-                  >
-                    <Clock className="h-4 w-4 mr-2" />
-                    Assignments
-                  </Button>
-                  <Button
-                    variant="outline"
-                    className="w-full justify-start"
-                    onClick={() => router.push("/grades")}
-                  >
-                    <BarChart3 className="h-4 w-4 mr-2" />
-                    Grades
-                  </Button>
-                </>
-              )}
-            </CardContent>
-          </Card>
+          <QuickActions />
 
           <Card>
             <CardHeader>
@@ -310,6 +302,7 @@ export default function DashboardPage() {
                 <li>✓ Complete lessons consistently for best results</li>
                 <li>✓ Take notes while learning</li>
                 <li>✓ Join discussion forums</li>
+                <li>✓ Practice regularly to reinforce concepts</li>
               </ul>
             </CardContent>
           </Card>

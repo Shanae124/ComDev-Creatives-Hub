@@ -8,7 +8,12 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
-import { BookOpen, Search, Star, Users, Clock, ArrowRight, Settings, Eye } from "lucide-react"
+import { Progress } from "@/components/ui/progress"
+import { Skeleton } from "@/components/ui/skeleton"
+import { EmptyState } from "@/components/empty-state"
+import { CourseCardSkeleton } from "@/components/skeleton-loader"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { BookOpen, Search, Star, Users, Clock, ArrowRight, Settings, Eye, Filter, Grid, List } from "lucide-react"
 import Link from "next/link"
 
 interface Course {
@@ -39,6 +44,8 @@ export default function CoursesPage() {
   const [error, setError] = useState<string | null>(null)
   const [enrollingId, setEnrollingId] = useState<number | null>(null)
   const [enrollError, setEnrollError] = useState<string | null>(null)
+  const [filterLevel, setFilterLevel] = useState<string>("all")
+  const [sortBy, setSortBy] = useState<string>("recent")
 
   useEffect(() => {
     if (!isAuthenticated) {
@@ -67,9 +74,19 @@ export default function CoursesPage() {
     }
   }, [isAuthenticated])
 
-  const filteredCourses = (viewMode === "enrolled" ? enrolledCourses : courses).filter((course) =>
-    course.title.toLowerCase().includes(searchTerm.toLowerCase())
-  )
+  const filteredCourses = (viewMode === "enrolled" ? enrolledCourses : courses)
+    .filter((course) =>
+      course.title.toLowerCase().includes(searchTerm.toLowerCase()) &&
+      (filterLevel === "all" || course.level === filterLevel)
+    )
+    .sort((a, b) => {
+      if (sortBy === "recent") return (b.id || 0) - (a.id || 0)
+      if (sortBy === "title") return a.title.localeCompare(b.title)
+      if (sortBy === "progress" && a.progress !== undefined && b.progress !== undefined) {
+        return (b.progress || 0) - (a.progress || 0)
+      }
+      return 0
+    })
 
   const handleEnroll = async (course: Course, e: MouseEvent) => {
     e.preventDefault()
