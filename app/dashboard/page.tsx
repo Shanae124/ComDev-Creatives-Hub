@@ -190,10 +190,10 @@ export default function DashboardPage() {
         </Card>
       )}
 
-      {/* Courses and Quick Actions Grid */}
+      {/* Courses and Insights Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Courses Section */}
-        <div className="lg:col-span-2 space-y-6">
+        <div className="lg:col-span-2">
           <Card>
             <CardHeader>
               <div className="flex items-center justify-between">
@@ -249,61 +249,75 @@ export default function DashboardPage() {
             </CardContent>
           </Card>
 
-          {/* Navigation Hub */}
+
+        </div>
+
+        {/* Activity & Insights Sidebar */}
+        <div className="space-y-6">
+          {/* Upcoming Deadlines */}
           <Card>
             <CardHeader>
-              <CardTitle className="text-lg">Navigation Hub</CardTitle>
-              <CardDescription>Jump to key areas quickly</CardDescription>
+              <CardTitle className="text-sm flex items-center gap-2">
+                <Clock className="h-4 w-4 text-orange-500" />
+                Upcoming Deadlines
+              </CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                {[
-                  { href: '/courses', label: 'Courses', icon: <BookOpen className="h-4 w-4" /> },
-                  { href: '/calendar', label: 'Calendar', icon: <Calendar className="h-4 w-4" /> },
-                  { href: '/announcements', label: 'Announcements', icon: <Users className="h-4 w-4" /> },
-                  { href: '/assignments', label: 'Assignments', icon: <Clock className="h-4 w-4" /> },
-                  { href: '/grades', label: 'Grades', icon: <BarChart3 className="h-4 w-4" /> },
-                  { href: '/submissions', label: 'Submissions', icon: <TrendingUp className="h-4 w-4" /> },
-                  { href: '/portal/student', label: 'Student Portal', icon: <Users className="h-4 w-4" /> },
-                  ...(isInstructor
-                    ? [
-                        { href: '/admin', label: 'Admin', icon: <Shield className="h-4 w-4" /> },
-                        { href: '/admin/impersonate', label: 'Impersonate', icon: <Eye className="h-4 w-4" /> },
-                        { href: '/portal/admin', label: 'Admin Portal', icon: <Shield className="h-4 w-4" /> },
-                        { href: '/admin/settings/external-tools', label: 'Meetings & Boards', icon: <Calendar className="h-4 w-4" /> },
-                      ]
-                    : []),
-                ].map((item) => (
-                  <Link key={item.href} href={item.href}>
-                    <div className="p-3 border rounded-lg hover:border-primary hover:bg-muted/50 transition-colors flex items-center gap-2">
-                      {item.icon}
-                      <span className="font-medium text-sm">{item.label}</span>
-                    </div>
-                  </Link>
-                ))}
+              {!isInstructor && enrolledCourses.length > 0 ? (
+                <div className="space-y-3">
+                  <div className="text-sm text-muted-foreground text-center py-4">
+                    No upcoming assignments
+                  </div>
+                </div>
+              ) : (
+                <div className="text-sm text-muted-foreground text-center py-4">
+                  {isInstructor ? "No pending grading" : "Enroll in courses to see assignments"}
+                </div>
+              )}
+            </CardContent>
+          </Card>
+
+          {/* Learning Streak */}
+          <Card className="border-0 bg-gradient-to-br from-purple-50 to-pink-50 dark:from-purple-950/20 dark:to-pink-950/20">
+            <CardHeader>
+              <CardTitle className="text-sm flex items-center gap-2">
+                <TrendingUp className="h-4 w-4 text-purple-600" />
+                Learning Streak
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="text-center">
+                <div className="text-4xl font-bold text-purple-600 mb-1">0</div>
+                <p className="text-xs text-muted-foreground">Days in a row</p>
+                <p className="text-xs text-muted-foreground mt-3">Keep learning to build your streak!</p>
               </div>
             </CardContent>
           </Card>
-        </div>
 
-        {/* Quick Actions Sidebar */}
-        <div className="space-y-6">
-          <QuickActions />
-
+          {/* Tips */}
           <Card>
             <CardHeader>
               <CardTitle className="text-sm flex items-center gap-2">
                 <TrendingUp className="h-4 w-4 text-primary" />
-                Learning Tips
+                {isInstructor ? "Instructor Tips" : "Learning Tips"}
               </CardTitle>
             </CardHeader>
             <CardContent className="text-sm text-muted-foreground">
-              <ul className="space-y-2">
-                <li>✓ Complete lessons consistently for best results</li>
-                <li>✓ Take notes while learning</li>
-                <li>✓ Join discussion forums</li>
-                <li>✓ Practice regularly to reinforce concepts</li>
-              </ul>
+              {isInstructor ? (
+                <ul className="space-y-2">
+                  <li>✓ Provide clear learning objectives</li>
+                  <li>✓ Use varied content types</li>
+                  <li>✓ Give timely feedback</li>
+                  <li>✓ Monitor student engagement</li>
+                </ul>
+              ) : (
+                <ul className="space-y-2">
+                  <li>✓ Set daily learning goals</li>
+                  <li>✓ Take notes while learning</li>
+                  <li>✓ Review material regularly</li>
+                  <li>✓ Join discussion forums</li>
+                </ul>
+              )}
             </CardContent>
           </Card>
         </div>
