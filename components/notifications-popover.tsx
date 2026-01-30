@@ -11,6 +11,7 @@ import {
 import { Badge } from "@/components/ui/badge"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { useAuthStore } from "@/lib/auth-store"
+import { notificationAPI } from "@/lib/api"
 import { formatDistanceToNow } from "date-fns"
 import Link from "next/link"
 
@@ -44,17 +45,10 @@ export function NotificationsPopover() {
     if (!token) return
     
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001'}/api/notifications`, {
-        headers: {
-          'Authorization': `Bearer ${token}`,
-        },
-      })
-      
-      if (response.ok) {
-        const data = await response.json()
-        setNotifications(data)
-        setUnreadCount(data.filter((n: Notification) => !n.read).length)
-      }
+      const response = await notificationAPI.getAll()
+      const data = response.data
+      setNotifications(data)
+      setUnreadCount(data.filter((n: Notification) => !n.read).length)
     } catch (error) {
       console.error('Error fetching notifications:', error)
     }
@@ -64,19 +58,11 @@ export function NotificationsPopover() {
     if (!token) return
 
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001'}/api/notifications/${id}/read`, {
-        method: 'PATCH',
-        headers: {
-          'Authorization': `Bearer ${token}`,
-        },
-      })
-
-      if (response.ok) {
-        setNotifications(notifications.map(n => 
-          n.id === id ? { ...n, read: true } : n
-        ))
-        setUnreadCount(Math.max(0, unreadCount - 1))
-      }
+      await notificationAPI.markAsRead(id)
+      setNotifications(notifications.map(n => 
+        n.id === id ? { ...n, read: true } : n
+      ))
+      setUnreadCount(Math.max(0, unreadCount - 1))
     } catch (error) {
       console.error('Error marking notification as read:', error)
     }
@@ -87,17 +73,9 @@ export function NotificationsPopover() {
     setLoading(true)
 
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001'}/api/notifications/mark-all-read`, {
-        method: 'PATCH',
-        headers: {
-          'Authorization': `Bearer ${token}`,
-        },
-      })
-
-      if (response.ok) {
-        setNotifications(notifications.map(n => ({ ...n, read: true })))
-        setUnreadCount(0)
-      }
+      await notificationAPI.markAllAsRead()
+      setNotifications(notifications.map(n => ({ ...n, read: true })))
+      setUnreadCount(0)
     } catch (error) {
       console.error('Error marking all as read:', error)
     } finally {
@@ -109,19 +87,11 @@ export function NotificationsPopover() {
     if (!token) return
 
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001'}/api/notifications/${id}`, {
-        method: 'DELETE',
-        headers: {
-          'Authorization': `Bearer ${token}`,
-        },
-      })
-
-      if (response.ok) {
-        const notification = notifications.find(n => n.id === id)
-        setNotifications(notifications.filter(n => n.id !== id))
-        if (notification && !notification.read) {
-          setUnreadCount(Math.max(0, unreadCount - 1))
-        }
+      await notificationAPI.delete(id)
+      const notification = notifications.find(n => n.id === id)
+      setNotifications(notifications.filter(n => n.id !== id))
+      if (notification && !notification.read) {
+        setUnreadCount(Math.max(0, unreadCount - 1))
       }
     } catch (error) {
       console.error('Error deleting notification:', error)

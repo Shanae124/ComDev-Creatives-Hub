@@ -134,4 +134,14 @@ export const settingsAPI = {
   getExternalTools: () => apiClient.get('/settings/external-tools'),
 };
 
+// Notification APIs
+export const notificationAPI = {
+  getAll: () => apiClient.get('/notifications'),
+  getUnread: () => apiClient.get('/notifications?unread_only=true'),
+  markAsRead: (id: number | string) => apiClient.patch(`/notifications/${id}/read`),
+  markAllAsRead: () => apiClient.patch('/notifications/mark-all-read'),
+  delete: (id: number | string) => apiClient.delete(`/notifications/${id}`),
+  create: (data: any) => apiClient.post('/notifications', data),
+};
+
 export default apiClient;
