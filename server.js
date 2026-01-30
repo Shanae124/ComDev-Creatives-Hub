@@ -1859,6 +1859,112 @@ console.log('  - /api/gradebook (Grading system)');
 console.log('  - /api/auth/sso (SSO providers)');
 console.log('  - /api/settings (System settings)');
 
+// ==================== NOTIFICATIONS ====================
+// Get user notifications
+app.get('/api/notifications', authenticate, async (req, res) => {
+  try {
+    const userId = req.user.id;
+    const { unread_only } = req.query;
+
+    let query = 'SELECT * FROM notifications WHERE user_id = $1';
+    const params = [userId];
+
+    if (unread_only === 'true') {
+      query += ' AND read = FALSE';
+    }
+
+    query += ' ORDER BY created_at DESC LIMIT 50';
+
+    const result = await pool.query(query, params);
+    res.json(result.rows);
+  } catch (err) {
+    console.error('Error fetching notifications:', err);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Mark notification as read
+app.patch('/api/notifications/:id/read', authenticate, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const userId = req.user.id;
+
+    const result = await pool.query(
+      'UPDATE notifications SET read = TRUE, updated_at = CURRENT_TIMESTAMP WHERE id = $1 AND user_id = $2 RETURNING *',
+      [id, userId]
+    );
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: 'Notification not found' });
+    }
+
+    res.json(result.rows[0]);
+  } catch (err) {
+    console.error('Error marking notification as read:', err);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Mark all notifications as read
+app.patch('/api/notifications/mark-all-read', authenticate, async (req, res) => {
+  try {
+    const userId = req.user.id;
+
+    await pool.query(
+      'UPDATE notifications SET read = TRUE, updated_at = CURRENT_TIMESTAMP WHERE user_id = $1 AND read = FALSE',
+      [userId]
+    );
+
+    res.json({ success: true, message: 'All notifications marked as read' });
+  } catch (err) {
+    console.error('Error marking all notifications as read:', err);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Delete notification
+app.delete('/api/notifications/:id', authenticate, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const userId = req.user.id;
+
+    const result = await pool.query(
+      'DELETE FROM notifications WHERE id = $1 AND user_id = $2 RETURNING *',
+      [id, userId]
+    );
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: 'Notification not found' });
+    }
+
+    res.json({ success: true, message: 'Notification deleted' });
+  } catch (err) {
+    console.error('Error deleting notification:', err);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Create notification (internal use or admin)
+app.post('/api/notifications', authenticate, authorize(['admin', 'instructor']), async (req, res) => {
+  try {
+    const { user_id, title, message, type, link } = req.body;
+
+    if (!user_id || !title || !message) {
+      return res.status(400).json({ error: 'user_id, title, and message are required' });
+    }
+
+    const result = await pool.query(
+      'INSERT INTO notifications (user_id, title, message, type, link) VALUES ($1, $2, $3, $4, $5) RETURNING *',
+      [user_id, title, message, type || 'info', link]
+    );
+
+    res.status(201).json(result.rows[0]);
+  } catch (err) {
+    console.error('Error creating notification:', err);
+    res.status(500).json({ error: err.message });
+  }
+});
+
 // ==================== ERROR HANDLING ====================
 app.use((err, req, res, next) => {
   console.error(`[ERROR] ${new Date().toISOString()} - ${err.message}`);

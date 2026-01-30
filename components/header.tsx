@@ -1,6 +1,6 @@
 "use client"
 
-import { Bell, Search, User, Moon, Sun, Menu, LogOut, Settings, Users } from "lucide-react"
+import { Search, User, Moon, Sun, Menu, LogOut, Settings, Users } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { useTheme } from "next-themes"
@@ -8,6 +8,7 @@ import { useEffect, useState } from "react"
 import { useAuthStore } from "@/lib/auth-store"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
+import { NotificationsPopover } from "@/components/notifications-popover"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -69,10 +70,7 @@ export function Header({ onMenuClick }: { onMenuClick?: () => void }) {
         {/* Right Section */}
         <div className="flex items-center gap-2 md:gap-4 ml-auto">
           {/* Notifications */}
-          <Button variant="ghost" size="icon" className="relative" title="Notifications">
-            <Bell className="h-5 w-5" />
-            <span className="absolute right-1.5 top-1.5 h-2 w-2 rounded-full bg-destructive animate-pulse" />
-          </Button>
+          <NotificationsPopover />
 
           {/* Theme Toggle */}
           <Button
