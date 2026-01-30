@@ -15,7 +15,6 @@ import {
   Award,
   ArrowRight,
   Play,
-  Zap,
   BarChart3,
   Mail,
 } from "lucide-react"
@@ -81,13 +80,13 @@ export default function HomePage() {
           <div className="space-y-8">
             <div className="space-y-4">
               <h1 className="text-5xl md:text-6xl font-bold tracking-tight">
-                Learn from the
+                Professional Learning
                 <span className="block bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-                  Best Instructors
+                  Management System
                 </span>
               </h1>
               <p className="text-xl text-muted-foreground">
-                Master new skills with expert-led courses designed for your success. Join thousands of learners transforming their careers.
+                Comprehensive course management and online learning platform for instructors and students.
               </p>
             </div>
 
@@ -102,22 +101,6 @@ export default function HomePage() {
                   Sign In
                 </Button>
               </Link>
-            </div>
-
-            {/* Stats */}
-            <div className="grid grid-cols-3 gap-6 pt-8 border-t">
-              <div>
-                <div className="text-3xl font-bold">500+</div>
-                <p className="text-sm text-muted-foreground">Active Students</p>
-              </div>
-              <div>
-                <div className="text-3xl font-bold">50+</div>
-                <p className="text-sm text-muted-foreground">Expert Courses</p>
-              </div>
-              <div>
-                <div className="text-3xl font-bold">98%</div>
-                <p className="text-sm text-muted-foreground">Completion Rate</p>
-              </div>
             </div>
           </div>
 
@@ -138,43 +121,43 @@ export default function HomePage() {
       {/* Features Section */}
       <section className="max-w-7xl mx-auto px-6 py-20 space-y-12">
         <div className="text-center space-y-4">
-          <h2 className="text-4xl font-bold">Why Choose ProtexxaLearn?</h2>
+          <h2 className="text-4xl font-bold">Platform Features</h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Everything you need for an effective online learning experience
+            Full-featured LMS with course management, assessments, and progress tracking
           </p>
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {[
             {
-              icon: Play,
-              title: "Interactive Learning",
-              description: "Engaging video lessons, quizzes, and hands-on assignments",
+              icon: BookOpen,
+              title: "Course Management",
+              description: "Create and organize courses with modules, lessons, and content",
             },
             {
               icon: Users,
-              title: "Expert Instructors",
-              description: "Learn from industry professionals with years of experience",
-            },
-            {
-              icon: Award,
-              title: "Certifications",
-              description: "Earn recognized certificates upon course completion",
+              title: "User Management",
+              description: "Role-based access for admins, instructors, and students",
             },
             {
               icon: BarChart3,
-              title: "Progress Tracking",
-              description: "Monitor your learning journey with detailed analytics",
+              title: "Analytics & Reporting",
+              description: "Track progress, grades, and completion status",
             },
             {
-              icon: Zap,
-              title: "Learn at Your Pace",
-              description: "Access courses anytime, anywhere on any device",
+              icon: Award,
+              title: "Assessments & Grading",
+              description: "Quizzes, assignments, and automated grading system",
+            },
+            {
+              icon: Play,
+              title: "SCORM Support",
+              description: "Import and deliver SCORM-compliant content packages",
             },
             {
               icon: TrendingUp,
-              title: "Career Growth",
-              description: "Build skills that advance your professional goals",
+              title: "Progress Tracking",
+              description: "Real-time tracking of student engagement and completion",
             },
           ].map((feature, i) => (
             <Card key={i} className="border-2 hover:border-primary/50 transition-all">
@@ -193,9 +176,9 @@ export default function HomePage() {
       {/* Meet Your Instructors Section */}
       <section className="max-w-7xl mx-auto px-6 py-20 space-y-12">
         <div className="text-center space-y-4">
-          <h2 className="text-4xl font-bold">Meet Your Instructors</h2>
+          <h2 className="text-4xl font-bold">Our Instructors</h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Learn from passionate educators who are dedicated to your success
+            Course creators and subject matter experts
           </p>
         </div>
 
@@ -303,20 +286,20 @@ export default function HomePage() {
       <section className="max-w-7xl mx-auto px-6 py-20 space-y-8">
         <Card className="border-2 bg-gradient-to-r from-primary/10 to-secondary/10">
           <CardHeader className="text-center space-y-4">
-            <h3 className="text-3xl font-bold">Ready to Start Learning?</h3>
+            <h3 className="text-3xl font-bold">Get Started</h3>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              Join our community of learners and transform your skills today
+              Create an account to access courses and learning materials
             </p>
           </CardHeader>
           <CardContent className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link href="/register">
               <Button size="lg" className="gap-2">
-                Create Free Account <ArrowRight className="h-5 w-5" />
+                Create Account <ArrowRight className="h-5 w-5" />
               </Button>
             </Link>
             <Link href="/login">
               <Button size="lg" variant="outline">
-                Already a Member?
+                Sign In
               </Button>
             </Link>
           </CardContent>
@@ -332,7 +315,7 @@ export default function HomePage() {
               <span className="font-bold">ProtexxaLearn</span>
             </div>
             <p className="text-sm text-muted-foreground">
-              Empowering learners worldwide with world-class education
+              Learning Management System Platform
             </p>
           </div>
           {[
