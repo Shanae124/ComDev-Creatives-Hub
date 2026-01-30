@@ -79,8 +79,20 @@ runMigrations().then(() => {
 
     process.on('SIGTERM', shutdown);
     process.on('SIGINT', shutdown);
-}, 3000);
+  }, 3000);
 
-apiProcess.on('error', (err) => {
-  console.error('[Startup] API error:', err);
+  apiProcess.on('error', (err) => {
+    console.error('[Startup] API error:', err);
+  });
+}).catch((err) => {
+  console.error('[Startup] Migration failed:', err);
+  // Start servers anyway
+  const apiProcess = spawn('node', ['server.js'], {
+    stdio: 'inherit',
+    env: {
+      ...process.env,
+      PORT: API_PORT,
+      API_PORT: API_PORT
+    }
+  });
 });
