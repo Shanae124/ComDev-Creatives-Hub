@@ -1,0 +1,204 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "email": "instructor@community.dev",
+      "password": "$2a$10$VHpk43vfwDnCq2S9aVosze7itU1oCUqOFSPkaf0jH.qzMovlE3AGm",
+      "first_name": "Sarah",
+      "last_name": "Johnson",
+      "role": "instructor",
+      "bio": "Social Media Marketing Expert & Cricut Design Specialist"
+    },
+    {
+      "id": 2,
+      "email": "student@community.dev",
+      "password": "$2a$10$NeLjIZvfSYRCDXgzwfY2w.jIvLBj8Ocm6r2605T/HEQZLnkg/A3bG",
+      "first_name": "Alex",
+      "last_name": "Smith",
+      "role": "student",
+      "bio": "Aspiring creative entrepreneur"
+    },
+    {
+      "id": 3,
+      "email": "tiffanyforde98@gmail.com",
+      "password": "$2a$10$Tomeo9/22.oKFbImmE8XHeHneRLETy5BAR23dUYyuFxnIlEk9gxG.",
+      "first_name": "Tiffany ",
+      "last_name": "Forde",
+      "role": "student"
+    }
+  ],
+  "courses": [
+    {
+      "id": 1,
+      "title": "Social Media Marketing for Crafters",
+      "description": "A 4‑week, hands‑on course focused on branding, promotion, and client engagement for the event décor industry using Cricut design and social platforms.",
+      "instructor_id": 1,
+      "is_published": true
+    }
+  ],
+  "modules": [
+    {
+      "id": 1,
+      "course_id": 1,
+      "title": "Brand & Visual Identity",
+      "description": "Define your brand and build visual consistency.",
+      "order_index": 1
+    },
+    {
+      "id": 2,
+      "course_id": 1,
+      "title": "Content Strategy & Captions",
+      "description": "Plan content and write compelling copy.",
+      "order_index": 2
+    },
+    {
+      "id": 3,
+      "course_id": 1,
+      "title": "Platform Growth & Engagement",
+      "description": "Grow on Instagram, TikTok, and Pinterest.",
+      "order_index": 3
+    },
+    {
+      "id": 4,
+      "course_id": 1,
+      "title": "Portfolio & Showcase",
+      "description": "Build a portfolio that converts followers into customers.",
+      "order_index": 4
+    }
+  ],
+  "lessons": [
+    {
+      "id": 1,
+      "module_id": 1,
+      "title": "Brand Voice & Ideal Customer",
+      "content": "Define who you serve and how you speak to them.",
+      "order_index": 1
+    },
+    {
+      "id": 2,
+      "module_id": 1,
+      "title": "Cricut Design Identity",
+      "content": "Create logo, pattern, and product mockups.",
+      "order_index": 2
+    },
+    {
+      "id": 3,
+      "module_id": 1,
+      "title": "Mobile Photography Basics",
+      "content": "Lighting, background, and composition tips.",
+      "order_index": 3
+    },
+    {
+      "id": 4,
+      "module_id": 2,
+      "title": "Content Pillars",
+      "content": "Build 3–5 content categories for consistency.",
+      "order_index": 1
+    },
+    {
+      "id": 5,
+      "module_id": 2,
+      "title": "Captions & Descriptions",
+      "content": "Write compelling product descriptions and CTAs.",
+      "order_index": 2
+    },
+    {
+      "id": 6,
+      "module_id": 2,
+      "title": "Hashtag Strategy",
+      "content": "Find and organize relevant hashtags.",
+      "order_index": 3
+    },
+    {
+      "id": 7,
+      "module_id": 3,
+      "title": "Instagram & Reels",
+      "content": "Create engaging short‑form content.",
+      "order_index": 1
+    },
+    {
+      "id": 8,
+      "module_id": 3,
+      "title": "TikTok Trends",
+      "content": "Leverage trends for visibility and growth.",
+      "order_index": 2
+    },
+    {
+      "id": 9,
+      "module_id": 3,
+      "title": "Pinterest for Crafters",
+      "content": "Use pins to drive traffic and sales.",
+      "order_index": 3
+    },
+    {
+      "id": 10,
+      "module_id": 3,
+      "title": "Client DMs & Responses",
+      "content": "Handle inquiries and convert to bookings.",
+      "order_index": 4
+    },
+    {
+      "id": 11,
+      "module_id": 4,
+      "title": "Portfolio Curation",
+      "content": "Select and present your best work.",
+      "order_index": 1
+    },
+    {
+      "id": 12,
+      "module_id": 4,
+      "title": "Showcase & Evaluation",
+      "content": "Prepare final presentation and review.",
+      "order_index": 2
+    }
+  ],
+  "projects": [
+    {
+      "id": 1,
+      "module_id": 1,
+      "title": "Brand Identity Kit",
+      "description": "Create 3 Cricut designs that represent your brand (logo, pattern, product mockup).",
+      "instructions": "Design in Cricut Design Space, create physical prototypes, photograph your work, and upload images.",
+      "project_type": "design",
+      "max_points": 100
+    },
+    {
+      "id": 2,
+      "module_id": 2,
+      "title": "30‑Day Content Calendar",
+      "description": "Plan a month of posts with captions and hashtags.",
+      "instructions": "Create a 30‑day schedule for Instagram, TikTok, and Pinterest.",
+      "project_type": "content_calendar",
+      "max_points": 100
+    },
+    {
+      "id": 3,
+      "module_id": 3,
+      "title": "Platform Content Sprint",
+      "description": "Post 5 pieces of content and share analytics.",
+      "instructions": "Submit screenshots of posts and performance metrics.",
+      "project_type": "campaign",
+      "max_points": 100
+    },
+    {
+      "id": 4,
+      "module_id": 4,
+      "title": "Final Portfolio Showcase",
+      "description": "Curate your portfolio and present your best work.",
+      "instructions": "Select 6–10 posts and create a portfolio presentation.",
+      "project_type": "portfolio",
+      "max_points": 100
+    }
+  ],
+  "enrollments": [
+    {
+      "id": 1,
+      "course_id": 1,
+      "student_id": 2,
+      "progress": 0
+    }
+  ],
+  "submissions": [],
+  "discussions": [],
+  "portfolio": []
+}

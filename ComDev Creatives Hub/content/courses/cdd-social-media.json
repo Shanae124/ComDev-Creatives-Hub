@@ -1,0 +1,257 @@
+{
+  "title": "Social Media Marketing for Practical Creators",
+  "subtitle": "A Professional Training Manual for Beginners (Sixth Edition – Updated 2026)",
+  "facilitator": "Tiffany Forde",
+  "modules": [
+    {
+      "title": "Module One | Foundation",
+      "subtitle": "Social Media for Product‑Based Businesses",
+      "image": {
+        "src": "https://images.unsplash.com/photo-1611162616305-c69b3fa7fbe0?q=80&w=1200&auto=format&fit=crop",
+        "alt": "Social media content planning"
+      },
+      "overview": "Social media is your digital storefront. In this module, students learn how visuals replace physical product touch, and why presentation is the fastest way to build trust with first‑time buyers.",
+      "lessons": [
+        {
+          "title": "Introduction to Social Media (Business Terms)",
+          "body": "Social platforms act as marketing channels, customer communication tools, brand representation spaces, and sales support. Every post sends a message about quality and professionalism."
+        },
+        {
+          "title": "Personal Use vs Business Use",
+          "body": "Personal posting is casual and spontaneous. Business posting must be intentional, consistent, and customer‑focused, with clean visuals and a clear purpose."
+        },
+        {
+          "title": "The Role of Visuals in Selling",
+          "body": "Customers judge products within seconds. High‑quality images and video build confidence, while poor visuals reduce perceived value."
+        },
+        {
+          "title": "Common Beginner Mistakes",
+          "body": "Poor lighting, cluttered backgrounds, inconsistent branding, and posting without a plan can all hurt sales even when the product is great."
+        }
+      ]
+    },
+    {
+      "title": "Module Two | Brand Groundwork",
+      "subtitle": "Preparing Your Business for Social Media",
+      "image": {
+        "src": "https://images.unsplash.com/photo-1520607162513-77705c0f0d4a?q=80&w=1200&auto=format&fit=crop",
+        "alt": "Brand identity workspace"
+      },
+      "overview": "Branding is the overall impression customers have of your business. This module builds a simple, repeatable system for colours, fonts, and presentation.",
+      "lessons": [
+        {
+          "title": "Beginner Branding",
+          "body": "Branding is clarity and repetition: visual style, tone, colour choices, and consistency across platforms."
+        },
+        {
+          "title": "Business Name & Presentation",
+          "body": "Names should be easy to read, pronounce, and scale beyond one product type. Presentation should look professional everywhere your name appears."
+        },
+        {
+          "title": "Colour & Font Consistency",
+          "body": "Choose two main colours and one accent. Use a decorative font for headings and a clean font for details to keep designs readable."
+        },
+        {
+          "title": "Preparing for Photography",
+          "body": "Before the camera, ensure products are clean, designs are well‑spaced, and brand elements are consistent."
+        }
+      ]
+    },
+    {
+      "title": "Module Three | Product Photography",
+      "subtitle": "Creating Images That Increase Product Value",
+      "image": {
+        "src": "https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?q=80&w=1200&auto=format&fit=crop",
+        "alt": "Product photography setup"
+      },
+      "overview": "Photography replaces physical interaction. This module shows how to create professional product photos using a phone and simple lighting.",
+      "lessons": [
+        {
+          "title": "Why Photography Matters",
+          "body": "Images communicate quality, pricing value, and professionalism. Poor photos can make handmade items look unfinished."
+        },
+        {
+          "title": "Phone Photography Basics",
+          "body": "A clean lens, correct lighting, and stable framing are more important than expensive cameras."
+        },
+        {
+          "title": "Angles & Composition",
+          "body": "Use flat lay for labels and packaging, 45‑degree for depth, and close‑ups for craftsmanship details."
+        },
+        {
+          "title": "Lighting & Backgrounds",
+          "body": "Natural window light, neutral backgrounds, and minimal props create clean, trustworthy visuals."
+        }
+      ]
+    },
+    {
+      "title": "Module Four | Product Videography",
+      "subtitle": "Using Video to Build Trust and Increase Sales",
+      "image": {
+        "src": "https://images.unsplash.com/photo-1517430816045-df4b7de11d1d?q=80&w=1200&auto=format&fit=crop",
+        "alt": "Video creation for social media"
+      },
+      "overview": "Video shows texture, scale, and use in real time. Short, clear videos build trust faster than images alone.",
+      "lessons": [
+        {
+          "title": "Why Video Performs Better",
+          "body": "Platforms prioritize video. It keeps attention longer and helps customers understand how a product works."
+        },
+        {
+          "title": "Beginner Equipment",
+          "body": "A phone, natural light, and stability are enough. Use a tripod or stable surface to avoid shaky footage."
+        },
+        {
+          "title": "Effective Video Types",
+          "body": "Rotation shots, close‑ups, in‑use demos, and before‑and‑after clips are simple and effective."
+        },
+        {
+          "title": "Length & Format",
+          "body": "Keep most clips between 5–15 seconds with one clear action or feature per video."
+        }
+      ]
+    },
+    {
+      "title": "Module Five | Design for Cutting & Craft Tools",
+      "subtitle": "Creating Clean, Professional Designs",
+      "image": {
+        "src": "https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=1200&auto=format&fit=crop",
+        "alt": "Design workspace for crafts"
+      },
+      "overview": "Design quality impacts perceived value. This module focuses on readability, spacing, and font use for clean cuts.",
+      "lessons": [
+        {
+          "title": "Fonts & Readability",
+          "body": "Use one decorative font and one clean font. Too many fonts make designs look messy and hard to cut."
+        },
+        {
+          "title": "Commercial‑Use Fonts",
+          "body": "Use fonts with clear licenses. Recommended sources include Google Fonts and Font Squirrel."
+        },
+        {
+          "title": "Spacing & Layout",
+          "body": "Increase letter spacing slightly and leave breathing room around text for a polished look."
+        },
+        {
+          "title": "Common Design Mistakes",
+          "body": "Over‑decorating, poor spacing, and unreadable fonts reduce quality even with perfect cutting."
+        }
+      ]
+    },
+    {
+      "title": "Module Six | Platforms for Selling Products",
+      "subtitle": "Choosing the Right Platforms",
+      "image": {
+        "src": "https://images.unsplash.com/photo-1611162618071-b39a2ec0559b?q=80&w=1200&auto=format&fit=crop",
+        "alt": "Instagram and TikTok content"
+      },
+      "overview": "Focus on platforms that support visuals and direct communication. Consistency matters more than being everywhere.",
+      "lessons": [
+        {
+          "title": "Platform Purpose",
+          "body": "Use platforms based on how they serve your product: visibility, trust‑building, or direct sales."
+        },
+        {
+          "title": "Facebook & Instagram",
+          "body": "Facebook supports community and communication. Instagram builds visual trust through a clean feed."
+        },
+        {
+          "title": "WhatsApp for Sales",
+          "body": "Use WhatsApp for inquiries, confirmations, and follow‑ups. Keep responses professional and organized."
+        }
+      ]
+    },
+    {
+      "title": "Module Seven | Content Creation & Posting",
+      "subtitle": "Building Engaging Posts",
+      "image": {
+        "src": "https://images.unsplash.com/photo-1557804506-669a67965ba0?q=80&w=1200&auto=format&fit=crop",
+        "alt": "Social media content creation"
+      },
+      "overview": "Great content highlights product value, tells a clear story, and invites interaction.",
+      "lessons": [
+        {
+          "title": "Text, Image, and Video Posts",
+          "body": "Pair text with visuals, keep copy concise, and use video for trust‑building and demonstrations."
+        },
+        {
+          "title": "Captions & Hashtags",
+          "body": "Start with a hook, explain the benefit, and end with a CTA. Use a mix of broad and niche hashtags."
+        },
+        {
+          "title": "Batching & Scheduling",
+          "body": "Create content in weekly batches, schedule posts, and review for consistency before publishing."
+        }
+      ]
+    },
+    {
+      "title": "Module Eight | Selling Digital Templates",
+      "subtitle": "Creating and Selling Digital Products",
+      "image": {
+        "src": "https://images.unsplash.com/photo-1487014679447-9f8336841d58?q=80&w=1200&auto=format&fit=crop",
+        "alt": "Digital templates and design tools"
+      },
+      "overview": "Digital templates sell repeatedly without restocking. This module covers formats, packaging, and pricing.",
+      "lessons": [
+        {
+          "title": "What Sells & File Types",
+          "body": "Labels, stickers, and social graphics sell well. Include SVG, PNG, and PDF for compatibility."
+        },
+        {
+          "title": "Packaging & Licensing",
+          "body": "Deliver zipped files with instructions. Clearly state usage rights to avoid confusion."
+        },
+        {
+          "title": "Pricing Strategy",
+          "body": "Start with entry pricing, test demand, and bundle for value. Price based on effort and uniqueness."
+        }
+      ]
+    },
+    {
+      "title": "Module Nine | Metrics & Improvement",
+      "subtitle": "Using Data to Refine Your Strategy",
+      "image": {
+        "src": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1200&auto=format&fit=crop",
+        "alt": "Analytics dashboard"
+      },
+      "overview": "Metrics show what content works. Beginners should focus on reach, engagement, and follower growth.",
+      "lessons": [
+        {
+          "title": "Simple Metrics That Matter",
+          "body": "Track reach, engagement, and clicks. Avoid vanity metrics that don’t connect to sales."
+        },
+        {
+          "title": "Using Insights",
+          "body": "Review weekly, identify top posts, and replicate what performs best."
+        },
+        {
+          "title": "Common Misunderstandings",
+          "body": "High followers don’t guarantee sales. Focus on quality engagement and consistent improvement."
+        }
+      ]
+    },
+    {
+      "title": "Module Ten | Final Project & Portfolio",
+      "subtitle": "Applying What You’ve Learned",
+      "image": {
+        "src": "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?q=80&w=1200&auto=format&fit=crop",
+        "alt": "Creative portfolio showcase"
+      },
+      "overview": "The final project ties everything together: a branded product, visuals, and a portfolio you can use beyond the course.",
+      "lessons": [
+        {
+          "title": "Final Deliverables",
+          "body": "Create one branded product, a 4‑angle photo set, one short video, and a polished social post."
+        },
+        {
+          "title": "Quality Standards",
+          "body": "Maintain consistent branding, clean visuals, and clear presentation throughout."
+        },
+        {
+          "title": "Portfolio Beyond the Course",
+          "body": "Update regularly and use it to pitch services, build credibility, and attract customers."
+        }
+      ]
+    }
+  ]
+}
