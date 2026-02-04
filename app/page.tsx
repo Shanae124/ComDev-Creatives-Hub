@@ -1,143 +1,141 @@
-"use client"
+'use client'
 
-import { useRouter } from "next/navigation"
-import { useAuthStore } from "@/lib/auth-store"
-import Link from "next/link"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import {
-  BookOpen,
-  ArrowRight,
-} from "lucide-react"
+import { useRouter } from 'next/navigation'
 
 export default function HomePage() {
   const router = useRouter()
-  const isAuthenticated = useAuthStore((state) => state.isAuthenticated)
-  const user = useAuthStore((state) => state.user)
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-background via-background to-muted/20">
-      {/* Navigation */}
-      <nav className="sticky top-0 z-50 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <BookOpen className="h-8 w-8 text-primary" />
-            <span className="text-2xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-              ProtexxaLearn
-            </span>
-          </div>
-          <div className="flex items-center gap-4">
-            <Link href="/login">
-              <Button variant="outline">Sign In</Button>
-            </Link>
-            <Link href="/register">
-              <Button>Get Started</Button>
-            </Link>
-          </div>
-        </div>
-      </nav>
-
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-green-50">
       {/* Hero Section */}
-      <section className="max-w-7xl mx-auto px-6 py-20 md:py-32 space-y-12">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
-          <div className="space-y-8">
-            <div className="space-y-4">
-              <h1 className="text-5xl md:text-6xl font-bold tracking-tight">
-                Professional Learning
-                <span className="block bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-                  Management System
-                </span>
+      <div className="container mx-auto px-4 py-16">
+        <div className="text-center max-w-4xl mx-auto">
+          {/* Logo/Brand */}
+          <div className="mb-10 flex flex-col items-center gap-4">
+            <div className="h-20 w-20 rounded-full bg-primary-600 text-white flex items-center justify-center text-2xl font-bold shadow-lg">
+              CDD
+            </div>
+            <div>
+              <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-3">
+                ComDev <span className="text-primary-600">Creatives Hub</span>
               </h1>
-              <p className="text-xl text-muted-foreground">
-                Comprehensive course management and online learning platform for instructors and students.
+              <p className="text-xl text-gray-600 font-medium">
+                Community Development Department
+              </p>
+              <p className="text-sm text-gray-500 mt-2">Empowering Creative Entrepreneurs</p>
+            </div>
+          </div>
+
+          {/* Mission Statement */}
+          <div className="mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-6">
+              Social Media Marketing for Crafters (4 Weeks)
+            </h2>
+            <p className="text-lg text-gray-700 leading-relaxed">
+              Learn branding, promotion, and client engagement for the event décor industry through
+              <strong> hands-on creation</strong>—no PowerPoint slides, just real work that builds your portfolio.
+            </p>
+          </div>
+
+          {/* Features Grid */}
+          <div className="grid md:grid-cols-3 gap-8 mb-16">
+            <div className="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition">
+              <div className="text-4xl mb-4">🎨</div>
+              <h3 className="text-xl font-bold mb-2">Design Projects</h3>
+              <p className="text-gray-600">Create real Cricut designs and build your brand identity</p>
+            </div>
+            <div className="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition">
+              <div className="text-4xl mb-4">📱</div>
+              <h3 className="text-xl font-bold mb-2">Social Media Mastery</h3>
+              <p className="text-gray-600">Learn Instagram, TikTok & Pinterest strategies that work</p>
+            </div>
+            <div className="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition">
+              <div className="text-4xl mb-4">🤝</div>
+              <h3 className="text-xl font-bold mb-2">Peer Collaboration</h3>
+              <p className="text-gray-600">Get feedback, share ideas, and learn together</p>
+            </div>
+          </div>
+
+          {/* CTA Buttons */}
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+            <button
+              onClick={() => router.push('/register')}
+              className="px-8 py-4 bg-primary-600 text-white rounded-lg font-bold text-lg hover:bg-primary-700 transition shadow-lg hover:shadow-xl"
+            >
+              Get Started Free
+            </button>
+            <button
+              onClick={() => router.push('/login')}
+              className="px-8 py-4 bg-white text-primary-600 border-2 border-primary-600 rounded-lg font-bold text-lg hover:bg-primary-50 transition"
+            >
+              Sign In
+            </button>
+          </div>
+
+          {/* Program Overview */}
+          <div className="mt-16 grid lg:grid-cols-2 gap-8">
+            <div className="bg-white p-8 rounded-xl shadow-lg text-left">
+              <h3 className="text-2xl font-bold mb-4 text-gray-800">Key Topics</h3>
+              <ul className="space-y-3 text-gray-700">
+                <li>• Creating engaging content</li>
+                <li>• Photography and video tips</li>
+                <li>• Writing compelling product descriptions</li>
+                <li>• Utilizing relevant hashtags</li>
+                <li>• Managing client inquiries via direct messaging</li>
+              </ul>
+            </div>
+            <div className="bg-white p-8 rounded-xl shadow-lg text-left">
+              <h3 className="text-2xl font-bold mb-4 text-gray-800">Outcome</h3>
+              <p className="text-gray-700 leading-relaxed">
+                Students will be equipped to set up and manage a professional social media
+                portfolio that effectively converts followers into paying customers.
               </p>
             </div>
-
-            <div className="flex flex-col sm:flex-row gap-4">
-              <Link href="/register">
-                <Button size="lg" className="gap-2">
-                  Start Learning <ArrowRight className="h-5 w-5" />
-                </Button>
-              </Link>
-              <Link href="/login">
-                <Button size="lg" variant="outline">
-                  Sign In
-                </Button>
-              </Link>
-            </div>
           </div>
 
-          {/* Hero Illustration */}
-          <div className="relative h-96 md:h-full hidden lg:block">
-            <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-secondary/10 rounded-3xl" />
-            <div className="absolute inset-4 bg-gradient-to-b from-primary/5 to-transparent rounded-2xl border border-primary/10" />
-            <div className="flex items-center justify-center h-full">
-              <div className="relative">
-                <BookOpen className="h-32 w-32 text-primary/20 absolute -inset-8" />
-                <div className="text-8xl">📚</div>
+          {/* Value Proposition */}
+          <div className="mt-16 bg-white p-8 rounded-xl shadow-lg">
+            <h3 className="text-2xl font-bold mb-6 text-gray-800">What Makes Us Different</h3>
+            <div className="grid md:grid-cols-2 gap-6 text-left">
+              <div className="flex items-start gap-3">
+                <span className="text-2xl">✅</span>
+                <div>
+                  <h4 className="font-bold mb-1">No Boring Slides</h4>
+                  <p className="text-gray-600 text-sm">Learn by doing, not reading PowerPoints</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-3">
+                <span className="text-2xl">✅</span>
+                <div>
+                  <h4 className="font-bold mb-1">Real Portfolio Pieces</h4>
+                  <p className="text-gray-600 text-sm">Every project builds your professional portfolio</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-3">
+                <span className="text-2xl">✅</span>
+                <div>
+                  <h4 className="font-bold mb-1">Practical Skills</h4>
+                  <p className="text-gray-600 text-sm">Apply what you learn immediately to your business</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-3">
+                <span className="text-2xl">✅</span>
+                <div>
+                  <h4 className="font-bold mb-1">Community Support</h4>
+                  <p className="text-gray-600 text-sm">Learn alongside other creative entrepreneurs</p>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="max-w-7xl mx-auto px-6 py-20 space-y-8">
-        <Card className="border-2 bg-gradient-to-r from-primary/10 to-secondary/10">
-          <CardHeader className="text-center space-y-4">
-            <h3 className="text-3xl font-bold">Get Started</h3>
-            <p className="text-muted-foreground max-w-2xl mx-auto">
-              Create an account to access courses and learning materials
-            </p>
-          </CardHeader>
-          <CardContent className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/register">
-              <Button size="lg" className="gap-2">
-                Create Account <ArrowRight className="h-5 w-5" />
-              </Button>
-            </Link>
-            <Link href="/login">
-              <Button size="lg" variant="outline">
-                Sign In
-              </Button>
-            </Link>
-          </CardContent>
-        </Card>
-      </section>
+      </div>
 
       {/* Footer */}
-      <footer className="border-t bg-muted/30 py-12">
-        <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-4 gap-8">
-          <div className="space-y-4">
-            <div className="flex items-center gap-2">
-              <BookOpen className="h-6 w-6 text-primary" />
-              <span className="font-bold">ProtexxaLearn</span>
-            </div>
-            <p className="text-sm text-muted-foreground">
-              Learning Management System Platform
-            </p>
-          </div>
-          {[
-            { title: "Product", links: ["Courses", "Instructors", "Pricing"] },
-            { title: "Company", links: ["About", "Blog", "Careers"] },
-            { title: "Learn", links: ["Documentation", "Help Center", "Contact"] },
-          ].map((col, i) => (
-            <div key={i} className="space-y-3">
-              <h4 className="font-semibold">{col.title}</h4>
-              <ul className="space-y-2">
-                {col.links.map((link, j) => (
-                  <li key={j}>
-                    <a href="#" className="text-sm text-muted-foreground hover:text-primary transition-colors">
-                      {link}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
-        </div>
-        <div className="max-w-7xl mx-auto px-6 border-t mt-12 pt-8 text-center text-sm text-muted-foreground">
-          <p>&copy; 2026 ProtexxaLearn. All rights reserved.</p>
+      <footer className="bg-gray-900 text-white py-8 mt-16">
+        <div className="container mx-auto px-4 text-center">
+          <p className="text-gray-400">
+            © {new Date().getFullYear()} Community Development Department. Empowering Creative Entrepreneurs.
+          </p>
         </div>
       </footer>
     </div>

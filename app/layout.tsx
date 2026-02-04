@@ -1,65 +1,43 @@
-"use client"
+import type { Metadata } from 'next'
+import Link from 'next/link'
+import './globals.css'
 
-import type React from "react"
-import { Geist, Geist_Mono } from "next/font/google"
-import { Analytics } from "@vercel/analytics/next"
-import "./globals.css"
-import "@/styles/ui-enhancements.css"
-import { AuthProvider } from "@/components/auth-provider"
-import { ThemeProvider } from "@/components/theme-provider"
-import { useAuthStore } from "@/lib/auth-store"
-import { usePathname } from "next/navigation"
-import { NavHeader } from "@/components/nav-header"
-
-const geistSans = Geist({ subsets: ["latin"] })
-const geistMono = Geist_Mono({ subsets: ["latin"] })
+export const metadata: Metadata = {
+  title: 'ComDev Creatives Hub | Community Development Learning Platform',
+  description: 'Learn social media marketing and Cricut design through hands-on projects',
+}
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode
-}>) {
-  const isAuthenticated = useAuthStore((s) => s.isAuthenticated)
-  const pathname = usePathname()
-
-  const isAuthPage = pathname?.startsWith("/login") || pathname?.startsWith("/register") || pathname?.startsWith("/verify-email")
-
+}) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <head>
-        <title>Protexxa Learning Platform | Enterprise Cybersecurity Training</title>
-        <meta
-          name="description"
-          content="Advanced learning management system powered by Protexxa. Featuring Protexxa Defender, CyberNations, and internal training programs."
-        />
-        <meta name="generator" content="v0.app" />
-        <link rel="icon" href="/icon.svg" type="image/svg+xml" />
-        <link rel="icon" href="/icon-light-32x32.png" media="(prefers-color-scheme: light)" />
-        <link rel="icon" href="/icon-dark-32x32.png" media="(prefers-color-scheme: dark)" />
-        <link rel="apple-touch-icon" href="/apple-icon.png" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
-        <meta name="theme-color" content="#0066cc" media="(prefers-color-scheme: light)" />
-        <meta name="theme-color" content="#3b82f6" media="(prefers-color-scheme: dark)" />
-        <script src="/course-content-init.js" defer></script>
-      </head>
-      <body className={`${geistSans.className} font-sans antialiased bg-white dark:bg-slate-950 text-slate-900 dark:text-white`}>
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <AuthProvider>
-            {isAuthenticated && !isAuthPage ? (
-              <div className="min-h-screen flex flex-col">
-                <NavHeader />
-                <main className="flex-1 w-full">
-                  <div className="mx-auto max-w-7xl px-4 md:px-6 py-6">
-                    {children}
-                  </div>
-                </main>
-              </div>
-            ) : (
-              children
-            )}
-          </AuthProvider>
-        </ThemeProvider>
-        <Analytics />
+    <html lang="en">
+      <body>
+        <div className="sticky top-0 z-50 bg-white/90 backdrop-blur border-b border-gray-100">
+          <div className="container mx-auto px-4 py-3 flex items-center justify-between">
+            <Link href="/" className="flex items-center gap-2 font-bold text-primary-600">
+              <span className="h-8 w-8 rounded-full bg-primary-600 text-white flex items-center justify-center text-sm">CD</span>
+              <span>ComDev Creatives Hub</span>
+            </Link>
+            <nav className="hidden lg:flex items-center gap-4 text-sm">
+              <Link className="nav-link" href="/student/dashboard">Hub</Link>
+              <Link className="nav-link" href="/courses">Courses</Link>
+              <Link className="nav-link" href="/tools">Tools</Link>
+              <Link className="nav-link" href="/tools/design-studio">Design Studio</Link>
+              <Link className="nav-link" href="/resources">Resources</Link>
+              <Link className="nav-link" href="/slides">Slides</Link>
+              <Link className="nav-link" href="/manual">Manual</Link>
+              <Link className="nav-link" href="/community">Help</Link>
+            </nav>
+            <div className="flex items-center gap-2">
+              <Link href="/login" className="px-3 py-2 text-xs font-semibold text-primary-700 border border-primary-200 rounded-lg hover:bg-primary-50">Sign In</Link>
+              <Link href="/register" className="px-3 py-2 text-xs font-semibold text-white bg-primary-600 rounded-lg hover:bg-primary-700">Join</Link>
+            </div>
+          </div>
+        </div>
+        {children}
       </body>
     </html>
   )

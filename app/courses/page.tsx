@@ -1,326 +1,181 @@
-"use client"
+'use client'
 
-import { useEffect, useState, type MouseEvent } from "react"
-import { useRouter } from "next/navigation"
-import { useAuthStore } from "@/lib/auth-store"
-import { courseAPI, enrollmentAPI } from "@/lib/api"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
-import { Input } from "@/components/ui/input"
-import { Progress } from "@/components/ui/progress"
-import { Skeleton } from "@/components/ui/skeleton"
-import { EmptyState } from "@/components/empty-state"
-import { CourseCardSkeleton } from "@/components/skeleton-loader"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { BookOpen, Search, Star, Users, Clock, ArrowRight, Settings, Eye, Filter, Grid, List } from "lucide-react"
-import Link from "next/link"
-
-interface Course {
-  id: number
-  title: string
-  description: string
-  instructor_name?: string
-  status?: string
-  content_html?: string
-  total_enrollments?: number
-  module_count?: number
-  enrolled?: number | boolean
-  duration?: string
-  rating?: number
-  level?: "beginner" | "intermediate" | "advanced"
-  progress?: number
-}
+import { useRouter } from 'next/navigation'
 
 export default function CoursesPage() {
   const router = useRouter()
-  const isAuthenticated = useAuthStore((state) => state.isAuthenticated)
-  const user = useAuthStore((state) => state.user)
-  const [searchTerm, setSearchTerm] = useState("")
-  const [courses, setCourses] = useState<Course[]>([])
-  const [enrolledCourses, setEnrolledCourses] = useState<Course[]>([])
-  const [loading, setLoading] = useState(true)
-  const [viewMode, setViewMode] = useState<"enrolled" | "browse">("enrolled")
-  const [error, setError] = useState<string | null>(null)
-  const [enrollingId, setEnrollingId] = useState<number | null>(null)
-  const [enrollError, setEnrollError] = useState<string | null>(null)
-  const [filterLevel, setFilterLevel] = useState<string>("all")
-  const [sortBy, setSortBy] = useState<string>("recent")
-
-  useEffect(() => {
-    if (!isAuthenticated) {
-      router.push("/login")
-    }
-  }, [isAuthenticated, router])
-
-  useEffect(() => {
-    const fetchCourses = async () => {
-      try {
-        const response = await courseAPI.getAll()
-        const data: Course[] = response.data || []
-        setCourses(data)
-        setEnrolledCourses(data.filter((c) => Boolean((c as any).enrolled)))
-        setError(null)
-      } catch (err: any) {
-        console.error("Error fetching courses:", err)
-        setError("Failed to load courses")
-      } finally {
-        setLoading(false)
-      }
-    }
-
-    if (isAuthenticated) {
-      fetchCourses()
-    }
-  }, [isAuthenticated])
-
-  const filteredCourses = (viewMode === "enrolled" ? enrolledCourses : courses)
-    .filter((course) =>
-      course.title.toLowerCase().includes(searchTerm.toLowerCase()) &&
-      (filterLevel === "all" || course.level === filterLevel)
-    )
-    .sort((a, b) => {
-      if (sortBy === "recent") return (b.id || 0) - (a.id || 0)
-      if (sortBy === "title") return a.title.localeCompare(b.title)
-      if (sortBy === "progress" && a.progress !== undefined && b.progress !== undefined) {
-        return (b.progress || 0) - (a.progress || 0)
-      }
-      return 0
-    })
-
-  const handleEnroll = async (course: Course, e: MouseEvent) => {
-    e.preventDefault()
-    if (!user?.id) return
-    try {
-      setEnrollError(null)
-      setEnrollingId(course.id)
-      await enrollmentAPI.enroll(user.id, course.id)
-      setCourses((prev) => prev.map((c) => (c.id === course.id ? { ...c, enrolled: true } : c)))
-      setEnrolledCourses((prev) => {
-        const already = prev.some((c) => c.id === course.id)
-        return already ? prev : [...prev, { ...course, enrolled: true }]
-      })
-      setViewMode("enrolled")
-    } catch (err: any) {
-      console.error("Enroll failed", err)
-      setEnrollError("Unable to enroll right now. Please try again.")
-    } finally {
-      setEnrollingId(null)
-    }
-  }
-
-  if (!isAuthenticated) {
-    return (
-      <div className="flex items-center justify-center min-h-screen">
-        <p>Loading...</p>
-      </div>
-    )
-  }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-950 dark:to-slate-900 p-4 md:p-8">
-      <div className="max-w-7xl mx-auto space-y-8">
-        {/* Header */}
-        <div className="space-y-4">
-          <h1 className="text-5xl font-bold tracking-tight bg-gradient-to-r from-blue-600 to-cyan-600 dark:from-blue-400 dark:to-cyan-400 bg-clip-text text-transparent">
-            {viewMode === "enrolled" ? "My Courses" : "Browse Courses"}
-          </h1>
-          <p className="text-muted-foreground text-lg">
-            {viewMode === "enrolled"
-              ? "Access your enrolled courses and track progress"
-              : "Discover new courses to expand your knowledge"}
+    <div className="min-h-screen bg-gray-50">
+      <header className="bg-white shadow-sm">
+        <div className="container mx-auto px-4 py-4 flex items-center justify-between">
+          <h1 className="text-2xl font-bold text-primary-600">Course Content</h1>
+          <button
+            onClick={() => router.push('/student/dashboard')}
+            className="px-4 py-2 text-sm text-primary-600 border border-primary-600 rounded-lg hover:bg-primary-50 transition"
+          >
+            Back to Hub
+          </button>
+        </div>
+      </header>
+
+      <main className="container mx-auto px-4 py-8">
+        {/* Course Overview */}
+        <section className="bg-white rounded-xl shadow-lg p-8 mb-8">
+          <h2 className="text-3xl font-bold text-gray-900 mb-3">
+            Social Media Marketing for Crafters
+          </h2>
+          <p className="text-gray-700 mb-4">
+            A 4‑week, hands‑on course focused on branding, promotion, and client engagement for
+            the event décor industry using Cricut design and social platforms.
           </p>
-        </div>
-
-        {/* Search and Filter */}
-        <div className="flex flex-col md:flex-row gap-4">
-          <div className="flex-1 relative">
-            <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-            <Input
-              placeholder="Search courses..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="pl-10"
-            />
+          <div className="grid md:grid-cols-3 gap-4 text-sm text-gray-600">
+            <div>📅 4 weeks</div>
+            <div>🕒 24 hours (2 days/week × 3 hours/day)</div>
+            <div>🎯 Outcome: Professional social media portfolio</div>
           </div>
-          <div className="flex gap-2">
-            <Button
-              variant={viewMode === "enrolled" ? "default" : "outline"}
-              onClick={() => setViewMode("enrolled")}
-            >
-              My Courses ({enrolledCourses.length})
-            </Button>
-            <Button
-              variant={viewMode === "browse" ? "default" : "outline"}
-              onClick={() => setViewMode("browse")}
-            >
-              Browse All
-            </Button>
-            {user?.role === 'instructor' && (
-              <Link href="/courses/content-editor">
-                <Button variant="outline" className="gap-2">
-                  <Settings className="w-4 h-4" />
-                  Edit Content
-                </Button>
-              </Link>
-            )}
+        </section>
+
+        {/* Key Topics */}
+        <section className="grid lg:grid-cols-2 gap-8 mb-8">
+          <div className="bg-white rounded-xl shadow-lg p-6">
+            <h3 className="text-2xl font-bold mb-4 text-gray-800">Key Topics</h3>
+            <ul className="space-y-2 text-gray-700">
+              <li>• Creating engaging content</li>
+              <li>• Photography and video tips</li>
+              <li>• Writing compelling product descriptions</li>
+              <li>• Utilizing relevant hashtags</li>
+              <li>• Managing client inquiries through direct messaging</li>
+            </ul>
           </div>
-        </div>
-
-        {enrollError && (
-          <div className="text-sm text-destructive" role="alert">
-            {enrollError}
+          <div className="bg-white rounded-xl shadow-lg p-6">
+            <h3 className="text-2xl font-bold mb-4 text-gray-800">Course Outcome</h3>
+            <p className="text-gray-700">
+              Students will be equipped to set up and manage a professional social media portfolio
+              that effectively converts followers into paying customers.
+            </p>
           </div>
-        )}
+        </section>
 
-        {/* Courses Grid */}
-        {loading ? (
-          <div className="text-center py-12">
-            <p className="text-muted-foreground">Loading courses...</p>
+        {/* Sample Lesson (Real Content) */}
+        <section className="bg-white rounded-xl shadow-lg p-8 mb-8">
+          <h3 className="text-2xl font-bold mb-3 text-gray-800">Sample Lesson: Brand Voice & Visual Identity</h3>
+          <p className="text-gray-700 mb-4">
+            Your brand voice is the personality behind every caption, reply, and call‑to‑action. Before you
+            post a single image, you need to decide how you want to sound to your audience—friendly and
+            warm, bold and premium, or playful and fun. This matters because people buy from creators they
+            feel connected to, and consistency builds that connection.
+          </p>
+          <p className="text-gray-700 mb-4">
+            Visual identity makes that connection immediate. The colors, fonts, and layout you use should
+            feel like they belong together across Instagram posts, product labels, story covers, and
+            packaging. A simple rule: pick one primary color, one supporting color, and one accent color,
+            then choose two fonts (one for headings, one for body text). Stick to those choices for at least
+            30 days so your audience starts to recognize you instantly.
+          </p>
+          <p className="text-gray-700 mb-6">
+            In today’s lesson, you’ll build a mini brand kit. You’ll create a logo mark or wordmark in a
+            square format, a repeatable pattern that can be used as a background, and a product mockup that
+            shows your design in real life. This kit will be used throughout the course for your social posts
+            and portfolio.
+          </p>
+          <div className="grid md:grid-cols-3 gap-4 text-sm text-gray-700">
+            <div className="bg-gray-50 border border-gray-200 rounded-lg p-4">
+              <div className="font-semibold mb-1">Deliverable 1</div>
+              Logo mark or wordmark (1080×1080)
+            </div>
+            <div className="bg-gray-50 border border-gray-200 rounded-lg p-4">
+              <div className="font-semibold mb-1">Deliverable 2</div>
+              Brand pattern or texture (1080×1080)
+            </div>
+            <div className="bg-gray-50 border border-gray-200 rounded-lg p-4">
+              <div className="font-semibold mb-1">Deliverable 3</div>
+              Product mockup using your design
+            </div>
           </div>
-        ) : error ? (
-          <Card className="text-center py-12">
-            <CardContent className="space-y-4">
-              <p className="text-lg font-semibold">We hit a snag</p>
-              <p className="text-muted-foreground">{error}</p>
-            </CardContent>
-          </Card>
-        ) : filteredCourses.length === 0 ? (
-          <Card className="text-center py-12">
-            <CardContent className="space-y-4">
-              <BookOpen className="h-16 w-16 mx-auto text-muted-foreground/40" />
-              <p className="text-lg font-semibold">
-                {viewMode === "enrolled" ? "No courses enrolled" : "No courses found"}
-              </p>
-              <p className="text-muted-foreground">
-                {viewMode === "enrolled"
-                  ? "Start your learning journey by browsing available courses"
-                  : "Try adjusting your search terms"}
-              </p>
-              {viewMode === "enrolled" && (
-                <Button onClick={() => setViewMode("browse")} className="mt-4">
-                  Browse Courses <ArrowRight className="ml-2 h-4 w-4" />
-                </Button>
-              )}
-            </CardContent>
-          </Card>
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 animate-fade-in">
-            {filteredCourses.map((course) => (
-              <Card key={course.id} className="h-full hover:shadow-2xl hover:border-primary/50 transition-all duration-300 cursor-pointer overflow-hidden group border-0 shadow-lg backdrop-blur-sm bg-white/80 dark:bg-slate-900/80">
-                {/* Image/Placeholder - clickable */}
-                <Link href={`/courses/${course.id}`}>
-                  <div className="h-40 bg-gradient-to-br from-primary/20 to-secondary/20 relative overflow-hidden">
-                    <div className="absolute inset-0 bg-gradient-to-br from-primary to-secondary opacity-0 group-hover:opacity-20 transition-opacity duration-300" />
-                    <div className="h-full flex items-center justify-center">
-                      <BookOpen className="h-16 w-16 text-muted-foreground/20 group-hover:scale-110 transition-transform duration-300" />
-                    </div>
-                  </div>
-                </Link>
+        </section>
 
-                <CardHeader>
-                  <Link href={`/courses/${course.id}`}>
-                    <div className="flex items-start justify-between gap-2">
-                      <CardTitle className="line-clamp-2 hover:text-primary transition-colors">{course.title}</CardTitle>
-                      {course.level && (
-                        <Badge
-                          variant={
-                            course.level === "beginner"
-                              ? "outline"
-                              : course.level === "intermediate"
-                                ? "secondary"
-                                : "default"
-                          }
-                          className="shrink-0"
-                        >
-                          {course.level}
-                        </Badge>
-                      )}
-                    </div>
-                  </Link>
-                  <CardDescription className="line-clamp-2">
-                    {course.description}
-                  </CardDescription>
-                </CardHeader>
-
-                <CardContent className="space-y-4">
-                  {course.instructor_name && (
-                    <p className="text-sm text-muted-foreground">by {course.instructor_name}</p>
-                  )}
-
-                  {/* Progress Bar - for enrolled courses */}
-                  {course.enrolled && course.progress !== undefined && (
-                    <div className="space-y-2">
-                      <div className="flex items-center justify-between text-sm">
-                        <span className="text-muted-foreground">Progress</span>
-                        <span className="font-semibold">{Math.round(course.progress)}%</span>
-                      </div>
-                      <div className="h-2 bg-muted rounded-full overflow-hidden">
-                        <div
-                          className="h-full bg-gradient-to-r from-primary to-secondary transition-all"
-                          style={{ width: `${course.progress}%` }}
-                        />
-                      </div>
-                    </div>
-                  )}
-
-                  {/* Stats */}
-                  <div className="flex flex-wrap gap-3 text-sm text-muted-foreground">
-                    {course.rating && (
-                      <div className="flex items-center gap-1">
-                        <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-                        {course.rating}
-                      </div>
-                    )}
-                    {typeof course.total_enrollments === "number" && (
-                      <div className="flex items-center gap-1">
-                        <Users className="h-4 w-4" />
-                        {course.total_enrollments || 0}
-                      </div>
-                    )}
-                    {course.duration && (
-                      <div className="flex items-center gap-1">
-                        <Clock className="h-4 w-4" />
-                        {course.duration}
-                      </div>
-                    )}
-                  </div>
-
-                  {/* CTA Buttons */}
-                  <div className="flex gap-2">
-                    {course.enrolled ? (
-                      <Link href={`/courses/${course.id}`} className="flex-1">
-                        <Button className="w-full">
-                          View Course
-                          <ArrowRight className="ml-2 h-4 w-4" />
-                        </Button>
-                      </Link>
-                    ) : (
-                      <>
-                        <Button
-                          className="flex-1"
-                          onClick={(e) => {
-                            e.preventDefault()
-                            handleEnroll(course, e)
-                          }}
-                          disabled={enrollingId === course.id}
-                        >
-                          {enrollingId === course.id ? "Enrolling..." : "Enroll"}
-                        </Button>
-                        <Link href={`/courses/${course.id}`}>
-                          <Button variant="outline" size="icon">
-                            <Eye className="h-4 w-4" />
-                          </Button>
-                        </Link>
-                      </>
-                    )}
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
+        <section className="bg-white rounded-xl shadow-lg p-8 mb-8">
+          <h3 className="text-2xl font-bold mb-3 text-gray-800">Sample Lesson: Captions That Convert</h3>
+          <p className="text-gray-700 mb-4">
+            Great captions do more than describe a product—they guide the reader to take action.
+            Start with a hook that speaks to a real problem: “Need centerpieces that look luxe but
+            stay on budget?” Then explain the value using plain, conversational language.
+            Your goal is to help a customer visualize the outcome, not just the item.
+          </p>
+          <p className="text-gray-700 mb-4">
+            A simple structure you can reuse every time is Hook → Benefit → Proof → CTA.
+            The benefit explains why your design matters (saves time, looks premium, fits the theme),
+            proof gives a quick example (client reaction, turnaround time, durability), and the CTA
+            tells them exactly what to do next (DM to book, click the link, request a quote).
+          </p>
+          <p className="text-gray-700 mb-6">
+            In this lesson, you’ll write three captions for the same product: one for Instagram,
+            one for a Pinterest pin description, and one for a short‑form video. This exercise teaches
+            you how to adapt the same message for different platforms while keeping your brand voice consistent.
+          </p>
+          <div className="grid md:grid-cols-3 gap-4 text-sm text-gray-700">
+            <div className="bg-gray-50 border border-gray-200 rounded-lg p-4">
+              <div className="font-semibold mb-1">Template</div>
+              Hook → Benefit → Proof → CTA
+            </div>
+            <div className="bg-gray-50 border border-gray-200 rounded-lg p-4">
+              <div className="font-semibold mb-1">Goal</div>
+              Drive DMs or bookings
+            </div>
+            <div className="bg-gray-50 border border-gray-200 rounded-lg p-4">
+              <div className="font-semibold mb-1">Deliverable</div>
+              3 platform‑specific captions
+            </div>
           </div>
-        )}
-      </div>
+        </section>
+
+        {/* Weekly Breakdown */}
+        <section className="bg-white rounded-xl shadow-lg p-8">
+          <h3 className="text-2xl font-bold mb-6 text-gray-800">Weekly Breakdown</h3>
+          <div className="space-y-6">
+            <div className="border-l-4 border-primary-500 pl-4">
+              <h4 className="text-xl font-semibold text-gray-900">Week 1: Brand & Visual Identity</h4>
+              <ul className="text-gray-700 mt-2 space-y-1">
+                <li>• Define brand voice and ideal customer</li>
+                <li>• Create 3 Cricut designs aligned with your brand</li>
+                <li>• Photo studio basics using mobile devices</li>
+                <li>• Project: Brand Identity Kit (logo, pattern, product mockup)</li>
+              </ul>
+            </div>
+
+            <div className="border-l-4 border-primary-500 pl-4">
+              <h4 className="text-xl font-semibold text-gray-900">Week 2: Content Strategy & Captions</h4>
+              <ul className="text-gray-700 mt-2 space-y-1">
+                <li>• Build content pillars for your business</li>
+                <li>• Write compelling product descriptions</li>
+                <li>• Hashtag research and content planning</li>
+                <li>• Project: 30‑Day Content Calendar</li>
+              </ul>
+            </div>
+
+            <div className="border-l-4 border-primary-500 pl-4">
+              <h4 className="text-xl font-semibold text-gray-900">Week 3: Platform Growth & Engagement</h4>
+              <ul className="text-gray-700 mt-2 space-y-1">
+                <li>• Instagram Reels, TikTok trends, Pinterest strategy</li>
+                <li>• Client inquiry responses and DM workflows</li>
+                <li>• Community engagement and collaborations</li>
+                <li>• Project: Post and analyze 5 pieces of content</li>
+              </ul>
+            </div>
+
+            <div className="border-l-4 border-primary-500 pl-4">
+              <h4 className="text-xl font-semibold text-gray-900">Week 4: Portfolio & Showcase</h4>
+              <ul className="text-gray-700 mt-2 space-y-1">
+                <li>• Curate your social media portfolio</li>
+                <li>• Final evaluation and showcase preparation</li>
+                <li>• Presentation skills for client pitching</li>
+                <li>• Final Project: Portfolio Showcase</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+      </main>
     </div>
   )
 }
