@@ -325,11 +325,29 @@ app.use((err, req, res, next) => {
   });
 });
 
-nextApp.prepare().then(() => {
-  app.all('*', (req, res) => handle(req, res));
-
-  app.listen(PORT, () => {
-    console.log(`🚀 ComDev Creatives Hub running on port ${PORT}`);
-    console.log('📚 Mode: MOCK (Persistent file storage)');
-  });
+process.on('uncaughtException', (err) => {
+  console.error('Uncaught exception:', err);
 });
+
+process.on('unhandledRejection', (err) => {
+  console.error('Unhandled rejection:', err);
+});
+
+nextApp
+  .prepare()
+  .then(() => {
+    app.all('*', (req, res) => handle(req, res));
+
+    const server = app.listen(PORT, () => {
+      console.log(`🚀 ComDev Creatives Hub running on port ${PORT}`);
+      console.log('📚 Mode: MOCK (Persistent file storage)');
+    });
+
+    server.on('error', (err) => {
+      console.error('Server error:', err);
+    });
+  })
+  .catch((err) => {
+    console.error('Failed to start Next app:', err);
+    process.exit(1);
+  });
