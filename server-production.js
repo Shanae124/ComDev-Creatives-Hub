@@ -309,6 +309,16 @@ app.use('/api/portfolio', (req, res, next) => {
   next();
 }, portfolioRoutes);
 
+// Basic health + root response for gateway checks
+app.get('/health', (req, res) => {
+  res.json({ status: 'ok' });
+});
+
+app.get('/', (req, res, next) => {
+  res.setHeader('x-app-status', 'up');
+  return next();
+});
+
 app.get('/api/health', (req, res) => {
   res.json({
     status: 'ok',
