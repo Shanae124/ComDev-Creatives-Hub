@@ -10,8 +10,9 @@ const next = require('next');
 dotenv.config();
 
 const PORT = process.env.PORT || 3000;
+const HOST = '0.0.0.0';
 const dev = process.env.NODE_ENV !== 'production';
-const nextApp = next({ dev, hostname: '0.0.0.0', port: PORT });
+const nextApp = next({ dev, hostname: HOST, port: PORT, dir: __dirname });
 const handle = nextApp.getRequestHandler();
 
 const app = express();
@@ -325,12 +326,12 @@ app.use((err, req, res, next) => {
   });
 });
 
-process.on('uncaughtException', (err) => {
-  console.error('Uncaught exception:', err);
+process.on('unhandledRejection', (reason) => {
+  console.error('Unhandled promise rejection:', reason);
 });
 
-process.on('unhandledRejection', (err) => {
-  console.error('Unhandled rejection:', err);
+process.on('uncaughtException', (error) => {
+  console.error('Uncaught exception:', error);
 });
 
 nextApp
@@ -338,16 +339,12 @@ nextApp
   .then(() => {
     app.all('*', (req, res) => handle(req, res));
 
-    const server = app.listen(PORT, () => {
+    app.listen(PORT, HOST, () => {
       console.log(`🚀 ComDev Creatives Hub running on port ${PORT}`);
       console.log('📚 Mode: MOCK (Persistent file storage)');
     });
-
-    server.on('error', (err) => {
-      console.error('Server error:', err);
-    });
   })
-  .catch((err) => {
-    console.error('Failed to start Next app:', err);
+  .catch((error) => {
+    console.error('Failed to start Next.js:', error);
     process.exit(1);
   });
