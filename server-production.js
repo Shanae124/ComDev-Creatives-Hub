@@ -10,9 +10,8 @@ const next = require('next');
 dotenv.config();
 
 const PORT = process.env.PORT || 3000;
-const HOST = '0.0.0.0';
 const dev = process.env.NODE_ENV !== 'production';
-const nextApp = next({ dev, hostname: HOST, port: PORT, dir: __dirname });
+const nextApp = next({ dev, dir: __dirname });
 const handle = nextApp.getRequestHandler();
 
 const app = express();
@@ -339,7 +338,7 @@ nextApp
   .then(() => {
     app.all('*', (req, res) => handle(req, res));
 
-    app.listen(PORT, HOST, () => {
+    const server = app.listen(PORT, '0.0.0.0', () => {
       console.log(`🚀 ComDev Creatives Hub running on port ${PORT}`);
       console.log('📚 Mode: MOCK (Persistent file storage)');
     });
