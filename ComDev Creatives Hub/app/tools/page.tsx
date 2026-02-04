@@ -75,6 +75,20 @@ export default function ToolsPage() {
           </div>
 
           <div className="bg-white rounded-2xl shadow-md p-6 border border-gray-100 card-hover">
+            <h3 className="text-xl font-bold mb-4">Fonts & Typography</h3>
+            <ul className="space-y-2 text-gray-700">
+              <li>• Google Fonts (clean, readable, free)</li>
+              <li>• Adobe Fonts (premium styles)</li>
+              <li>• Fontshare (modern pairings)</li>
+              <li>• Typewolf (pairing inspiration)</li>
+            </ul>
+            <div className="mt-4 flex flex-wrap gap-2">
+              <a href="https://fonts.google.com/" target="_blank" rel="noreferrer" className="px-3 py-2 text-sm bg-gray-900 text-white rounded-lg">Google Fonts</a>
+              <a href="https://fonts.adobe.com/" target="_blank" rel="noreferrer" className="px-3 py-2 text-sm border border-gray-200 rounded-lg">Adobe Fonts</a>
+            </div>
+          </div>
+
+          <div className="bg-white rounded-2xl shadow-md p-6 border border-gray-100 card-hover">
             <h3 className="text-xl font-bold mb-4">Photo & Video Editing</h3>
             <ul className="space-y-2 text-gray-700">
               <li>• CapCut (short‑form video editing)</li>
@@ -85,6 +99,20 @@ export default function ToolsPage() {
             <div className="mt-4 flex flex-wrap gap-2">
               <a href="https://www.capcut.com/" target="_blank" rel="noreferrer" className="px-3 py-2 text-sm bg-gray-900 text-white rounded-lg">CapCut</a>
               <a href="https://www.adobe.com/products/photoshop-lightroom.html" target="_blank" rel="noreferrer" className="px-3 py-2 text-sm border border-gray-200 rounded-lg">Lightroom</a>
+            </div>
+          </div>
+
+          <div className="bg-white rounded-2xl shadow-md p-6 border border-gray-100 card-hover">
+            <h3 className="text-xl font-bold mb-4">Assets & Mockups</h3>
+            <ul className="space-y-2 text-gray-700">
+              <li>• Remove.bg (clean product cutouts)</li>
+              <li>• Smartmockups (mockup previews)</li>
+              <li>• Pexels (free photo assets)</li>
+              <li>• Coolors (brand palettes)</li>
+            </ul>
+            <div className="mt-4 flex flex-wrap gap-2">
+              <a href="https://www.remove.bg/" target="_blank" rel="noreferrer" className="px-3 py-2 text-sm bg-gray-900 text-white rounded-lg">Remove.bg</a>
+              <a href="https://www.smartmockups.com/" target="_blank" rel="noreferrer" className="px-3 py-2 text-sm border border-gray-200 rounded-lg">Smartmockups</a>
             </div>
           </div>
 

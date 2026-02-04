@@ -15,7 +15,7 @@ export default function LoginPage() {
     setLoading(true)
 
     try {
-      const response = await fetch('http://localhost:5000/api/auth/login', {
+      const response = await fetch('/api/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
@@ -32,12 +32,8 @@ export default function LoginPage() {
       localStorage.setItem('user', JSON.stringify(data.user))
       localStorage.setItem('token', data.token)
 
-      // Redirect based on role
-      if (data.user.role === 'instructor') {
-        router.push('/instructor/dashboard')
-      } else {
-        router.push('/student/dashboard')
-      }
+      // Redirect to hub
+      router.push('/student/dashboard')
     } catch (err: any) {
       setError(err.message)
     } finally {

@@ -30,7 +30,7 @@ export default function StudentDashboard() {
   const loadEnrolledCourses = async () => {
     try {
       const token = localStorage.getItem('token')
-      const response = await fetch('http://localhost:5000/api/courses/my/enrollments', {
+      const response = await fetch('/api/courses/my/enrollments', {
         headers: {
           'Authorization': `Bearer ${token}`
         },

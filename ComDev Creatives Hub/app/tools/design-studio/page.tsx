@@ -66,6 +66,58 @@ export default function DesignStudioPage() {
           </div>
         </section>
 
+        <section className="bg-white rounded-xl shadow-lg p-6 mb-8">
+          <h3 className="text-xl font-bold text-gray-900 mb-4">Fonts & Typography Library</h3>
+          <p className="text-gray-700 mb-4">
+            Build stronger branding with consistent typography. Use these libraries to find clean,
+            readable fonts for social posts, logos, and product labels.
+          </p>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-3">
+            <a href="https://fonts.google.com/" target="_blank" rel="noreferrer" className="px-4 py-3 bg-white text-gray-900 border border-gray-200 rounded-lg font-semibold hover:bg-gray-50 transition text-center">Google Fonts</a>
+            <a href="https://fonts.adobe.com/" target="_blank" rel="noreferrer" className="px-4 py-3 bg-gray-900 text-white rounded-lg font-semibold hover:bg-black transition text-center">Adobe Fonts</a>
+            <a href="https://www.fontshare.com/" target="_blank" rel="noreferrer" className="px-4 py-3 bg-white text-gray-900 border border-gray-200 rounded-lg font-semibold hover:bg-gray-50 transition text-center">Fontshare</a>
+            <a href="https://www.fontsquirrel.com/" target="_blank" rel="noreferrer" className="px-4 py-3 bg-white text-gray-900 border border-gray-200 rounded-lg font-semibold hover:bg-gray-50 transition text-center">Font Squirrel</a>
+            <a href="https://www.dafont.com/" target="_blank" rel="noreferrer" className="px-4 py-3 bg-white text-gray-900 border border-gray-200 rounded-lg font-semibold hover:bg-gray-50 transition text-center">DaFont (Check Licenses)</a>
+            <a href="https://www.typewolf.com/" target="_blank" rel="noreferrer" className="px-4 py-3 bg-white text-gray-900 border border-gray-200 rounded-lg font-semibold hover:bg-gray-50 transition text-center">Typewolf Pairings</a>
+          </div>
+
+          <div className="mt-6">
+            <h4 className="text-lg font-semibold text-gray-900 mb-3">Font Pairing & Inspiration</h4>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-3">
+              <a href="https://fontjoy.com/" target="_blank" rel="noreferrer" className="px-4 py-3 bg-white text-gray-900 border border-gray-200 rounded-lg font-semibold hover:bg-gray-50 transition text-center">Fontjoy Pairings</a>
+              <a href="https://fontpair.co/" target="_blank" rel="noreferrer" className="px-4 py-3 bg-white text-gray-900 border border-gray-200 rounded-lg font-semibold hover:bg-gray-50 transition text-center">Font Pair</a>
+              <a href="https://typ.io/" target="_blank" rel="noreferrer" className="px-4 py-3 bg-white text-gray-900 border border-gray-200 rounded-lg font-semibold hover:bg-gray-50 transition text-center">Typ.io Examples</a>
+              <a href="https://www.behance.net/" target="_blank" rel="noreferrer" className="px-4 py-3 bg-white text-gray-900 border border-gray-200 rounded-lg font-semibold hover:bg-gray-50 transition text-center">Behance Typography</a>
+              <a href="https://dribbble.com/tags/typography" target="_blank" rel="noreferrer" className="px-4 py-3 bg-white text-gray-900 border border-gray-200 rounded-lg font-semibold hover:bg-gray-50 transition text-center">Dribbble Typography</a>
+              <a href="https://www.fontspace.com/" target="_blank" rel="noreferrer" className="px-4 py-3 bg-white text-gray-900 border border-gray-200 rounded-lg font-semibold hover:bg-gray-50 transition text-center">FontSpace</a>
+            </div>
+          </div>
+        </section>
+
+        <section className="bg-white rounded-xl shadow-lg p-6 mb-8">
+          <h3 className="text-xl font-bold text-gray-900 mb-4">Assets, Icons & Mockups</h3>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-3">
+            <a href="https://www.remove.bg/" target="_blank" rel="noreferrer" className="px-4 py-3 bg-white text-gray-900 border border-gray-200 rounded-lg font-semibold hover:bg-gray-50 transition text-center">Remove.bg (Backgrounds)</a>
+            <a href="https://www.smartmockups.com/" target="_blank" rel="noreferrer" className="px-4 py-3 bg-white text-gray-900 border border-gray-200 rounded-lg font-semibold hover:bg-gray-50 transition text-center">Smartmockups</a>
+            <a href="https://thenounproject.com/" target="_blank" rel="noreferrer" className="px-4 py-3 bg-white text-gray-900 border border-gray-200 rounded-lg font-semibold hover:bg-gray-50 transition text-center">Noun Project</a>
+            <a href="https://www.flaticon.com/" target="_blank" rel="noreferrer" className="px-4 py-3 bg-white text-gray-900 border border-gray-200 rounded-lg font-semibold hover:bg-gray-50 transition text-center">Flaticon</a>
+            <a href="https://www.pexels.com/" target="_blank" rel="noreferrer" className="px-4 py-3 bg-white text-gray-900 border border-gray-200 rounded-lg font-semibold hover:bg-gray-50 transition text-center">Pexels Photos</a>
+            <a href="https://coolors.co/" target="_blank" rel="noreferrer" className="px-4 py-3 bg-white text-gray-900 border border-gray-200 rounded-lg font-semibold hover:bg-gray-50 transition text-center">Coolors Palettes</a>
+          </div>
+
+          <div className="mt-6">
+            <h4 className="text-lg font-semibold text-gray-900 mb-3">SVGs, Patterns & Design Elements</h4>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-3">
+              <a href="https://www.svgrepo.com/" target="_blank" rel="noreferrer" className="px-4 py-3 bg-white text-gray-900 border border-gray-200 rounded-lg font-semibold hover:bg-gray-50 transition text-center">SVG Repo</a>
+              <a href="https://www.vecteezy.com/" target="_blank" rel="noreferrer" className="px-4 py-3 bg-white text-gray-900 border border-gray-200 rounded-lg font-semibold hover:bg-gray-50 transition text-center">Vecteezy</a>
+              <a href="https://www.freepik.com/" target="_blank" rel="noreferrer" className="px-4 py-3 bg-white text-gray-900 border border-gray-200 rounded-lg font-semibold hover:bg-gray-50 transition text-center">Freepik (Check Licenses)</a>
+              <a href="https://www.heropatterns.com/" target="_blank" rel="noreferrer" className="px-4 py-3 bg-white text-gray-900 border border-gray-200 rounded-lg font-semibold hover:bg-gray-50 transition text-center">Hero Patterns</a>
+              <a href="https://haikei.app/" target="_blank" rel="noreferrer" className="px-4 py-3 bg-white text-gray-900 border border-gray-200 rounded-lg font-semibold hover:bg-gray-50 transition text-center">Haikei Shapes</a>
+              <a href="https://www.transparenttextures.com/" target="_blank" rel="noreferrer" className="px-4 py-3 bg-white text-gray-900 border border-gray-200 rounded-lg font-semibold hover:bg-gray-50 transition text-center">Transparent Textures</a>
+            </div>
+          </div>
+        </section>
+
         <section className="bg-white rounded-xl shadow-lg p-6">
           <h3 className="text-xl font-bold text-gray-900 mb-3">Embedded Editor (Photopea)</h3>
           <p className="text-gray-600 text-sm mb-4">
@@ -80,6 +132,14 @@ export default function DesignStudioPage() {
               className="px-4 py-2 text-sm border border-gray-200 rounded-lg hover:bg-gray-50"
             >
               Open Full Editor
+            </a>
+            <a
+              href="https://www.photopea.com/#new"
+              target="_blank"
+              rel="noreferrer"
+              className="px-4 py-2 text-sm border border-gray-200 rounded-lg hover:bg-gray-50"
+            >
+              New Design
             </a>
             <a
               href="https://www.photopea.com/#iU6G5Yb3v"

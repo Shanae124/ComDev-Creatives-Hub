@@ -9,8 +9,26 @@ dotenv.config();
 const app = express();
 
 // Middleware
+const allowedOrigins = ['http://localhost:3000'];
+if (process.env.APP_ORIGIN) allowedOrigins.push(process.env.APP_ORIGIN);
+if (process.env.RAILWAY_PUBLIC_DOMAIN) {
+  allowedOrigins.push(`https://${process.env.RAILWAY_PUBLIC_DOMAIN}`);
+}
+
+const isAllowedOrigin = (origin) => {
+  if (!origin) return true;
+  if (allowedOrigins.includes(origin)) return true;
+  if (origin.endsWith('.up.railway.app')) return true;
+  return false;
+};
+
 app.use(cors({
-  origin: 'http://localhost:3000',
+  origin: (origin, callback) => {
+    if (isAllowedOrigin(origin)) {
+      return callback(null, true);
+    }
+    return callback(new Error('Not allowed by CORS'));
+  },
   credentials: true
 }));
 app.use(express.json());
