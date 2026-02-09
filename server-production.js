@@ -354,6 +354,8 @@ nextApp
 
     const server = app.listen(PORT, '0.0.0.0', () => {
       console.log(`🚀 ComDev Creatives Hub running on port ${PORT}`);
+      console.log(`🔧 PORT env: ${process.env.PORT || 'unset'}`);
+      console.log(`🔧 Public domain: ${process.env.RAILWAY_PUBLIC_DOMAIN || 'unset'}`);
       console.log('📚 Mode: MOCK (Persistent file storage)');
     });
   })

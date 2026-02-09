@@ -32,6 +32,6 @@ RUN mkdir -p /app/uploads
 COPY --from=builder /app/scripts ./scripts
 COPY --from=builder /app/content ./content
 
-EXPOSE 3000 5000
+EXPOSE 8080
 
 CMD ["npm", "run", "start"]
