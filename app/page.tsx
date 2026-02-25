@@ -6,138 +6,206 @@ export default function HomePage() {
   const router = useRouter()
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-green-50">
+    <div className="min-h-screen bg-white">
       {/* Hero Section */}
-      <div className="container mx-auto px-4 py-16">
-        <div className="text-center max-w-4xl mx-auto">
-          {/* Logo/Brand */}
-          <div className="mb-10 flex flex-col items-center gap-4">
-            <div className="h-20 w-20 rounded-full bg-primary-600 text-white flex items-center justify-center text-2xl font-bold shadow-lg">
-              CDD
-            </div>
-            <div>
-              <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-3">
-                ComDev <span className="text-primary-600">Creatives Hub</span>
-              </h1>
-              <p className="text-xl text-gray-600 font-medium">
-                Community Development Department
-              </p>
-              <p className="text-sm text-gray-500 mt-2">Empowering Creative Entrepreneurs</p>
-            </div>
-          </div>
-
-          {/* Mission Statement */}
-          <div className="mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-6">
-              Social Media Marketing for Crafters (4 Weeks)
-            </h2>
-            <p className="text-lg text-gray-700 leading-relaxed">
-              Learn branding, promotion, and client engagement for the event décor industry through
-              <strong> hands-on creation</strong>—no PowerPoint slides, just real work that builds your portfolio.
+      <section className="relative bg-gradient-to-br from-gray-900 via-primary-900 to-gray-800 text-white py-20 sm:py-28">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-3xl">
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight mb-6">
+              Master Creative Entrepreneurship
+            </h1>
+            <p className="text-lg sm:text-xl text-gray-300 mb-8 max-w-2xl">
+              Project-based learning for ambitious creators. Build your portfolio, develop real skills, and connect with community—no fluff, just results.
             </p>
-          </div>
-
-          {/* Features Grid */}
-          <div className="grid md:grid-cols-3 gap-8 mb-16">
-            <div className="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition">
-              <div className="text-4xl mb-4">🎨</div>
-              <h3 className="text-xl font-bold mb-2">Design Projects</h3>
-              <p className="text-gray-600">Create real Cricut designs and build your brand identity</p>
-            </div>
-            <div className="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition">
-              <div className="text-4xl mb-4">📱</div>
-              <h3 className="text-xl font-bold mb-2">Social Media Mastery</h3>
-              <p className="text-gray-600">Learn Instagram, TikTok & Pinterest strategies that work</p>
-            </div>
-            <div className="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition">
-              <div className="text-4xl mb-4">🤝</div>
-              <h3 className="text-xl font-bold mb-2">Peer Collaboration</h3>
-              <p className="text-gray-600">Get feedback, share ideas, and learn together</p>
+            <div className="flex flex-col sm:flex-row gap-4">
+              <button
+                onClick={() => router.push('/register')}
+                className="px-8 py-3 bg-primary-600 text-white font-semibold rounded-lg hover:bg-primary-700 transition"
+              >
+                Start Free
+              </button>
+              <button
+                onClick={() => router.push('/login')}
+                className="px-8 py-3 bg-white/10 text-white font-semibold rounded-lg hover:bg-white/20 transition border border-white/20"
+              >
+                Sign In
+              </button>
             </div>
           </div>
+        </div>
+      </section>
 
-          {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <button
-              onClick={() => router.push('/register')}
-              className="px-8 py-4 bg-primary-600 text-white rounded-lg font-bold text-lg hover:bg-primary-700 transition shadow-lg hover:shadow-xl"
-            >
-              Get Started Free
-            </button>
-            <button
-              onClick={() => router.push('/login')}
-              className="px-8 py-4 bg-white text-primary-600 border-2 border-primary-600 rounded-lg font-bold text-lg hover:bg-primary-50 transition"
-            >
-              Sign In
-            </button>
-          </div>
+      {/* Value Proposition Section */}
+      <section className="py-16 sm:py-20 bg-white">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-3xl sm:text-4xl font-bold text-center text-gray-900 mb-12">
+            Why Choose ComDev Creatives?
+          </h2>
 
-          {/* Program Overview */}
-          <div className="mt-16 grid lg:grid-cols-2 gap-8">
-            <div className="bg-white p-8 rounded-xl shadow-lg text-left">
-              <h3 className="text-2xl font-bold mb-4 text-gray-800">Key Topics</h3>
-              <ul className="space-y-3 text-gray-700">
-                <li>• Creating engaging content</li>
-                <li>• Photography and video tips</li>
-                <li>• Writing compelling product descriptions</li>
-                <li>• Utilizing relevant hashtags</li>
-                <li>• Managing client inquiries via direct messaging</li>
-              </ul>
-            </div>
-            <div className="bg-white p-8 rounded-xl shadow-lg text-left">
-              <h3 className="text-2xl font-bold mb-4 text-gray-800">Outcome</h3>
+          <div className="grid md:grid-cols-3 gap-8">
+            {/* Value Prop 1 */}
+            <div className="card p-8">
+              <div className="w-12 h-12 bg-primary-100 text-primary-700 rounded-lg flex items-center justify-center text-2xl font-bold mb-4">
+                ✓
+              </div>
+              <h3 className="text-xl font-semibold text-gray-900 mb-3">Project-Based Learning</h3>
               <p className="text-gray-700 leading-relaxed">
-                Students will be equipped to set up and manage a professional social media
-                portfolio that effectively converts followers into paying customers.
+                Every assignment builds real portfolio pieces you can showcase to clients and employers.
+              </p>
+            </div>
+
+            {/* Value Prop 2 */}
+            <div className="card p-8">
+              <div className="w-12 h-12 bg-primary-100 text-primary-700 rounded-lg flex items-center justify-center text-2xl font-bold mb-4">
+                ✓
+              </div>
+              <h3 className="text-xl font-semibold text-gray-900 mb-3">Practical Skills</h3>
+              <p className="text-gray-700 leading-relaxed">
+                Learn actionable strategies you can apply immediately to grow your business.
+              </p>
+            </div>
+
+            {/* Value Prop 3 */}
+            <div className="card p-8">
+              <div className="w-12 h-12 bg-primary-100 text-primary-700 rounded-lg flex items-center justify-center text-2xl font-bold mb-4">
+                ✓
+              </div>
+              <h3 className="text-xl font-semibold text-gray-900 mb-3">Supportive Community</h3>
+              <p className="text-gray-700 leading-relaxed">
+                Learn alongside other creative entrepreneurs. Get feedback and share wins together.
               </p>
             </div>
           </div>
+        </div>
+      </section>
 
-          {/* Value Proposition */}
-          <div className="mt-16 bg-white p-8 rounded-xl shadow-lg">
-            <h3 className="text-2xl font-bold mb-6 text-gray-800">What Makes Us Different</h3>
-            <div className="grid md:grid-cols-2 gap-6 text-left">
-              <div className="flex items-start gap-3">
-                <span className="text-2xl">✅</span>
-                <div>
-                  <h4 className="font-bold mb-1">No Boring Slides</h4>
-                  <p className="text-gray-600 text-sm">Learn by doing, not reading PowerPoints</p>
+      {/* Current Offering */}
+      <section className="py-16 sm:py-20 bg-gray-50">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">Featured Course</h2>
+          <p className="text-gray-600 text-lg mb-12 max-w-2xl">
+            Our inaugural program designed for creative entrepreneurs
+          </p>
+
+          <div className="card p-10">
+            <div className="grid lg:grid-cols-2 gap-10">
+              <div>
+                <h3 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-4">
+                  Social Media Marketing for Crafters
+                </h3>
+                <p className="text-gray-700 mb-6 leading-relaxed">
+                  A 4-week, hands-on course focused on branding, promotion, and client engagement for the event décor industry. Build your brand from concept to customer conversion.
+                </p>
+
+                <div className="space-y-4 mb-8">
+                  <div className="flex items-center gap-3">
+                    <span className="text-primary-600 font-semibold">📅</span>
+                    <span className="text-gray-700"><strong>Duration:</strong> 4 weeks</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <span className="text-primary-600 font-semibold">⏱️</span>
+                    <span className="text-gray-700"><strong>Time:</strong> 6 hours/week (2 sessions × 3 hours)</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <span className="text-primary-600 font-semibold">🎯</span>
+                    <span className="text-gray-700"><strong>Outcome:</strong> Professional portfolio + brand strategy</span>
+                  </div>
                 </div>
+
+                <button
+                  onClick={() => router.push('/courses')}
+                  className="px-6 py-3 bg-primary-600 text-white font-semibold rounded-lg hover:bg-primary-700 transition"
+                >
+                  View Course Details
+                </button>
               </div>
-              <div className="flex items-start gap-3">
-                <span className="text-2xl">✅</span>
-                <div>
-                  <h4 className="font-bold mb-1">Real Portfolio Pieces</h4>
-                  <p className="text-gray-600 text-sm">Every project builds your professional portfolio</p>
-                </div>
-              </div>
-              <div className="flex items-start gap-3">
-                <span className="text-2xl">✅</span>
-                <div>
-                  <h4 className="font-bold mb-1">Practical Skills</h4>
-                  <p className="text-gray-600 text-sm">Apply what you learn immediately to your business</p>
-                </div>
-              </div>
-              <div className="flex items-start gap-3">
-                <span className="text-2xl">✅</span>
-                <div>
-                  <h4 className="font-bold mb-1">Community Support</h4>
-                  <p className="text-gray-600 text-sm">Learn alongside other creative entrepreneurs</p>
+
+              <div>
+                <h4 className="text-xl font-semibold text-gray-900 mb-6">What You'll Learn</h4>
+                <div className="space-y-3">
+                  <div className="border-l-3 border-primary-600 pl-4">
+                    <p className="font-semibold text-gray-900">Brand Development</p>
+                    <p className="text-sm text-gray-600">Define your brand voice, visual identity, and positioning</p>
+                  </div>
+                  <div className="border-l-3 border-primary-600 pl-4">
+                    <p className="font-semibold text-gray-900">Content Creation</p>
+                    <p className="text-sm text-gray-600">Photography, video, copywriting, and visual design</p>
+                  </div>
+                  <div className="border-l-3 border-primary-600 pl-4">
+                    <p className="font-semibold text-gray-900">Platform Strategy</p>
+                    <p className="text-sm text-gray-600">Instagram, TikTok, Pinterest growth and engagement tactics</p>
+                  </div>
+                  <div className="border-l-3 border-primary-600 pl-4">
+                    <p className="font-semibold text-gray-900">Customer Conversion</p>
+                    <p className="text-sm text-gray-600">Turn followers into clients with strategic messaging</p>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      </section>
 
-      {/* Footer */}
-      <footer className="bg-gray-900 text-white py-8 mt-16">
-        <div className="container mx-auto px-4 text-center">
-          <p className="text-gray-400">
-            © {new Date().getFullYear()} Community Development Department. Empowering Creative Entrepreneurs.
-          </p>
+      {/* How It Works */}
+      <section className="py-16 sm:py-20 bg-white">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-3xl sm:text-4xl font-bold text-center text-gray-900 mb-12">
+            Your Learning Journey
+          </h2>
+
+          <div className="grid md:grid-cols-4 gap-6">
+            <div className="text-center">
+              <div className="w-12 h-12 bg-primary-600 text-white rounded-full flex items-center justify-center font-bold text-lg mx-auto mb-4">
+                1
+              </div>
+              <h3 className="font-semibold text-gray-900 mb-2">Enroll</h3>
+              <p className="text-sm text-gray-600">Join a cohort and get access to course materials and community</p>
+            </div>
+
+            <div className="text-center">
+              <div className="w-12 h-12 bg-primary-600 text-white rounded-full flex items-center justify-center font-bold text-lg mx-auto mb-4">
+                2
+              </div>
+              <h3 className="font-semibold text-gray-900 mb-2">Learn</h3>
+              <p className="text-sm text-gray-600">Complete weekly modules with hands-on design and strategy projects</p>
+            </div>
+
+            <div className="text-center">
+              <div className="w-12 h-12 bg-primary-600 text-white rounded-full flex items-center justify-center font-bold text-lg mx-auto mb-4">
+                3
+              </div>
+              <h3 className="font-semibold text-gray-900 mb-2">Share</h3>
+              <p className="text-sm text-gray-600">Get feedback from instructors and community peers on your work</p>
+            </div>
+
+            <div className="text-center">
+              <div className="w-12 h-12 bg-primary-600 text-white rounded-full flex items-center justify-center font-bold text-lg mx-auto mb-4">
+                4
+              </div>
+              <h3 className="font-semibold text-gray-900 mb-2">Launch</h3>
+              <p className="text-sm text-gray-600">Complete the course with a portfolio-ready brand strategy</p>
+            </div>
+          </div>
         </div>
-      </footer>
+      </section>
+
+      {/* CTA Section */}
+      <section className="py-16 sm:py-20 bg-gray-50">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-6">
+            Ready to Start Your Creative Journey?
+          </h2>
+          <p className="text-lg text-gray-600 mb-10 max-w-2xl mx-auto">
+            Join a community of ambitious creators building real businesses through strategic creativity.
+          </p>
+          <button
+            onClick={() => router.push('/register')}
+            className="px-10 py-4 bg-primary-600 text-white font-semibold rounded-lg hover:bg-primary-700 transition text-lg"
+          >
+            Get Started Free
+          </button>
+        </div>
+      </section>
     </div>
   )
 }
