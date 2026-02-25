@@ -1,0 +1,1827 @@
+Social Media Marketing
+Community Technology Programme
+Course Manual
+Sixth Edition  |  2025 – 2026
+5.24B
+Global Social■Media Users
+6.83h
+Daily Avg Screen■Time Worldwide
+15%
+Annual Growth in■Social Commerce
+73%
+Marketers Say■Social Delivers ROI
+This comprehensive course manual has been fully updated for 2025–2026 to reflect the rapidly evolving
+social media landscape. Every chapter incorporates current platform algorithms, AI-powered tools, short-form
+video dominance, social commerce trends, and data-backed strategies proven to deliver measurable results
+in today's digital environment.
+What's New in the Sixth Edition
+✦ Fully updated platform statistics and algorithm insights (2025)
+✦ New TikTok for Business module with complete setup and strategy guide
+✦ New Threads & X (Twitter) module covering the post-rebrand landscape
+✦ LinkedIn Marketing chapter expanded with B2B thought leadership strategies
+✦ AI Tools chapter: ChatGPT, Gemini, Canva Magic, CapCut AI, and more
+✦ Social Commerce: Instagram Shops, TikTok Shop, Facebook Marketplace
+✦ Creator Economy: Monetization, Brand Deals, and UGC strategies
+✦ Revised analytics section with GA4 integration and attribution modelling
+Table of Contents
+MODULE
+CHAPTER
+PAGE
+Module One | Foundation
+1. Introduction to Social Media 2025
+6
+2. Corporate Groundwork & Brand Identity
+12
+3. Logo, Colour & Visual Identity Design
+18
+Module Two | Facebook & Meta
+4. Facebook for Business (2025)
+28
+5. Profile Pictures, Covers & Reels
+34
+6. Posting, Scheduling & Creator Studio
+40
+7. Facebook Ads Manager & Meta Business Suite
+48
+Module Three | Strategy & Analytics
+8. Social Media Marketing Strategy
+58
+9. Building a Results-Driven Brand
+66
+10. Analytics, KPIs & Reporting
+72
+Module Four | Content Creation
+11. Creating Image Content with Canva AI
+80
+12. Creating Video Content (Short & Long Form)
+92
+13. AI-Powered Content Tools
+108
+Module Five | Instagram & Threads
+14. Instagram for Business (2025)
+118
+15. Instagram Shopping & Promotions
+128
+16. Threads – The New Conversation Platform
+136
+Module Six | TikTok
+17. TikTok for Business – Full Module
+142
+18. TikTok Ads & TikTok Shop
+154
+Module Seven | YouTube
+19. YouTube Studio & Shorts
+162
+20. YouTube Analytics & Monetization
+172
+Module Eight | LinkedIn & X
+21. LinkedIn for Business & B2B Marketing
+180
+22. X (Twitter) Marketing in 2025
+190
+Module Nine | Finishing Touches
+23. WhatsApp Business & Social Commerce
+198
+24. Intellectual Property, AI Ethics & Compliance
+206
+Module One | Foundation
+The Building Blocks of Social Media Marketing
+Social Media Marketing Manual  |  Sixth Edition  |  2025–2026
+Community Technology Programme
+© 2025 Community Technology Programme. All rights reserved.
+Page 4
+1. Introduction to Social Media 2025
+MODULE ONE | FOUNDATION
+Social media has transformed from a novelty communication tool into the backbone of global digital
+commerce, news distribution, and community building. In 2025, over 5.24 billion people use social media —
+representing approximately 64% of the world's population. The average person maintains accounts on more
+than seven platforms and spends over 2 hours and 20 minutes per day actively engaging with social content.
+For businesses, this reality creates both extraordinary opportunity and intense competition. Organic reach
+has declined on legacy platforms like Facebook, yet new platforms and formats — particularly short-form
+video — have opened entirely new channels where brands can achieve viral growth with zero ad spend.
+Understanding the current landscape is the essential first step.
+THE LARGEST SOCIAL NETWORKS IN 2025The following rankings are based on Monthly Active Users (MAU) as reported by platforms and compiled by
+Statista, DataReportal, and We Are Social (Q1 2025):
+Rank
+Platform
+MAU (Billions)
+Primary Use
+Key Demographic
+1
+Facebook
+3.07B
+Social networking, Groups, Marketplace
+25–45, all genders
+2
+YouTube
+2.70B
+Video (long + Shorts)
+All ages, 18–34 core
+3
+WhatsApp
+2.00B
+Messaging, Business Chat
+Global, 18–45
+4
+Instagram
+2.00B
+Photo, Reels, Stories, Shopping
+18–34, female skew
+5
+TikTok
+1.65B
+Short-form video, Discover
+Gen Z, 13–30
+6
+WeChat
+1.34B
+Super App (China)
+China-based, all ages
+7
+Facebook Messenger
+1.01B
+Messaging, Bots, Commerce
+25–45
+8
+Telegram
+0.90B
+Messaging, Channels, Bots
+Privacy-conscious, 18–35
+9
+Snapchat
+0.85B
+Ephemeral content, AR
+Gen Z, 13–25
+10
+X (Twitter)
+0.61B
+Microblogging, News, Spaces
+Male skew, 25–44
+11
+Pinterest
+0.53B
+Visual discovery, Shopping
+Female skew, 25–44
+12
+LinkedIn
+1.00B+
+Professional networking, B2B
+Professionals, 25–55
+13
+Threads
+0.30B
+Text-based social, Meta-linked
+Instagram users, 18–35
+14
+Reddit
+1.00B+
+Communities, News, Discussion
+Male skew, 18–35
+Social Media Marketing Manual  |  Sixth Edition  |  2025–2026
+Community Technology Programme
+© 2025 Community Technology Programme. All rights reserved.
+Page 5
+2025 Platform Reality Check
+TikTok: Despite regulatory pressure in some markets, TikTok's user base has grown 27% YoY.
+Threads: Meta's Twitter alternative now exceeds 300M users and is growing rapidly.
+LinkedIn: Organic reach on LinkedIn is currently the HIGHEST of any major platform.
+Facebook: Still the #1 most-used platform globally — especially for audiences 35+.
+YouTube Shorts: Now receives over 70 billion views PER DAY — larger than TikTok.
+UNDERSTANDING PLATFORM FEATURES (2025)Not all platforms offer the same content capabilities. Choosing the right platform starts with understanding
+what each supports and how audiences engage with it:
+Platform
+Photos
+Video
+Stories
+Live
+Shopping
+Links
+Audio
+AI Tools
+Facebook
+✓
+✓
+✓
+✓
+✓
+✓
+✓
+✓
+Instagram
+✓
+✓ (Reels)
+✓
+✓
+✓
+Bio only
+✗
+✓
+TikTok
+✓
+✓ (Core)
+✗
+✓
+✓
+Bio only
+✓
+✓
+YouTube
+✗
+✓ + Shorts
+✗
+✓
+✓
+✓
+✗
+✓
+LinkedIn
+✓
+✓
+✗
+✓
+✗
+✓
+✗
+✓
+X (Twitter)
+✓
+✓
+✗
+✓ Spaces
+✗
+✓
+✓
+✓
+WhatsApp
+✓
+✓
+✓
+✓
+Catalog
+✗
+✓ (Core)
+✗
+Pinterest
+✓
+✓
+✓
+✗
+✓
+✓
+✗
+✓
+Threads
+✓
+✓
+✗
+✗
+✗
+✓
+✗
+✓
+PLATFORM SELECTION STRATEGYThe biggest mistake new businesses make is trying to be everywhere at once. A focused presence on two or
+three well-chosen platforms consistently outperforms a scattered approach across every network. Use these
+questions to guide your platform selection:
+■ Where does your target audience spend the most time? (Research their demographics.)
+■ What type of content can you consistently produce? (Video, photos, articles, audio?)
+■ What is your primary business goal? (Brand awareness, leads, sales, community?)
+■ What are your competitors doing — and where are they succeeding?
+■ What human and technical resources do you have available?
+"The best social media platform is the one where YOUR audience lives and
+where YOU can consistently show up with great content."
+ 
+THE CONTENT CONSUMPTION SHIFT: SHORT-FORM VIDEODOMINATESSocial Media Marketing Manual  |  Sixth Edition  |  2025–2026
+Community Technology Programme
+© 2025 Community Technology Programme. All rights reserved.
+Page 6
+The most significant shift in social media since 2020 has been the explosive growth of short-form video
+content. Led by TikTok, then quickly adopted by Instagram Reels and YouTube Shorts, this format now
+dominates discovery and reach across all major platforms.
+Metric
+Short-Form Video (2025)
+Avg daily time watching short-form video
+53 minutes per user
+% of marketers using short-form video
+67%
+Avg engagement rate vs static posts
+3x higher
+% of B2C brands using Reels/TikTok/Shorts
+84%
+Consumer preference for video vs text
+73% prefer video
+Social Media Marketing Manual  |  Sixth Edition  |  2025–2026
+Community Technology Programme
+© 2025 Community Technology Programme. All rights reserved.
+Page 7
+2. Corporate Groundwork & Brand Identity
+MODULE ONE | FOUNDATION
+Great marketing begins before you write a single post. The foundational elements of your brand — your
+name, logo, colours, tone of voice, and value proposition — form the bedrock upon which every piece of
+social content is built. In 2025, consumers form a judgment about a brand in less than 0.05 seconds online.
+Getting these fundamentals right is not optional; it is the difference between a brand people remember and
+one they scroll past.
+BUSINESS NAME ESSENTIALSA business name is your first brand impression. It must work across your website, social handles, email
+addresses, and verbal word-of-mouth simultaneously.
+Key Checklist for a Strong Business Name:
+■ Short & memorable — ideally 1–2 words, under 15 characters
+■ Easy to pronounce and spell a single way
+■ Available as a .com domain and across major social platforms
+■ No unintended meanings or negative connotations in other languages
+■ Not trademarked by another company in your industry
+■ Future-proof — does not tie you to a single product, location, or trend
+Quick Tool: Check Name Availability
+Namecheckr.com — checks username availability across 30+ social platforms at once.
+Godaddy.com or Namecheap.com — check and register domain names.
+USPTO.gov / local IP authority — search for trademark conflicts.
+BRAND VOICE & TONEYour brand voice is the consistent personality your business communicates through all content. It should be
+defined before you post anything. The four most common brand voice types are:
+Voice Type
+Traits
+Best For
+Example Tone
+Professional
+Expert, authoritative, credible
+B2B, Finance, Legal
+"Industry-leading solutions for enterprise teams."
+Friendly
+Warm, approachable, conversational
+Retail, Food, Lifestyle
+"Hey there! We've got exactly what you need."
+Bold/Disruptive
+Confident, provocative, edgy
+Tech startups, Fashion
+"We don't follow trends. We set them."
+Inspirational
+Motivating, aspirational, emotional
+Fitness, NGOs, Education
+"Every step forward is a step towards your best self."
+VALUE PROPOSITIONSocial Media Marketing Manual  |  Sixth Edition  |  2025–2026
+Community Technology Programme
+© 2025 Community Technology Programme. All rights reserved.
+Page 8
+Your value proposition is a single, clear statement that explains how your product or service solves a
+problem, delivers benefits, and why customers should choose you over a competitor. Every piece of social
+content you create should, in some way, reinforce this proposition.
+■ Formula: 'We help [target audience] achieve [desired outcome] by [unique method/differentiator].'
+BUILDING YOUR BRAND BIBLEA Brand Bible (also called a Brand Style Guide) is the single document that governs how your brand looks,
+sounds, and behaves across every touchpoint. In 2025, with content often created by multiple team members
+or AI tools, a Brand Bible is essential for consistency.
+■ Logo usage rules (spacing, minimum size, do's and don'ts)
+■ Colour palette with exact HEX, RGB, and CMYK codes
+■ Typography — primary and secondary fonts, sizing hierarchy
+■ Photography and imagery style guidelines
+■ Brand voice and tone guide with examples
+■ Mission, vision and values statement
+■ Social media handle and bio templates
+■ Free Brand Bible templates are available on Canva.com — search 'Brand Guidelines'.
+Social Media Marketing Manual  |  Sixth Edition  |  2025–2026
+Community Technology Programme
+© 2025 Community Technology Programme. All rights reserved.
+Page 9
+3. Logo, Colour & Visual Identity Design
+MODULE ONE | FOUNDATION
+Your visual identity is the most instantly recognisable part of your brand. In the social media feed, thumbnails
+and profile pictures appear at very small sizes — often just 40x40 pixels. A great logo works at any size and
+remains identifiable even without colour.
+LOGO DESIGN PRINCIPLES (2025)Logo design principles have not fundamentally changed, but the contexts in which logos appear have
+multiplied dramatically. Your logo must now work as a tiny app icon, a large billboard, an animated GIF intro,
+a profile picture, a watermark on video, and an embroidered patch — sometimes all in the same week.
+The Five Principles of an Effective Logo:
+■ Simplicity — complex logos fail at small sizes and are harder to remember
+■ Versatility — must work in full colour, single colour, and on dark and light backgrounds
+■ Memorability — a unique visual hook that sticks in the mind after a single viewing
+■ Timelessness — avoid trendy fonts or effects that date quickly (e.g. 'gradient overload')
+■ Relevance — subtly communicates the industry, values, or personality of the brand
+LOGO TYPESType
+Description
+Best For
+Examples
+Wordmark
+Business name styled as the logo
+Unique or memorable names
+Google, Coca-Cola, FedEx
+Lettermark
+Initials only
+Long business names
+IBM, HBO, NASA
+Pictorial Mark
+Icon/symbol without text
+Established brands
+Apple, Twitter, Nike swoosh
+Abstract Mark
+Non-literal geometric form
+Global, versatile brands
+Pepsi, Adidas
+Mascot
+Character representing the brand
+Fun, family brands
+KFC Colonel, Michelin Man
+Combination Mark
+Icon + text combined
+New businesses (most common)
+Lacoste, Burger King
+Emblem
+Text enclosed within symbol
+Badges, institutional
+Starbucks, Harley-Davidson
+DESIGNING IN CANVA (2025 UPDATED)Canva remains the premier free design tool for social media content, and its AI capabilities have expanded
+significantly. The 2025 version includes Magic Design (AI logo generation), Magic Write (AI copywriting),
+Magic Eraser (AI background removal), and Text to Image (AI illustration generation) — all accessible within
+the free tier with limited uses.
+Step-by-Step: Creating a Professional Logo in Canva
+Step 1: Go to canva.com and log in (or create a free account)
+Step 2: In the search bar, type 'Logo' and select the Logo template format (500 x 500px)
+Social Media Marketing Manual  |  Sixth Edition  |  2025–2026
+Community Technology Programme
+© 2025 Community Technology Programme. All rights reserved.
+Page 10
+Step 3: Browse templates OR click 'Magic Design' to generate AI logo options using keywords
+Step 4: Customise your chosen template: change fonts, colors, shapes, and icon elements
+Step 5: Apply your brand colours using exact HEX codes (enter in the color picker)
+Step 6: Test: zoom out to 20% — is the logo still readable and identifiable?
+Step 7: Download as PNG with transparent background (Canva Pro) or use remove.bg for free
+Step 8: Export additional variants: full colour, white, black, and horizontal/stacked layouts
+Free AI Logo Alternatives to Canva
+Looka.com — AI-powered logo generator with full brand kit download.
+Brandmark.io — AI logo design with instant brand identity package.
+Hatchful by Shopify (free) — simple logo builder for small businesses.
+Adobe Express (free tier) — Adobe-quality templates with AI features.
+remove.bg — Free background removal for logos and product photos.
+CORPORATE COLOUR PALETTE IN 2025Colour psychology plays a measurable role in brand perception and purchase decisions. Studies show that
+colour increases brand recognition by up to 80%. Your colour palette should include 3–5 colours: a primary
+brand colour, one or two secondary colours, a neutral (white, grey, or black), and an accent for
+calls-to-action.
+Color
+Psychological Association
+Brands Using It
+Blue
+Trust, reliability, professionalism
+Facebook, LinkedIn, PayPal, Samsung
+Red
+Energy, passion, urgency
+YouTube, Netflix, Coca-Cola, KFC
+Green
+Health, growth, sustainability
+WhatsApp, Starbucks, Whole Foods
+Purple
+Luxury, creativity, wisdom
+Cadbury, Hallmark, Twitch
+Orange
+Enthusiasm, innovation, warmth
+Amazon, Fanta, Harley-Davidson
+Yellow
+Optimism, clarity, happiness
+McDonald's, Snapchat, Ikea
+Black
+Sophistication, power, elegance
+Apple, Nike, Chanel
+Pink
+Playfulness, warmth, femininity
+T-Mobile, Barbie, Victoria's Secret
+■ Use coolors.co or Adobe Color to build harmonious palettes. Lock your primary brand colour and let the tool suggest
+complementary and analogous colours.
+Social Media Marketing Manual  |  Sixth Edition  |  2025–2026
+Community Technology Programme
+© 2025 Community Technology Programme. All rights reserved.
+Page 11
+Module Two | Facebook & Meta
+The World's Largest Social Platform
+Social Media Marketing Manual  |  Sixth Edition  |  2025–2026
+Community Technology Programme
+© 2025 Community Technology Programme. All rights reserved.
+Page 12
+4. Facebook for Business (2025)
+MODULE TWO | FACEBOOK & META
+With 3.07 billion monthly active users, Facebook remains the world's most-used social platform in 2025.
+While younger audiences gravitate toward TikTok and Instagram, Facebook dominates among users aged
+25–54 and is the #1 platform in most developing markets. For businesses targeting these demographics,
+Facebook is non-negotiable.
+FACEBOOK ACCOUNT TYPESPersonal Profile
+A personal profile is a non-commercial account for individual use. Facebook's terms of service prohibit using
+personal profiles for business purposes. Always create a Business Page for your company. However, your
+personal profile is used to create and administer your Page.
+Facebook Business Page
+A Business Page is a public-facing account for brands, businesses, celebrities, and public figures. Key 2025
+features include: AI-powered Post Composer suggestions, integrated Facebook Shop, Appointment Booking,
+automatic WhatsApp link integration, and advanced Meta Business Suite analytics.
+Facebook Groups
+Groups are community spaces where members share content and interact. In 2025, groups represent
+Facebook's highest organic reach channel — group posts routinely reach 40–60% of members compared to
+less than 5% for regular Page posts. Building a branded community group alongside your Page is a powerful
+growth strategy.
+SETTING UP A FACEBOOK BUSINESS PAGE (2025)Step 1: Log into your personal Facebook account at facebook.com
+Step 2: Click the menu (grid icon) → Select 'Pages' → Click 'Create New Page'
+Step 3: Enter your Page Name (use your exact business name), Category, and Bio (up to 255 characters)
+Step 4: Upload your Profile Picture (logo, minimum 180x180px — appears circular)
+Step 5: Upload your Cover Photo or Video (820x312px for desktop, 640x360px for mobile)
+Step 6: Complete your 'About' section: website, phone, address, hours, and services
+Step 7: Set up your Call-to-Action button (options: Book Now, Shop Now, Contact Us, etc.)
+Step 8: Enable WhatsApp Chat link if applicable
+Step 9: Begin posting content before inviting followers (aim for at least 3–5 posts)
+Step 10: Invite your existing contacts to Like/Follow the page
+FACEBOOK PAGE OPTIMISATION CHECKLISTSocial Media Marketing Manual  |  Sixth Edition  |  2025–2026
+Community Technology Programme
+© 2025 Community Technology Programme. All rights reserved.
+Page 13
+Element
+2025 Best Practice
+Why It Matters
+Profile Picture
+Logo, 180x180px minimum, circular crop-safe
+Appears in comments, ads, and notifications
+Cover
+820x312px, use video cover for 2x engagement
+First thing visitors see — sets brand tone
+Username (@handle)
+Match your business name, claim early
+Used in all tags and direct links
+Bio (255 chars)
+Include primary keyword + call to action
+Appears in search results and previews
+CTA Button
+Set to most relevant action (Book, Shop, Contact)
+Direct pathway to conversions
+Page Category
+Choose most specific category available
+Affects search visibility and ad targeting
+Services/Products
+List all offerings with descriptions and prices
+Enables Facebook Shop and service discovery
+THE FACEBOOK ALGORITHM IN 2025Facebook's algorithm — now called EdgeRank's successor, the Meta Content Recommendation System —
+prioritises content based on four key factors:
+■ Relationship: Content from Pages/people you interact with regularly ranks higher
+■ Content Type Preference: The algorithm learns and serves formats you engage with most
+■ Meaningful Interactions: Comments and shares are weighted 5–10x more than Likes
+■ Recency: Newer content is favoured, but evergreen viral content gets extended reach
+Algorithm Hack: The 'Comments First' Strategy
+Instead of asking followers to 'Like' your post, ask a question that invites a comment.
+Comments generate 5-10x more algorithm points than Likes, significantly boosting organic reach.
+Example: Instead of 'Like if you agree!', try 'What's your biggest challenge with [topic]? Comment below!'
+Social Media Marketing Manual  |  Sixth Edition  |  2025–2026
+Community Technology Programme
+© 2025 Community Technology Programme. All rights reserved.
+Page 14
+5. Profile Pictures, Covers & Reels
+MODULE TWO | FACEBOOK & META
+FACEBOOK IMAGE SPECIFICATIONS (2025)Asset
+Recommended Size
+Format
+Key Notes
+Profile Picture
+400x400px (displays at 180x180)
+PNG or JPG
+Circular crop — keep key content centered
+Cover Photo
+820x312px desktop / 640x360px mobile
+PNG or JPG
+Safe zone: centre 640x312px
+Cover Video
+820x312px, 20–90 seconds
+MP4 or MOV
+Autoplays silently — use text/visuals
+Post Image (Square)
+1080x1080px
+PNG or JPG
+Best for feed display
+Post Image (Landscape)
+1200x630px
+PNG or JPG
+Best for link shares
+Reel/Video
+1080x1920px (9:16 vertical)
+MP4
+Aspect ratio critical for mobile
+Story
+1080x1920px (9:16 vertical)
+PNG, JPG, or MP4
+15 seconds for images, 60s for video
+Event Cover
+1920x1005px
+PNG or JPG
+Wide format — avoid text at edges
+FACEBOOK REELS IN 2025Facebook Reels — introduced in 2022 and rapidly grown since — now receive significantly higher organic
+reach than any other content type on Facebook. Meta has publicly stated its commitment to prioritizing video
+content, particularly Reels, across both Facebook and Instagram in its algorithm.
+Reels Best Practices:
+■ Length: 7–30 seconds performs best for reach; 30–90 seconds for storytelling
+■ Hook: First 1–3 seconds must be visually arresting — no slow introductions
+■ Captions: 85% of videos are watched without sound — always add captions
+■ Music: Use trending audio from the Facebook Reels audio library
+■ Text Overlays: Key messages should appear on screen as text
+■ Call to Action: End every Reel with a clear action ('Follow for more', 'Link in bio')
+■ Posting Frequency: 3–5 Reels per week outperforms sporadic posting
+CREATING CONTENT IN CANVA FOR FACEBOOKCanva's Facebook-specific templates are pre-sized for all Facebook formats. For the fastest workflow, use
+the 'Brand Kit' feature (free with limits, unlimited on Pro) to store your colours, fonts, and logos so they apply
+automatically to new designs.
+■ In 2025, Canva's 'Magic Design' AI can generate complete Facebook post designs from a text prompt. Type a
+description of your business and desired post content, and it produces 3–5 professional template options in seconds.
+Social Media Marketing Manual  |  Sixth Edition  |  2025–2026
+Community Technology Programme
+© 2025 Community Technology Programme. All rights reserved.
+Page 15
+6. Posting, Scheduling & Creator Studio
+MODULE TWO | FACEBOOK & META
+CONTENT POSTING STRATEGYConsistent, high-quality posting is the foundation of Facebook growth. Random or infrequent posting signals
+to the algorithm that your Page is inactive, reducing reach. The recommended posting frequency varies by
+business type but the key principle is: quality over quantity.
+Business Type
+Recommended Frequency
+Best Content Mix
+Small Business (1 person)
+3–5 posts/week
+40% Reels, 30% carousels, 20% stories, 10% text
+Medium Business (team)
+5–7 posts/week
+30% Reels, 30% carousels, 25% images, 15% live
+Media/Publisher
+1–3 posts/day
+50% video, 30% link posts, 20% images
+E-commerce Brand
+5–7 posts/week
+35% product video, 30% UGC, 25% promotions, 10% value content
+THE CONTENT MIX: 80/20 RULEThe most effective Facebook pages follow the 80/20 content rule: 80% of content provides value,
+entertainment, or education — with no direct sales message. Only 20% of content directly promotes products
+or services. Pages that reverse this ratio see rapid follower decline and suppressed algorithmic reach.
+META BUSINESS SUITE: THE COMMAND CENTERMeta Business Suite (business.facebook.com) replaced Creator Studio as the primary management hub for
+Facebook and Instagram in 2023. It allows you to manage posts, messages, ads, shops, and analytics
+across both platforms from a single dashboard.
+Key Meta Business Suite Features (2025):
+■ Unified Inbox: Manage Facebook and Instagram messages, comments, and reviews in one place
+■ Content Scheduler: Schedule posts and Reels up to 90 days in advance
+■ AI Content Suggestions: AI-generated caption and hashtag recommendations
+■ Insights Dashboard: Unified reach, engagement, and audience analytics
+■ Ads Manager Integration: Create, manage, and track ad campaigns
+■ Shop Manager: Manage Facebook and Instagram Shop product catalogues
+■ Automations: Set up auto-replies for common messages and FAQs
+FACEBOOK ADS — OVERVIEWFacebook Ads (managed through Meta Ads Manager) remain the most powerful paid social media platform
+available in 2025, with targeting capabilities that no competitor has matched. Even a modest budget of
+$5–$10 per day can generate significant results when campaigns are well-structured.
+Ad Campaign Objectives (2025):
+Social Media Marketing Manual  |  Sixth Edition  |  2025–2026
+Community Technology Programme
+© 2025 Community Technology Programme. All rights reserved.
+Page 16
+■ Awareness: Reach, Brand Awareness, Video Views
+■ Traffic: Website Clicks, Landing Page Views, App Downloads
+■ Engagement: Post Engagement, Page Likes, Event Responses, Video Views
+■ Leads: Lead Generation (native forms), Instant Experience, Messenger Leads
+■ Conversions: Website Purchases, Store Traffic, Catalog Sales
+Facebook Ads: Key 2025 Updates
+Advantage+ Campaigns: Meta's AI now auto-optimises targeting, creative, and budgets.
+Advantage+ Shopping Campaigns: AI-driven e-commerce campaigns with minimal setup required.
+AI Creative Variations: Upload one image and Meta AI generates multiple ad variations.
+Conversions API: Required for accurate tracking as cookie-based attribution declines.
+Social Media Marketing Manual  |  Sixth Edition  |  2025–2026
+Community Technology Programme
+© 2025 Community Technology Programme. All rights reserved.
+Page 17
+7. Facebook Insights & Analytics
+MODULE TWO | FACEBOOK & META
+KEY FACEBOOK METRICS TO TRACKMetric
+What It Measures
+Why It Matters
+Good Benchmark
+Reach
+Unique accounts who saw your content
+Indicates content discoverability
+5–15% of followers
+Impressions
+Total times content was displayed
+Measures overall exposure
+Always > Reach
+Engagement Rate
+(Likes+Comments+Shares)/Reach x100
+Content resonance with audience
+1–5% is good, 5%+ is excellent
+Video View Rate
+3-second views / Impressions
+Measures hook effectiveness
+30–50% is strong
+Click-Through Rate
+Link clicks / Impressions
+Measures compelling call-to-action
+1–3% for organic posts
+Follower Growth Rate
+New followers / Total x 100
+Audience growth momentum
+>2% per month is healthy
+Best Time to Post
+When your audience is most active
+Maximises initial reach
+Check your own Insights data
+READING FACEBOOK INSIGHTSAccess Insights from your Page by clicking 'Professional Dashboard' or navigating to Meta Business Suite →
+Insights. Key reports to review weekly include: Reach Overview, Content Performance (sort by reach, then
+engagement rate), Audience Demographics, and the Best Performing Posts report.
+■ Sort your posts by Engagement Rate (not just raw likes) to identify which content types genuinely resonate with your
+audience. This is your content strategy data.
+Social Media Marketing Manual  |  Sixth Edition  |  2025–2026
+Community Technology Programme
+© 2025 Community Technology Programme. All rights reserved.
+Page 18
+Module Three | Strategy & Analytics
+Building a Results-Driven Social Media Plan
+Social Media Marketing Manual  |  Sixth Edition  |  2025–2026
+Community Technology Programme
+© 2025 Community Technology Programme. All rights reserved.
+Page 19
+8. Social Media Marketing Strategy
+MODULE THREE | STRATEGY & ANALYTICS
+Posting content without a strategy is like driving without a destination. A documented social media strategy is
+the single biggest differentiator between businesses that see measurable results from social media and those
+that don't. Research from CoSchedule found that marketers with a documented strategy are 313% more
+likely to report success.
+THE SMART GOALS FRAMEWORK FOR SOCIAL MEDIAAll social media goals must be SMART: Specific, Measurable, Achievable, Relevant, and Time-bound. Vague
+goals like 'grow our following' produce vague results. Concrete goals produce concrete outcomes.
+Goal Type
+Vague Version
+SMART Version
+Awareness
+Get more followers
+Grow Instagram followers from 1,200 to 3,000 by June 30, 2025
+Engagement
+Get more likes
+Achieve avg. 4% engagement rate across all posts in Q2 2025
+Traffic
+Drive website visits
+Generate 500 monthly website clicks from Facebook by April 2025
+Leads
+Get more enquiries
+Generate 20 qualified leads per month via Instagram DMs by May 2025
+Sales
+Make sales from social
+Achieve $5,000/month revenue from TikTok Shop by Q3 2025
+AUDIENCE RESEARCH IN 2025Understanding your target audience has never been easier — or more important. Modern tools allow you to
+build rich audience personas based on real behavioral data, not assumptions.
+Audience Research Tools:
+■ Meta Audience Insights (business.facebook.com) — demographic data for any interest group
+■ SparkToro — discover where your audience spends time online, what podcasts they listen to
+■ Google Analytics 4 — demographic and interest data for your website visitors
+■ Platform native analytics — each platform's analytics reveal follower demographics
+■ Social listening tools (Brandwatch, Mention) — monitor what your audience discusses
+THE SOCIAL MEDIA CONTENT FUNNELEffective social media content maps to the customer journey — from stranger to loyal advocate. Every
+content plan should include content for each stage:
+Funnel Stage
+Goal
+Content Types
+Platforms
+TOFU (Awareness)
+Reach new audiences
+Entertaining Reels, TikToks, educational posts, memes
+TikTok, Instagram, YouTube Shorts, Facebook
+MOFU (Consideration)
+Build trust & interest
+How-to videos, testimonials, behind-scenes, comparisons
+Instagram, YouTube, Facebook, LinkedIn
+BOFU (Conversion)
+Drive action/purchase
+Offers, demos, reviews, limited-time deals, stories CTAs
+Instagram Stories, Facebook Ads, WhatsApp
+Social Media Marketing Manual  |  Sixth Edition  |  2025–2026
+Community Technology Programme
+© 2025 Community Technology Programme. All rights reserved.
+Page 20
+RETENTION (Loyalty)
+Keep & delight customers
+Exclusive content, loyalty offers, community groups
+WhatsApp, Facebook Groups, Email + social
+CONTENT CALENDAR PLANNINGA content calendar is a visual scheduling tool that maps out what content you will post, on which platform, on
+which date, and at what time. It transforms social media from a reactive, last-minute activity into a strategic,
+planned communication program.
+Monthly Content Calendar Template:
+■ Week 1: Brand storytelling (who you are, your mission, team culture)
+■ Week 2: Educational/value content (tips, how-to's, industry insights)
+■ Week 3: Product/service showcase (demos, features, before & after)
+■ Week 4: Social proof (reviews, testimonials, user-generated content, case studies)
+■ Use free tools like Metricool, Later, or Buffer to schedule content across multiple platforms at once. This 'batching'
+approach saves hours per week.
+Social Media Marketing Manual  |  Sixth Edition  |  2025–2026
+Community Technology Programme
+© 2025 Community Technology Programme. All rights reserved.
+Page 21
+9. Building a Results-Driven Brand
+MODULE THREE | STRATEGY & ANALYTICS
+VISUAL CONSISTENCY ACROSS PLATFORMSResearch shows that consistent brand presentation across all channels increases revenue by up to 23%. Yet
+many small businesses maintain completely different visual identities on each platform — different profile
+photos, inconsistent colour usage, mismatched fonts. Your audience should be able to recognise your brand
+instantly, regardless of platform.
+Visual Consistency Checklist:
+■ Same logo version used as profile picture on all platforms
+■ Same or complementary cover images across platforms
+■ Brand colour palette applied to all post graphics
+■ Consistent fonts in all designed content
+■ Consistent photography style (warm tones, bright/airy, dark/moody, etc.)
+■ Logo watermark applied consistently to all video and photo content
+CRAFTING YOUR BRAND'S NARRATIVEIn 2025, consumers don't buy products — they buy stories, values, and communities. Brands that
+consistently communicate a compelling narrative achieve 20x more engagement than those that
+communicate only product features. Your narrative should answer: Why does your business exist? Who does
+it serve? What change does it create in the world?
+"People don't buy what you do. They buy why you do it." — Simon Sinek
+The 5-Part Brand Story Framework:
+■ Origin Story: Why was the business founded? What problem were you solving for yourself?
+■ Mission: What is the bigger purpose beyond profit? What change are you creating?
+■ Values: What principles guide every decision you make?
+■ Social Proof: Who have you helped and how has their life/business improved?
+■ Vision: Where are you taking your customers? What future are you building toward?
+10. Analytics, KPIs & Reporting
+MODULE THREE | STRATEGY & ANALYTICS
+SETTING UP YOUR ANALYTICS DASHBOARDWithout measurement, social media is guesswork. In 2025, the standard approach is to use each platform's
+native analytics alongside a unified third-party dashboard for cross-platform reporting.
+Social Media Marketing Manual  |  Sixth Edition  |  2025–2026
+Community Technology Programme
+© 2025 Community Technology Programme. All rights reserved.
+Page 22
+Tool
+Type
+Cost
+Best For
+Meta Business Suite
+Native (Facebook + Instagram)
+Free
+Daily monitoring, audience insights
+Google Analytics 4
+Web traffic attribution
+Free
+Measuring social media's website impact
+TikTok Analytics
+Native
+Free
+TikTok-specific performance data
+YouTube Studio
+Native
+Free
+YouTube channel analytics
+LinkedIn Analytics
+Native
+Free
+Professional audience insights
+Later / Metricool
+Third-party (multi-platform)
+Free tier available
+Cross-platform scheduling + analytics
+Sprout Social
+Enterprise third-party
+Paid ($249+/mo)
+Agency/enterprise reporting
+Hootsuite
+Third-party (multi-platform)
+Paid ($99+/mo)
+Team collaboration + analytics
+MONTHLY REPORTING FRAMEWORKEvery month, pull a standardized report across all active platforms covering these metrics. Compare to the
+previous month to identify trends and to your SMART goal benchmarks.
+■ Follower/Subscriber Count (and net change vs. prior month)
+■ Total Reach and Impressions
+■ Average Engagement Rate by content type
+■ Top 3 performing posts (by reach, by engagement, by conversions)
+■ Website sessions driven from each social platform (via GA4)
+■ Leads or sales attributed to social media
+■ Paid ad performance: CPM, CPC, CTR, ROAS (if running ads)
+Social Media Marketing Manual  |  Sixth Edition  |  2025–2026
+Community Technology Programme
+© 2025 Community Technology Programme. All rights reserved.
+Page 23
+Module Four | Content Creation
+Creating Content That Captures Attention
+Social Media Marketing Manual  |  Sixth Edition  |  2025–2026
+Community Technology Programme
+© 2025 Community Technology Programme. All rights reserved.
+Page 24
+11. Creating Image Content with Canva AI
+MODULE FOUR | CONTENT CREATION
+THE CANVA AI TOOLKIT (2025)Canva has evolved from a simple drag-and-drop design tool into a full AI-powered creative suite. In 2025,
+Canva's AI features have dramatically reduced the time required to create professional social media content
+— what once took 45 minutes now takes 5.
+AI Feature
+What It Does
+Access
+Magic Design
+Generates complete design from a text prompt
+Free (limited uses/month)
+Magic Write
+AI copywriting for captions, headlines, ads
+Free (limited uses/month)
+Magic Eraser
+Remove unwanted objects from photos
+Canva Pro
+Magic Edit
+Replace elements in photos with AI-generated alternatives
+Canva Pro
+Background Remover
+Instantly remove photo backgrounds
+Canva Pro (or use remove.bg free)
+Text to Image
+Generate AI illustrations from text prompts
+Free (limited uses/month)
+Magic Animate
+Add animations to static designs automatically
+Free
+Translate
+Translate designs into 100+ languages instantly
+Canva Pro
+Brand Kit
+Store brand colours, fonts, and logos for auto-application
+Canva Pro
+PLATFORM IMAGE SPECIFICATIONS REFERENCE (2025)Platform
+Square Post
+Portrait Post
+Story/Reel
+Profile Photo
+Instagram
+1080x1080px
+1080x1350px
+1080x1920px
+400x400px (circular)
+Facebook
+1080x1080px
+1080x1350px
+1080x1920px
+400x400px (circular)
+TikTok
+—
+—
+1080x1920px
+200x200px (circular)
+YouTube
+1280x720px (thumbnail)
+—
+—
+800x800px (circular)
+Twitter/X
+1200x675px
+—
+1080x1920px
+400x400px (circular)
+LinkedIn
+1200x627px
+—
+—
+400x400px (circular)
+Pinterest
+—
+1000x1500px (2:3)
+—
+165x165px
+CREATING SCROLL-STOPPING CONTENT: DESIGN PRINCIPLESIn a feed where users scroll at 300+ words per minute, your image has approximately 1.7 seconds to stop the
+scroll. These design principles dramatically increase the likelihood your content gets noticed:
+■ High Contrast: Light text on dark background or vice versa — never light on light
+■ Bold Typography: Large, readable fonts work better at small sizes
+■ Single Focal Point: One dominant visual element draws the eye instantly
+Social Media Marketing Manual  |  Sixth Edition  |  2025–2026
+Community Technology Programme
+© 2025 Community Technology Programme. All rights reserved.
+Page 25
+■ Brand Colour Consistency: Recognisable colours trigger brand memory even without a logo
+■ Human Faces: Posts with human faces receive up to 38% more engagement
+■ Negative Space: Don't fill every pixel — breathing room improves readability
+■ Authenticity Over Perfection: Raw, real content often outperforms polished studio shots
+BATCH CONTENT CREATION WORKFLOWThe most efficient approach to social media content creation is batching: setting aside a dedicated block of
+time (e.g., 2–4 hours weekly) to create all content for the coming week in one session. This eliminates daily
+decision fatigue and ensures consistent quality.
+Weekly Batch Workflow:
+■ Monday 9am: Content planning — review calendar, confirm topics for the week
+■ Monday 10am: Copywriting session — write all captions, hashtags, and CTAs
+■ Monday 11am: Design session — create all images and graphics in Canva
+■ Monday 1pm: Video session — film or edit all video content for the week
+■ Monday 2pm: Scheduling session — load all content into Meta Business Suite/Later/Metricool
+■ Once scheduled, your social media runs on autopilot for the week, freeing you to focus on community management,
+engagement, and growth activities.
+Social Media Marketing Manual  |  Sixth Edition  |  2025–2026
+Community Technology Programme
+© 2025 Community Technology Programme. All rights reserved.
+Page 26
+12. Creating Video Content (Short & Long Form)
+MODULE FOUR | CONTENT CREATION
+THE VIDEO CONTENT LANDSCAPE IN 2025Video content accounts for 82% of all internet traffic in 2025. For social media marketers, video is no longer
+one option among many — it is the primary format through which content is discovered, consumed, and
+shared. Understanding the difference between short-form and long-form video is essential for platform
+strategy.
+Dimension
+Short-Form Video (< 60–90 sec)
+Long-Form Video (2–30+ min)
+Primary Platforms
+TikTok, Instagram Reels, YouTube Shorts, Facebook Reels
+YouTube, Facebook Watch, LinkedIn Video
+Primary Goal
+Discovery, awareness, entertainment, virality
+Education, trust-building, conversion
+Production Effort
+Low — smartphone, ring light, 1 take
+High — scripted, edited, B-roll
+Algorithm Boost
+Highest — platforms actively promote short video
+Strong on YouTube, moderate elsewhere
+Ideal Content Types
+Trends, tips, behind-scenes, quick demos, reactions
+Tutorials, reviews, interviews, documentaries
+Avg Completion Rate
+55–75% (strong hook required)
+25–40% (quality sustains viewers)
+THE ANATOMY OF A VIRAL SHORT-FORM VIDEOAfter analysing thousands of viral short-form videos, a consistent structure emerges that maximises both
+algorithm performance and viewer completion rates:
+■ 0–1 seconds: The Hook — a visually striking image, bold text, or spoken statement that stops the scroll
+■ 1–3 seconds: The Promise — explicitly state what the viewer will get ('Here's how I grew to 10k in 30 days')
+■ 3–15 seconds: The Value — deliver the core content quickly, using text overlays and voiceover
+■ 15–25 seconds: The Proof — evidence, example, result, or demonstration
+■ 25–30 seconds: The CTA — clear instruction ('Follow for more', 'Comment YES if this helped')
+2025 Video Hook Formulas That Work
+1. 'I [did X] and got [surprising result]' — curiosity + credibility
+2. '[Number] things nobody tells you about [topic]' — list format, high completion
+3. 'Stop [common mistake] — do this instead' — pattern interrupt + problem-solution
+4. 'POV: You just [relatable scenario]' — POV format drives massive engagement
+5. 'Wait for it...' — teases payoff, drives full completion (critical for algorithm)
+TOOLS FOR VIDEO CREATION (2025)Tool
+Type
+Cost
+Best For
+CapCut
+Mobile + Desktop video editor
+Free (Pro available)
+TikTok/Reels editing, auto-captions, AI effects
+Social Media Marketing Manual  |  Sixth Edition  |  2025–2026
+Community Technology Programme
+© 2025 Community Technology Programme. All rights reserved.
+Page 27
+Canva Video
+Browser-based editor
+Free / Pro
+Branded video templates, quick edits
+DaVinci Resolve
+Professional desktop editor
+Free (Studio is paid)
+High-quality editing, color grading
+Adobe Premiere Rush
+Mobile + Desktop editor
+Paid (Creative Cloud)
+Professional mobile editing
+InShot
+Mobile editor
+Free / Pro
+Fast Reels/TikTok edits on phone
+Descript
+AI video + podcast editor
+Free / Paid tiers
+Edit video by editing transcript (AI)
+Pictory
+AI text-to-video
+Paid
+Turn blog posts/scripts into video automatically
+HeyGen
+AI avatar video
+Paid
+Create spokesperson videos without filming
+EQUIPMENT GUIDE: STARTING FROM ZEROYou do not need expensive equipment to create effective social media video content. The best camera is the
+one you have — your smartphone. In 2025, videos shot on iPhone or flagship Android devices routinely
+achieve millions of views.
+Starter Kit (Under $100 total):
+■ Ring Light ($15–$30) — eliminates shadows, creates professional studio lighting effect
+■ Smartphone Tripod/Stand ($10–$20) — stable shots, hands-free recording
+■ Lavalier/Clip Microphone ($20–$40) — dramatically improves audio quality
+■ White or Branded Backdrop ($10–$20 for fabric, or use existing wall/environment)
+Upgrade Kit ($300–$500):
+■ Ring Light with Stand + Diffuser ($50–$80)
+■ Wireless Lavalier Mic (DJI Mic or Rode Wireless Go II) ($200–$300)
+■ Gimbal Stabilizer ($80–$150) for walking/movement shots
+Social Media Marketing Manual  |  Sixth Edition  |  2025–2026
+Community Technology Programme
+© 2025 Community Technology Programme. All rights reserved.
+Page 28
+13. AI-Powered Content Tools
+MODULE FOUR | CONTENT CREATION
+Artificial intelligence has fundamentally changed content creation in 2025. AI tools can now generate
+captions, hashtags, scripts, images, voiceovers, entire videos, and even respond to social media comments
+— in seconds. Marketers who leverage AI tools work 5–10x faster than those who don't, and the quality gap
+is narrowing rapidly.
+AI TOOLS FOR SOCIAL MEDIA MARKETERSTool
+AI Capability
+Best Social Media Use Case
+ChatGPT (OpenAI)
+Text generation, editing, strategy
+Caption writing, content ideas, hashtag research, strategy planning
+Claude (Anthropic)
+Text generation, analysis, coding
+Long-form content, strategy documents, ad copy variations
+Gemini (Google)
+Text, image, search-integrated
+Research-backed captions, trend analysis, YouTube scripts
+Canva Magic Suite
+Design, image, copy generation
+Social graphics, brand templates, AI photo editing
+CapCut AI
+Video editing, auto-captions, effects
+TikTok/Reels editing, auto-subtitles, AI backgrounds
+ElevenLabs
+AI voice generation
+Voiceovers for videos without filming yourself
+Midjourney / DALL-E
+AI image generation
+Custom illustrations, product mockups, unique visuals
+Flick
+AI hashtag + caption research
+Data-driven hashtag strategy, caption optimisation
+Ocoya / Predis.ai
+AI social media content creation
+Auto-generate full posts from product descriptions
+USING AI RESPONSIBLY IN CONTENT CREATIONWhile AI dramatically accelerates content creation, several important principles apply to ensure quality,
+authenticity, and ethical compliance:
+■ Always review and edit AI-generated content — AI makes factual errors (called 'hallucinations')
+■ Maintain your authentic brand voice — AI outputs need personalisation to feel genuine
+■ Disclose AI-generated content where platform rules or consumer expectations require it
+■ Never use AI to create deepfakes, impersonate others, or spread misinformation
+■ Verify AI-generated statistics and claims with primary sources before publishing
+■ Use AI as a starting point, not a finished product
+AI Prompt Template for Social Media Captions
+Try this prompt in ChatGPT or Claude:
+'Write 5 Instagram caption variations for a [business type] post about [topic].
+Brand voice: [professional/fun/inspirational/bold]. Include a question to drive comments.
+Character limit: 150. Include 5 relevant hashtags at the end.'
+Tip: The more specific your prompt, the better the output.
+Social Media Marketing Manual  |  Sixth Edition  |  2025–2026
+Community Technology Programme
+© 2025 Community Technology Programme. All rights reserved.
+Page 29
+Module Five | Instagram & Threads
+Visual Storytelling & Modern Social Conversation
+Social Media Marketing Manual  |  Sixth Edition  |  2025–2026
+Community Technology Programme
+© 2025 Community Technology Programme. All rights reserved.
+Page 30
+14. Instagram for Business (2025)
+MODULE FIVE | INSTAGRAM & THREADS
+Instagram remains the world's premier visual social platform, with 2 billion monthly active users and the
+highest average engagement rate of any major platform for visual content. In 2025, Instagram is the top
+platform for brand discovery among consumers aged 18–34, and over 130 million users tap on shopping
+posts every month.
+INSTAGRAM CONTENT TYPES (2025)Content Type
+Description
+Avg Reach
+Best Use Case
+Reels (9:16 video)
+Short-form video, 15–90 seconds
+Highest (algorithmic push)
+Discovery, entertainment, virality
+Carousels (2–10 slides)
+Swipeable multi-image/video posts
+High (2nd views counted)
+Education, step-by-step, storytelling
+Static Posts (photo/graphic)
+Single image or graphic
+Moderate (declining)
+Announcements, product shots, quotes
+Stories (24hr)
+Ephemeral 15-second content
+High among followers
+Behind-scenes, polls, CTAs, updates
+Instagram Live
+Real-time broadcast
+Moderate-High (notifies followers)
+Q&As, launches, events, interviews
+Instagram Broadcast Channel
+One-to-many direct messaging
+Very High (direct message)
+Exclusive content, announcements
+Guides
+Curated posts + commentary
+Low (discovery limited)
+Resource hubs, travel guides
+THE INSTAGRAM ALGORITHM IN 2025Instagram's Head of Instagram, Adam Mosseri, confirmed in 2025 that the platform uses separate ranking
+systems for Feed, Explore, Reels, and Stories. Each has different signals, but all reward genuine
+engagement over passive viewing.
+Feed Ranking Signals (most to least important):
+■ Saves: The strongest signal — users who save content deeply value it
+■ Comments: Especially multi-word comments and comment threads
+■ Shares: Direct shares to Stories and via DM massively boost reach
+■ Likes: Still counted but weighted lower than above actions
+■ Profile visits after seeing the post: Indicates deep curiosity
+■ Time spent viewing the post: Longer dwell time = quality signal
+■ Optimise for SAVES by creating 'save-worthy' content: tutorials, reference lists, recipes, templates, and
+checklist-style carousels that people want to return to.
+HASHTAG STRATEGY 2025Instagram's hashtag strategy has evolved significantly. In 2025, meta-analysis of over 1M posts shows that
+3–7 highly relevant hashtags outperform the 'dump 30 hashtags' approach that dominated prior strategies.
+2025 Hashtag Best Practices:
+Social Media Marketing Manual  |  Sixth Edition  |  2025–2026
+Community Technology Programme
+© 2025 Community Technology Programme. All rights reserved.
+Page 31
+■ Use 3–7 hashtags maximum — more does not increase reach
+■ Mix sizes: 1–2 large hashtags (1M+ posts), 2–3 medium (100k–1M), 1–2 niche (<100k)
+■ Use hashtags in the caption (not comments) for maximum indexing
+■ Research hashtags using the Instagram search bar — view the Reels tab to see what performs
+■ Create a branded hashtag (#YourBrandName) to aggregate user-generated content
+■ Avoid banned hashtags — check any new hashtag before using it
+INSTAGRAM SHOPPING SETUPInstagram Shopping allows businesses to tag products directly in posts, Reels, and Stories, with a direct
+purchase pathway without leaving the app. In 2025, over 70% of Instagram users say they've discovered a
+product on Instagram they later purchased.
+Instagram Shopping Setup Steps:
+1. Ensure you have a Facebook Business Page connected to your Instagram Business Account
+2. Go to Meta Commerce Manager (business.facebook.com/commerce) and create a Catalogue
+3. Add products with high-quality photos, descriptions, prices, and links
+4. Submit your Instagram account for Shopping Review in Instagram Settings
+5. Once approved (usually 1–5 days), Shopping tags appear in your post editor
+6. Tag products in all relevant posts, Reels, and Stories
+7. Set up an Instagram Shop tab on your profile for a dedicated storefront
+Social Media Marketing Manual  |  Sixth Edition  |  2025–2026
+Community Technology Programme
+© 2025 Community Technology Programme. All rights reserved.
+Page 32
+15. Instagram Promotions & Analytics
+MODULE FIVE | INSTAGRAM & THREADS
+INSTAGRAM ADS (2025)Instagram ads are managed through Meta Ads Manager and share the same powerful targeting as Facebook
+ads. In 2025, Instagram Reels Ads deliver the best cost-per-result of any Instagram format, often at 30–40%
+lower CPM than feed ads.
+Instagram Ad Formats:
+■ Photo Ads: Single image in feed or Stories
+■ Video Ads: Up to 60 seconds in feed, 15 seconds in Stories
+■ Reels Ads: Full-screen 9:16 video, 15–30 seconds optimal
+■ Carousel Ads: 2–10 images/videos users can swipe through
+■ Collection Ads: Featured image/video + product grid below
+■ Story Ads: Full-screen 9:16 format, must be designed mobile-first
+Instagram Ads Budget Guide for Small Businesses
+Brand Awareness (Reach): $5–$15/day — reach 1,000–5,000 unique users/day
+Website Traffic: $10–$20/day — drive 50–200 clicks/day (varies by industry)
+Lead Generation: $15–$30/day — generate 5–15 leads/day (varies by offer)
+E-commerce Sales: Start with $20–$50/day and scale winning creatives
+Rule of thumb: Run a new ad for at least 7 days before evaluating performance.
+INSTAGRAM ANALYTICS DEEP DIVEAccess Instagram Insights via your Professional Account: tap the bar chart icon on your profile, or use Meta
+Business Suite for more detailed analysis.
+Metric
+Where to Find It
+Benchmark
+Accounts Reached
+Insights → Accounts Reached
+5–20% of followers/post (organic)
+Engagement Rate
+Interactions / Reach x 100
+1–3% average, 5%+ excellent
+Profile Visits
+Insights → Profile Activity
+Rising trend = growing brand interest
+Reel Performance
+Reels → View Individual Reel Insights
+50%+ play rate = strong hook
+Story Completion Rate
+Stories → Individual Story Insights
+70%+ = engaging story
+Follower Demographics
+Insights → Audience
+Verify vs. target audience
+Best Time to Post
+Insights → Audience → Most Active Times
+Post 15–30 min before peak
+Website Clicks
+Insights → Profile Activity
+Track monthly vs. goals
+Social Media Marketing Manual  |  Sixth Edition  |  2025–2026
+Community Technology Programme
+© 2025 Community Technology Programme. All rights reserved.
+Page 33
+THE INFLUENCER MARKETING LANDSCAPE (2025)Influencer marketing has matured from a trend into a standard channel in the marketing mix. In 2025, the
+most effective influencer partnerships are with micro and nano influencers — those with smaller but highly
+engaged, niche-specific audiences.
+Tier
+Follower Range
+Avg Engagement Rate
+Typical Cost
+Best For
+Nano
+1K–10K
+5–8%
+$0–$500/post
+Local business, hyper-niche
+Micro
+10K–100K
+3–6%
+$500–$5,000/post
+Niche authority, ROI-focused
+Macro
+100K–1M
+1–3%
+$5K–$50K/post
+Brand awareness, scale
+Mega/Celebrity
+1M+
+0.5–1.5%
+$50K–$1M+/post
+Mass awareness campaigns
+16. Threads – The New Conversation Platform
+MODULE FIVE | INSTAGRAM & THREADS
+Threads, Meta's text-based social network launched in July 2023, has grown to over 300 million active users
+by 2025. Directly integrated with Instagram, Threads represents a significant opportunity for brands to reach
+engaged audiences with low competition and currently high organic reach — similar to early Instagram or
+early Twitter.
+THREADS FOR BUSINESS: KEY FACTS■ Posts up to 500 characters, with photos, videos, links, and polls
+■ Organic reach is currently 3–5x higher than equivalent Facebook or Instagram posts
+■ Linked to your Instagram account — import your follower base instantly
+■ No hashtags currently — discoverability relies on keywords in the post text
+■ Ads have launched (2024–2025) — early adopters benefit from lower ad costs
+■ Ideal for thought leadership, industry commentary, behind-scenes updates, and community Q&A;
+Social Media Marketing Manual  |  Sixth Edition  |  2025–2026
+Community Technology Programme
+© 2025 Community Technology Programme. All rights reserved.
+Page 34
+Module Six | TikTok
+The World's Most Powerful Discovery Engine
+Social Media Marketing Manual  |  Sixth Edition  |  2025–2026
+Community Technology Programme
+© 2025 Community Technology Programme. All rights reserved.
+Page 35
+17. TikTok for Business – Full Module
+MODULE SIX | TIKTOK
+TikTok is no longer just an entertainment platform for teenagers. With 1.65 billion monthly active users in
+2025 — and a user base that now spans all age groups — TikTok is the world's most powerful content
+discovery engine. Brands that crack TikTok's algorithm achieve reach that is impossible on any other
+platform, often going viral with zero followers and zero ad spend.
+TikTok in Numbers (2025)
+1.65 billion monthly active users globally
+Average daily time on TikTok: 95 minutes per user (highest of any social platform)
+55% of TikTok users have purchased a product they discovered on TikTok
+#TikTokMadeMeBuyIt hashtag has been used over 100 billion times
+TikTok Shop reached $20B+ in GMV in 2024, growing 200% YoY
+89% of users say TikTok creators influence their purchasing decisions
+THE TIKTOK ALGORITHM: FOR YOU PAGE (FYP)TikTok's For You Page (FYP) algorithm is the most sophisticated content recommendation system in social
+media. Unlike other platforms that primarily surface content from accounts you follow, TikTok's FYP serves
+content based purely on predicted interest — meaning a brand-new account with zero followers can reach
+millions of people in 24 hours.
+FYP Algorithm Ranking Signals:
+■ Video Completion Rate: The single most important signal — viewers who watch to the end signal quality
+■ Rewatches: Users who replay a video signal high value to the algorithm
+■ Shares: The strongest engagement signal — sharing is active recommendation
+■ Comments: Both volume and sentiment matter; comment threads boost distribution
+■ Likes: Standard engagement signal
+■ Audio: Using trending sounds significantly boosts discoverability via audio search
+■ Hashtags: Relevant niche hashtags help categorise content for the algorithm
+■ Device + Account Settings: Language, location, device type all factor in
+SETTING UP TIKTOK FOR BUSINESS1. Download TikTok and create a personal account, OR go to ads.tiktok.com to create a Business Account
+directly
+2. In Settings → Manage Account → Switch to Business Account
+3. Choose your Business Category (this affects content recommendations and ad eligibility)
+4. Complete your profile: profile photo (logo), bio (150 characters), website link
+Social Media Marketing Manual  |  Sixth Edition  |  2025–2026
+Community Technology Programme
+© 2025 Community Technology Programme. All rights reserved.
+Page 36
+5. Set up TikTok Business Center at business.tiktok.com for ads and analytics management
+6. Connect your TikTok to Instagram and YouTube for cross-platform promotion
+7. Enable Creator Tools (Settings → Creator Tools) to access analytics and monetization
+TIKTOK CONTENT STRATEGYTikTok content strategy differs fundamentally from other platforms. On TikTok, entertainment value comes
+before brand messaging. The mantra is: 'Don't make ads, make TikToks.' Content that feels native, authentic,
+and entertaining outperforms polished, brand-heavy content by 10x.
+Content Pillars for TikTok Business Accounts:
+■ Educational: 'Did you know...', quick tips, myth-busting, industry secrets
+■ Entertainment: Trends, challenges, humor, relatable workplace moments
+■ Behind-the-Scenes: Manufacturing process, team culture, day-in-the-life
+■ Product/Service: Demos, transformations, before-and-after, unboxing
+■ User-Generated Content (UGC): Duets, stitches, customer testimonials
+■ Storytelling: Founder journey, brand origin, customer success stories
+TIKTOK VIDEO SPECIFICATIONSFormat
+Dimensions
+Duration
+File Size Limit
+Standard Video (Feed)
+1080x1920px (9:16)
+3 seconds – 10 minutes
+287.6 MB (iOS), 72 MB (Android)
+TikTok Ads
+1080x1920px (9:16)
+5–60 seconds recommended
+500 MB
+Profile Picture
+200x200px minimum
+N/A
+5 MB
+TikTok Shop Thumbnail
+800x800px
+N/A
+2 MB
+TIKTOK TRENDING AUDIO STRATEGYUsing trending audio is one of the most reliable strategies to increase TikTok reach. The algorithm actively
+boosts videos using trending sounds because users browse via audio search. A video using a trending sound
+gets served to everyone who has engaged with that sound before — an instant built-in audience.
+How to Find Trending Audio:
+■ Browse the TikTok Creative Center (ads.tiktok.com/business/creativecenter) → Trending Songs
+■ Check the music note icon on any video in your FYP — it shows song stats and trends
+■ Follow your industry's top creators and note which audio they're using
+■ The 'For You' page Browse tab surfaces trending content using specific audio
+Social Media Marketing Manual  |  Sixth Edition  |  2025–2026
+Community Technology Programme
+© 2025 Community Technology Programme. All rights reserved.
+Page 37
+18. TikTok Ads & TikTok Shop
+MODULE SIX | TIKTOK
+TIKTOK ADS OVERVIEWTikTok Ads have matured significantly since launch and now offer sophisticated targeting comparable to
+Meta Ads, with generally lower costs per result in most markets. In 2025, TikTok Ads are an essential tool for
+businesses targeting audiences under 35.
+Ad Format
+Placement
+Best For
+In-Feed Ads
+Native in For You Page
+Brand awareness, traffic, app installs
+TopView Ads
+First video on app open (3–60s)
+Maximum brand awareness, launches
+Branded Hashtag Challenge
+Discovery page hashtag banner
+UGC campaigns, viral reach
+Branded Effects
+Custom AR effects/filters
+Interactive brand experiences
+Spark Ads
+Boost existing organic posts as ads
+Best CTR — native feel, social proof
+Collection Ads
+In-feed + product catalogue
+E-commerce product discovery
+TikTok Shop Ads (VSA)
+Shopping-linked video ads
+Direct TikTok Shop sales
+TIKTOK SHOP: THE FUTURE OF SOCIAL COMMERCETikTok Shop is the fastest-growing social commerce platform in the world, enabling creators and brands to
+sell products directly through TikTok videos, Live streams, and a dedicated Shop tab — all without users
+leaving the app. In markets where it's available, TikTok Shop delivers the highest conversion rates of any
+social commerce platform.
+TikTok Shop Setup:
+1. Visit seller.tiktok.com and register as a seller
+2. Verify your business documents and bank account
+3. Create your product catalogue with high-quality photos, videos, and descriptions
+4. Link products to your TikTok videos using the Product Link feature
+5. Enable Affiliate programme to allow creators to promote your products for commission
+6. Go Live regularly with product demonstrations — TikTok Live Shopping converts at 3–5x static
+Social Media Marketing Manual  |  Sixth Edition  |  2025–2026
+Community Technology Programme
+© 2025 Community Technology Programme. All rights reserved.
+Page 38
+Module Seven | YouTube
+The World's Second Largest Search Engine
+Social Media Marketing Manual  |  Sixth Edition  |  2025–2026
+Community Technology Programme
+© 2025 Community Technology Programme. All rights reserved.
+Page 39
+19. YouTube Studio & Shorts
+MODULE SEVEN | YOUTUBE
+YouTube is simultaneously the world's second-largest search engine (behind Google, its parent company)
+and the second-largest social media platform by user count. In 2025, YouTube's dual nature as both a search
+engine and social platform makes it uniquely valuable: content can drive discovery for years, not just hours.
+YOUTUBE CONTENT FORMATS (2025)Format
+Duration
+Reach Mechanism
+Best For
+Long-form Videos
+5–30+ minutes
+Search, Suggested, Subscriptions
+Tutorials, reviews, deep education
+YouTube Shorts
+Up to 60 seconds (up to 3 min)
+Shorts Feed (algorithmic FYP)
+Discovery, repurposed TikTok/Reels
+YouTube Live
+No time limit
+Live notifications + homepage
+Events, Q&As, gaming, reactions
+YouTube Premieres
+Scheduled video with live chat
+Event notification to subscribers
+New video launches, trailers
+Community Posts
+Text, images, polls
+Subscriber homepage and notifications
+Engagement between videos
+YOUTUBE SEO: THE SEARCHABLE PLATFORM ADVANTAGEUnlike TikTok or Instagram where content has a 24–48 hour discovery window, YouTube videos can rank in
+search results and drive organic views for years. This 'evergreen' quality is YouTube's unique advantage and
+requires an SEO (Search Engine Optimisation) approach to content strategy.
+YouTube SEO Checklist:
+■ Title: Include your primary keyword in the first 60 characters — be descriptive and compelling
+■ Description: Write 200–400 words using primary and secondary keywords naturally; include timestamps
+■ Tags: Add 8–12 relevant tags including variations of your primary keyword
+■ Chapters: Add timestamps (0:00 Intro, 1:30 Topic 1...) to improve watch time and UX
+■ Custom Thumbnail: High-contrast image with bold text; A/B test thumbnails
+■ Cards & End Screens: Add at the 70% mark — link to related videos to keep viewers watching
+■ Pinned Comment: Pin your own comment with key resources and links from the video
+■ Playlists: Group related videos — playlists rank in YouTube search and drive binge-watching
+YOUTUBE SHORTS STRATEGY (2025)YouTube Shorts now generates 70+ billion views daily — surpassing TikTok. In 2025, Shorts have become
+the primary discovery mechanism for new YouTube channels. The recommended strategy is to use Shorts
+for audience discovery and long-form for monetization and depth.
+Shorts Content Strategy:
+■ Repurpose your best TikTok and Instagram Reels to YouTube Shorts — triple your reach from one video
+■ Create Shorts that tease long-form content ('Full video in my channel')
+Social Media Marketing Manual  |  Sixth Edition  |  2025–2026
+Community Technology Programme
+© 2025 Community Technology Programme. All rights reserved.
+Page 40
+■ Post 3–5 Shorts per week for maximum algorithmic push
+■ Shorts DO NOT negatively impact long-form video performance (confirmed by YouTube)
+■ Shorts that drive viewers to your long-form content achieve the highest ROI of any YouTube strategy.
+Social Media Marketing Manual  |  Sixth Edition  |  2025–2026
+Community Technology Programme
+© 2025 Community Technology Programme. All rights reserved.
+Page 41
+20. YouTube Analytics & Monetization
+MODULE SEVEN | YOUTUBE
+YOUTUBE ANALYTICS: KEY METRICSMetric
+What It Tells You
+Why It Matters
+Click-Through Rate (CTR)
+% who clicked thumbnail when shown
+Low CTR = fix thumbnail/title
+Avg View Duration
+Average seconds viewers watch
+Higher = better for algorithm
+Watch Time (Hours)
+Total hours content has been viewed
+Primary ranking signal in search
+Avg Percentage Viewed
+% of video average viewer watches
+>50% indicates strong content quality
+Impressions
+How many times thumbnail was shown
+Tracks recommendation algorithm traction
+Subscriber Source
+Where new subscribers come from
+Identify best content for growth
+Revenue per 1K Views (RPM)
+Earnings per 1,000 views
+Key monetization metric
+YOUTUBE MONETIZATION (YPP) IN 2025The YouTube Partner Programme (YPP) allows creators to earn revenue from ads, channel memberships,
+Super Thanks, Super Chat, Super Stickers, and YouTube Shopping.
+YPP Eligibility Thresholds (2025):
+■ Standard YPP: 1,000 subscribers + 4,000 hours watch time (past 12 months) OR 10M Shorts views
+■ YPP Expanded Access (Lower Tier): 500 subscribers + 3,000 watch hours + 3 public uploads in 90 days
+■ YPP grants access to: Ad revenue, Super Thanks, Channel Memberships, YouTube Shopping
+THE YOUTUBE ALGORITHM IN 2025YouTube's recommendation algorithm has one primary goal: keep viewers on YouTube longer. It achieves
+this by recommending videos that have historically been watched to completion by similar viewers. This
+means average view duration and viewer satisfaction (likes, comments, surveys) are the most powerful
+signals.
+Algorithm Optimisation Tips:
+■ Open every video with a strong hook that delivers on the thumbnail/title promise
+■ Use pattern interrupts every 60–90 seconds to maintain attention (cuts, graphics, music changes)
+■ Use the 'Loop Method': reference something coming later in the video to prevent early drop-offs
+■ End videos with a compelling reason to watch another video immediately
+■ Upload consistently — the algorithm rewards channels that post on predictable schedules
+Social Media Marketing Manual  |  Sixth Edition  |  2025–2026
+Community Technology Programme
+© 2025 Community Technology Programme. All rights reserved.
+Page 42
+Module Eight | LinkedIn & X (Twitter)
+Professional Networks & Microblogging
+Social Media Marketing Manual  |  Sixth Edition  |  2025–2026
+Community Technology Programme
+© 2025 Community Technology Programme. All rights reserved.
+Page 43
+21. LinkedIn for Business & B2B Marketing
+MODULE EIGHT | LINKEDIN & X
+LinkedIn has undergone a transformation from a job-seeking website into the world's most powerful B2B
+marketing platform. With 1 billion+ members, 63 million companies listed, and the highest organic reach of
+any major social platform in 2025, LinkedIn offers unparalleled access to decision-makers, executives, and
+industry professionals.
+WHY LINKEDIN IN 2025?Metric
+Value
+Monthly Active Users
+1 billion+
+Avg Engagement Rate (organic)
+0.36% (5x higher than Twitter, similar to Instagram)
+B2B Lead Generation Rate
+LinkedIn generates 80% of B2B social media leads
+Decision-Maker Access
+4 out of 5 LinkedIn members drive business decisions
+Content Reach
+Organic posts currently reach 5–20% of followers (vs 1–5% Facebook)
+Content Lifespan
+Posts surface in feeds for 24–48 hours (vs 3–5 hours on Instagram)
+LINKEDIN CONTENT THAT PERFORMS IN 2025LinkedIn's algorithm heavily favours content that generates meaningful discussion in comments. The most
+successful content types are those that share genuine professional insights, personal stories, and thought
+leadership — not corporate press releases.
+Content Type
+Avg Engagement
+Best Practices
+Text-only posts (opinion/insight)
+Highest
+500–1,300 characters; end with a question; no links
+Document/Carousel PDFs
+Very High
+10–20 slides; educational; 'save to read later' CTA
+Native Video
+High
+60–90 seconds; captions essential; professional insights
+Images with insight captions
+Moderate-High
+Infographics, data visualisations, quote graphics
+Articles (LinkedIn native)
+Moderate
+Long-form (1,500–3,000 words); expertise demonstration
+Polls
+High engagement
+4 options; genuinely interesting question; comment to explain vote
+Links (external)
+Lowest
+Post the link in the first comment to maximise reach
+LINKEDIN COMPANY PAGE VS. PERSONAL PROFILEIn 2025, personal profiles consistently outperform Company Pages on LinkedIn for organic reach. The
+algorithm favours person-to-person interaction. The most effective LinkedIn strategy combines both: a
+well-maintained Company Page for brand credibility, plus active content from the founder/CEO's personal
+profile.
+■ Encourage your team to share Company Page posts from their personal profiles. A single share from an active
+personal profile can multiply a Company Page post's reach by 10–20x.
+Social Media Marketing Manual  |  Sixth Edition  |  2025–2026
+Community Technology Programme
+© 2025 Community Technology Programme. All rights reserved.
+Page 44
+LINKEDIN ADVERTISINGLinkedIn Ads are the most expensive in social media (CPCs of $5–$15 vs $0.50–$2 on Meta) but offer
+targeting no other platform can match: job title, company, industry, seniority, skills, and more. For B2B
+businesses, the ROI is often exceptional.
+LinkedIn Ad Formats:
+■ Sponsored Content: Promoted posts in the feed (photo, video, carousel, document)
+■ Message Ads (InMail): Sent directly to LinkedIn inboxes — high open rates
+■ Lead Gen Forms: Native forms auto-filled with LinkedIn profile data — highest B2B lead quality
+■ Text Ads: Right-rail display ads — lower CPM, good for retargeting
+■ Thought Leader Ads: Sponsor content from individual employees' profiles (2024 feature)
+Social Media Marketing Manual  |  Sixth Edition  |  2025–2026
+Community Technology Programme
+© 2025 Community Technology Programme. All rights reserved.
+Page 45
+22. X (Twitter) Marketing in 2025
+MODULE EIGHT | LINKEDIN & X
+X, formerly Twitter, underwent dramatic changes following Elon Musk's acquisition in 2022 and continues to
+evolve in 2025. Despite losing a significant portion of its advertising revenue and some user base, X remains
+the most important platform for real-time news, industry discussions, and direct brand-to-audience
+conversation.
+X (TWITTER) IN 2025: THE CURRENT STATE■ Monthly Active Users: approximately 610 million globally
+■ X Premium (paid subscription) unlocks extended posts, creator revenue sharing, and reduced ads
+■ Creator Revenue Share: X now pays creators a share of ad revenue from replies
+■ X Spaces: Live audio rooms drive significant engagement for thought leaders
+■ Communities: Topic-based private groups similar to Facebook Groups
+■ Long-form Posts: Up to 25,000 characters for X Premium subscribers
+X MARKETING BEST PRACTICES (2025)■ Be conversational and direct — X rewards genuine interaction, not corporate speak
+■ Use 1–2 hashtags maximum — X's algorithm has deprioritised hashtag discovery
+■ Post 3–7 times daily for maximum reach — X has the highest recommended posting frequency
+■ Engage actively — reply to mentions, join trending conversations in your niche
+■ Use X Spaces to host weekly live audio discussions — powerful for audience building
+■ Thread content: Break insights into numbered tweet threads for high engagement
+■ Media posts (images/video) receive 3–5x more impressions than text-only posts
+X Content That Gets Shared
+Contrarian takes: Respectful disagreement with conventional wisdom drives replies and shares.
+Industry predictions: 'My prediction for [industry] in 2025...' — drives discussion.
+Quick insights: '3 things I wish I knew before [experience]...'
+Real-time commentary: React to breaking industry news as it happens.
+Data drops: Share interesting statistics relevant to your audience.
+Social Media Marketing Manual  |  Sixth Edition  |  2025–2026
+Community Technology Programme
+© 2025 Community Technology Programme. All rights reserved.
+Page 46
+Module Nine | Finishing Touches
+WhatsApp, Commerce, IP & AI Ethics
+Social Media Marketing Manual  |  Sixth Edition  |  2025–2026
+Community Technology Programme
+© 2025 Community Technology Programme. All rights reserved.
+Page 47
+23. WhatsApp Business & Social Commerce
+MODULE NINE | FINISHING TOUCHES
+WhatsApp Business has evolved from a basic messaging tool into a powerful commerce and customer
+service platform. With 2 billion active users and the highest open rates of any messaging channel (98% vs
+20% for email), WhatsApp Business offers direct, personal communication at scale.
+WHATSAPP BUSINESS FEATURES (2025)Feature
+Description
+Business Value
+Business Profile
+Verified business info, website, location, hours
+Builds trust and discoverability
+Product Catalogue
+List and showcase products with photos and prices
+In-app product discovery and ordering
+Quick Replies
+Save and reuse frequent message templates
+10x faster customer service response
+Automated Messages
+Greeting, away, and auto-reply messages
+24/7 response even when offline
+WhatsApp Flows
+Interactive in-chat forms and booking
+Appointments, surveys, lead capture
+Broadcast Lists
+Send to up to 256 contacts at once
+Direct promotions to opted-in customers
+WhatsApp Channels
+One-to-many broadcast like newsletter
+Share updates with large audiences
+WhatsApp Pay
+In-chat payments (selected markets)
+Frictionless in-chat purchase pathway
+API (for scaling)
+CRM integration, chatbots, mass messaging
+Enterprise-scale customer communication
+SOCIAL COMMERCE IN 2025: THE FULL PICTURESocial commerce — the ability to discover and purchase products directly within social media platforms — is
+the fastest-growing commerce channel globally. In 2025, global social commerce revenue exceeds $1 trillion
+for the first time, with Asia Pacific leading and Western markets rapidly accelerating.
+Platform
+Commerce Feature
+Status (2025)
+Best For
+TikTok Shop
+In-app product listings, live selling
+Available in US, UK, SEA, expanding
+Consumer products, viral products
+Instagram Shopping
+Product tags, Shop tab, Live Shopping
+Global
+Visual products, fashion, beauty
+Facebook Shops
+Full storefront within Facebook
+Global
+All e-commerce categories
+Pinterest Shopping
+Product pins with purchase links
+US and expanding
+Home décor, fashion, food
+YouTube Shopping
+Product links below videos, livestream shopping
+US, expanding
+Tech, fashion, beauty tutorials
+WhatsApp Commerce
+Catalogue + ordering via chat
+Select markets
+Direct-to-consumer, services
+Social Media Marketing Manual  |  Sixth Edition  |  2025–2026
+Community Technology Programme
+© 2025 Community Technology Programme. All rights reserved.
+Page 48
+24. Intellectual Property, AI Ethics & Compliance
+MODULE NINE | FINISHING TOUCHES
+COPYRIGHT IN THE SOCIAL MEDIA AGE (2025)Copyright law applies equally online as offline. In the context of social media marketing, copyright violations
+are among the most common legal issues businesses face — often unknowingly. Platforms have invested
+heavily in automated copyright detection systems that will remove content, monetize it on behalf of the
+copyright holder, or strike your account.
+WHAT YOU CAN AND CANNOT USEContent Type
+Can You Use It?
+How to Use Legally
+Your own photos/videos
+Yes — full rights
+No restrictions
+Photos from Google Images
+No (usually copyrighted)
+Use with explicit license only
+Royalty-Free Stock (Unsplash, Pexels)
+Yes (per license terms)
+Credit photographer where required
+Licensed Stock (Shutterstock, Getty)
+Yes — with paid license
+Check license for social media use
+Music in videos
+Only if licensed
+Use royalty-free music (Epidemic Sound, Artlist, platform libraries)
+Brand logos of other companies
+Nominative use only
+Reference only — never in own branding
+AI-generated images (Midjourney, DALL-E)
+Usually yes (check ToS)
+Verify platform's AI art ownership policy
+User-Generated Content (UGC)
+With explicit permission
+Get written consent before reposting
+PLATFORM COPYRIGHT SYSTEMSYouTube Content ID:
+YouTube's Content ID system automatically scans every uploaded video against a database of copyrighted
+works. A match results in a copyright claim (not a strike), which may mute your audio, block the video in
+certain countries, or redirect ad revenue to the rights holder.
+Meta Rights Manager:
+Facebook and Instagram use Rights Manager to detect copyrighted images and video. Rights holders can
+register their content and choose to block, monetize, or monitor infringing posts.
+TikTok Copyright Policy:
+TikTok's Commercial Music Library provides licensed music for business accounts. Using unlicensed
+commercial music in business account videos risks removal or account restrictions.
+AI ETHICS & DISCLOSURE IN 2025As AI-generated content becomes indistinguishable from human-created content, regulatory bodies and
+platform policies are evolving rapidly. Several key guidelines now apply:
+■ EU AI Act (2025): Requires disclosure of AI-generated content in some categories
+Social Media Marketing Manual  |  Sixth Edition  |  2025–2026
+Community Technology Programme
+© 2025 Community Technology Programme. All rights reserved.
+Page 49
+■ FTC Guidelines (US): Require disclosure of AI-generated endorsements and testimonials
+■ Platform Policies: TikTok, Instagram, and YouTube now require labelling AI-generated realistic content
+■ Deepfakes: Creating realistic AI-generated videos of real people without consent is illegal in many
+jurisdictions
+■ AI Advertising Compliance: AI-generated ad claims must still comply with all advertising standards
+AI Content Best Practices
+Label AI-generated images and videos with 'AI-generated' or 'Made with AI' disclosures.
+Never use AI to create realistic content depicting real people without explicit consent.
+Verify all AI-generated factual claims before publishing — AI models make errors.
+Use AI as a tool, not a replacement for genuine brand voice and human creativity.
+Stay updated on platform-specific AI disclosure requirements — these change regularly.
+SOCIAL MEDIA POLICY FOR BUSINESSESEvery business active on social media should maintain a documented Social Media Policy covering: who is
+authorised to post on behalf of the brand, what information may not be shared publicly, how to handle
+negative comments and crisis situations, guidelines for employee personal use of social media (where it
+reflects on the brand), and the process for obtaining approvals for paid campaign content.
+Social Media Marketing Manual  |  Sixth Edition  |  2025–2026
+Community Technology Programme
+© 2025 Community Technology Programme. All rights reserved.
+Page 50
+You're Ready to Begin
+Social Media Marketing Manual | Sixth Edition
+The platforms will change. The algorithms will evolve. The fundamentals —
+great content, authentic storytelling, and genuine community — will always
+ win.
+ 
+Module Completion Checklist
+■  Module 1: Business name, logo, brand bible, and colour palette complete
+■  Module 2: Facebook Business Page live and optimised
+■  Module 3: SMART goals documented, content calendar created
+■  Module 4: Content batching workflow established, AI tools set up
+■  Module 5: Instagram Business Account live, Shopping enabled
+■  Module 6: TikTok Business Account live, first 5 videos posted
+■  Module 7: YouTube channel created, Shorts strategy in motion
+■  Module 8: LinkedIn Company Page live, personal profile optimised
+■  Module 9: WhatsApp Business set up, IP policy documented
+ © 2025 Community Technology Programme. All rights reserved. Sixth Edition — Updated for 2025–2026.
+ 

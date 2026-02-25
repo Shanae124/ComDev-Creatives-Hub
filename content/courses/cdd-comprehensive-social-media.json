@@ -1,0 +1,560 @@
+{
+  "id": "social-media-marketing-2025",
+  "title": "Social Media Marketing for Practical Creators",
+  "subtitle": "Professional Training Manual – Sixth Edition 2025–2026",
+  "facilitator": "Community Technology Programme",
+  "description": "Comprehensive course covering all aspects of social media marketing, from foundational brand strategy to advanced platform-specific tactics. Fully updated for 2025 with TikTok, Threads, AI tools, and social commerce strategies.",
+  "totalChapters": 24,
+  "totalModules": 9,
+  "keyStats": {
+    "globalUsers": "5.24B",
+    "avgScreenTime": "2h 20m daily",
+    "socialCommerceGrowth": "15% annual",
+    "marketersReportingROI": "73%"
+  },
+  "modules": [
+    {
+      "id": "module-1",
+      "title": "Module One | Foundation",
+      "subtitle": "The Building Blocks of Social Media Marketing",
+      "chapters": [
+        {
+          "id": "ch-1",
+          "title": "Introduction to Social Media 2025",
+          "topics": [
+            "Social media landscape in 2025",
+            "5.24 billion global users and market reality",
+            "Platform trends and algorithm changes",
+            "Short-form video dominance (53 min daily)",
+            "Platform selection strategy",
+            "B2C vs B2B social media approaches"
+          ],
+          "keyTakeaways": [
+            "Facebook remains #1 by users (3.07B), but TikTok leads in engagement",
+            "YouTube Shorts: 70 billion views per day",
+            "Organic reach requires strategy; paid reach is essential on legacy platforms",
+            "Short-form video gets 3x higher engagement than static posts",
+            "67% of marketers now use short-form video"
+          ],
+          "resources": ["Platform comparison chart", "2025 Social network rankings", "Feature compatibility matrix"]
+        },
+        {
+          "id": "ch-2",
+          "title": "Corporate Groundwork & Brand Identity",
+          "topics": [
+            "Business naming essentials",
+            "Brand voice and tone definition",
+            "Value proposition formulation",
+            "Building your Brand Bible",
+            "Consistency across platforms",
+            "Consumer perception metrics (0.05 second judgment)"
+          ],
+          "keyTakeaways": [
+            "Business name must work across websites, email, handles, and word-of-mouth",
+            "Choose 1 of 4 voice types: Professional, Friendly, Bold/Disruptive, or Inspirational",
+            "Value proposition formula: 'We help [audience] achieve [outcome] by [method]'",
+            "Brand Bible is essential for consistency across multiple creators/AI tools",
+            "Color increases brand recognition by up to 80%"
+          ],
+          "resources": ["Brand name checklist", "Voice tone examples", "Canva Brand Bible templates"]
+        },
+        {
+          "id": "ch-3",
+          "title": "Logo, Colour & Visual Identity Design",
+          "topics": [
+            "Logo design principles for 2025",
+            "Logo types and applications",
+            "Testing logos at small sizes (40x40 pixels)",
+            "Color psychology in branding",
+            "Corporate color palette selection",
+            "Using Canva and AI design tools"
+          ],
+          "keyTakeaways": [
+            "Five logo principles: Simplicity, Versatility, Memorability, Timelessness, Relevance",
+            "Logo must work at 500px and 40px sizes equally well",
+            "7 logo types: Wordmark, Lettermark, Pictorial, Abstract, Mascot, Combination, Emblem",
+            "Blue = trust (Facebook, LinkedIn), Red = energy (YouTube, Netflix), Green = growth",
+            "Canva Magic Design now generates professional logos with AI in seconds"
+          ],
+          "resources": ["Logo design checklist", "Canva free tier guide", "Color psychology table"]
+        }
+      ]
+    },
+    {
+      "id": "module-2",
+      "title": "Module Two | Facebook & Meta",
+      "subtitle": "The World's Largest Social Platform",
+      "chapters": [
+        {
+          "id": "ch-4",
+          "title": "Facebook for Business (2025)",
+          "topics": [
+            "Account types: Personal vs Page vs Creator",
+            "Facebook for businesses aged 25-54",
+            "Global dominance (3.07B users)",
+            "Marketplace and commerce features",
+            "Facebook Groups strategy",
+            "WhatsApp/Messenger integration"
+          ],
+          "keyTakeaways": [
+            "Facebook dominates ages 25-54 and most developing markets",
+            "Personal profiles prohibited for commercial use",
+            "Facebook Pages have best reach and analytics",
+            "Creator accounts for influencers and large audiences",
+            "Facebook Groups provide 2x higher engagement than Pages"
+          ],
+          "resources": ["Page setup checklist", "Account type comparison", "Policy guidelines"]
+        },
+        {
+          "id": "ch-5",
+          "title": "Profile Pictures, Covers & Reels",
+          "topics": [
+            "Profile picture optimal sizes and formats",
+            "Cover photo design best practices",
+            "Reels algorithm and best practices",
+            "Profile completeness impact on reach",
+            "Aspect ratios for all image types",
+            "Mobile-first design principles"
+          ],
+          "keyTakeaways": [
+            "Profile picture: 170x170px minimum; 1:1 ratio",
+            "Cover photo: 820x312px; clear even at 300px width",
+            "Reels algorithm favors native uploads over Instagram Reels imports",
+            "Empty fields cost 15-25% reach on average",
+            "Profile completeness is 70% of first-time visitor conversion"
+          ],
+          "resources": ["Image size template guide", "Design standards checklist", "Mobile preview tool"]
+        },
+        {
+          "id": "ch-6",
+          "title": "Posting, Scheduling & Creator Studio",
+          "topics": [
+            "Native posting vs link sharing",
+            "Content Calendar best practices",
+            "Scheduling across time zones",
+            "Best times to post (2025 data)",
+            "Meta Creator Studio features",
+            "Batch content creation workflow"
+          ],
+          "keyTakeaways": [
+            "Native posts (photo/video uploaded directly) get 2x reach vs link posts",
+            "Optimal times: Wed 9am-5pm, Thu 12-3pm, Fri 9am-5pm (US Central)",
+            "Scheduled posts appear in algorithm same as instant posts",
+            "Creator Studio allows scheduling to 6 Meta platforms simultaneously",
+            "Batch create 1 month of content in 1-2 sessions for consistency"
+          ],
+          "resources": ["Content calendar template", "Creator Studio guide", "Timezone conversion chart"]
+        },
+        {
+          "id": "ch-7",
+          "title": "Facebook Ads Manager & Meta Business Suite",
+          "topics": [
+            "Ads Manager interface navigation",
+            "Campaign/Ad Set/Ad hierarchy",
+            "Audience targeting and lookalike audiences",
+            "Budget and bidding strategies",
+            "Meta Pixel installation for retargeting",
+            "Conversion tracking setup"
+          ],
+          "keyTakeaways": [
+            "3-tier structure: Campaigns determine goal, Ad Sets define audience, Ads show creative",
+            "Lookalike audiences convert at 2x rate of cold targeting",
+            "Meta Pixel tracks off-platform conversions and enables retargeting",
+            "Dynamic ads automatically show best performing variations",
+            "Retargeting audiences have 15x lower CPC than cold audiences"
+          ],
+          "resources": ["Ads Manager walkthrough", "Pixel setup guide", "Audience targeting checklist"]
+        }
+      ]
+    },
+    {
+      "id": "module-3",
+      "title": "Module Three | Strategy & Analytics",
+      "subtitle": "Data-Driven Decision Making",
+      "chapters": [
+        {
+          "id": "ch-8",
+          "title": "Social Media Marketing Strategy",
+          "topics": [
+            "SMART goal setting for social media",
+            "Competitive analysis frameworks",
+            "Content pillar identification",
+            "Editorial calendar planning",
+            "Owned vs paid vs earned media",
+            "Attribution modelling for revenue"
+          ],
+          "keyTakeaways": [
+            "SMART: Specific, Measurable, Achievable, Relevant, Time-bound",
+            "20% promotional, 80% educational/entertaining content converts best",
+            "Content pillars should align with 3-5 core themes of your business",
+            "Multi-touch attribution shows social media's true impact",
+            "First-touch attribution undervalues social by 40-60%"
+          ],
+          "resources": ["SMART goal template", "Content pillar worksheet", "Competitive analysis template"]
+        },
+        {
+          "id": "ch-9",
+          "title": "Building a Results-Driven Brand",
+          "topics": [
+            "Trust-building through consistency",
+            "Authenticity in brand messaging",
+            "Community engagement best practices",
+            "Crisis management on social media",
+            "Employee advocacy programs",
+            "User-generated content strategy"
+          ],
+          "keyTakeaways": [
+            "Brands with consistent posting get 2x higher engagement",
+            "Responding to comments within 1 hour increases engagement by 27%",
+            "UGC posts get 4x higher engagement than brand-created content",
+            "Employee posts get 8x more reach than brand posts",
+            "Crisis response needed within 4 hours to prevent brand damage"
+          ],
+          "resources": ["Engagement response template", "Crisis communication plan", "UGC guidelines"]
+        },
+        {
+          "id": "ch-10",
+          "title": "Analytics, KPIs & Reporting",
+          "topics": [
+            "Vanity metrics vs meaningful metrics",
+            "GA4 integration with social platforms",
+            "Dashboard creation for stakeholders",
+            "Benchmarking against industry standards",
+            "Attribution and ROI calculation",
+            "Monthly reporting best practices"
+          ],
+          "keyTakeaways": [
+            "Followers/Likes are vanity metrics; measure engagement rate instead",
+            "GA4 provides cross-platform user journey tracking",
+            "Engagement rate = (Interactions / Followers) x 100; benchmark: 1-3%",
+            "Cost per conversion matters more than click-through rate",
+            "Attribution models: First-touch, Last-touch, Linear, Time-decay"
+          ],
+          "resources": ["KPI dashboard template", "GA4 setup guide", "Reporting template (monthly)"]
+        }
+      ]
+    },
+    {
+      "id": "module-4",
+      "title": "Module Four | Content Creation",
+      "subtitle": "Professional Content at Scale",
+      "chapters": [
+        {
+          "id": "ch-11",
+          "title": "Creating Image Content with Canva AI",
+          "topics": [
+            "Canva Pro features and AI tools",
+            "Brand kit setup in Canva",
+            "Magic Design for rapid creation",
+            "Image sizing for all platforms",
+            "Typography best practices",
+            "Batch content creation workflows"
+          ],
+          "keyTakeaways": [
+            "Canva Magic Design generates 3-5 design variations in seconds",
+            "Brand Kit auto-applies colors, fonts, logos to all designs",
+            "Facebook: 1200x628px, Instagram: 1080x1080px, LinkedIn: 1200x627px",
+            "Sans-serif fonts get 26% higher readability online",
+            "2 fonts maximum: 1 display, 1 body (avoid more than 3 font sizes)"
+          ],
+          "resources": ["Canva tutorial guide", "Image dimension cheat sheet", "Typography rules"]
+        },
+        {
+          "id": "ch-12",
+          "title": "Creating Video Content (Short & Long Form)",
+          "topics": [
+            "Short-form video best practices",
+            "Hook in first 3 seconds",
+            "Vertical vs horizontal formats",
+            "Captions and accessibility",
+            "B-roll and transitions",
+            "Audio selection and licensing"
+          ],
+          "keyTakeaways": [
+            "First 3 seconds determine 80% of watch time",
+            "Captions increase watch time by 52%",
+            "Vertical video (9:16) gets 1200% more engagement than horizontal",
+            "Trending audio increases discoverability by 3-4x",
+            "Silent auto-play requires captions or visual interest in first frame"
+          ],
+          "resources": ["Video brief template", "Captions best practices", "Audio licensing guide"]
+        },
+        {
+          "id": "ch-13",
+          "title": "AI-Powered Content Tools",
+          "topics": [
+            "ChatGPT for captions and copy",
+            "Gemini for research and brainstorming",
+            "CapCut AI for video editing",
+            "Murf and Eleven Labs for voice-over",
+            "Remove.bg for background removal",
+            "Ethics and disclosure in AI content"
+          ],
+          "keyTakeaways": [
+            "ChatGPT can draft 20 captions in 2 minutes",
+            "CapCut's AI editing removes 80% of manual editing time",
+            "Synthetic voice costs 80% less than hiring voice talent",
+            "Disclose AI-generated content for trust and compliance",
+            "AI tools are accelerators, not replacements for strategy"
+          ],
+          "resources": ["AI tool comparison chart", "ChatGPT prompt library", "Disclosure guidelines"]
+        }
+      ]
+    },
+    {
+      "id": "module-5",
+      "title": "Module Five | Instagram & Threads",
+      "subtitle": "Visual Storytelling and Conversation",
+      "chapters": [
+        {
+          "id": "ch-14",
+          "title": "Instagram for Business (2025)",
+          "topics": [
+            "Instagram account types",
+            "Reels algorithm and reach",
+            "Feed posts, Stories, and Lives",
+            "Hashtag strategy for discovery",
+            "Shopping features and integration",
+            "Carousels and Guides"
+          ],
+          "keyTakeaways": [
+            "Reels get 3.5x more reach than Feed posts in 2025",
+            "Business/Creator accounts unlock all analytics",
+            "Hashtags on Reels add 30-50% more reach",
+            "Instagram Shops convert 6x better than external links",
+            "Carousel posts get 2x higher engagement than single photos"
+          ],
+          "resources": ["Instagram setup checklist", "Reel creation template", "Hashtag research tool"]
+        },
+        {
+          "id": "ch-15",
+          "title": "Instagram Shopping & Promotions",
+          "topics": [
+            "Product tag setup in Instagram Shop",
+            "Shoppable posts and carousels",
+            "Creator Fund and affiliate programs",
+            "Collaboration features",
+            "Live Shopping events",
+            "Integration with Shopify/WooCommerce"
+          ],
+          "keyTakeaways": [
+            "Instagram Shop integration reduces purchase friction by 60%",
+            "Shoppable carousels get 3x more adds-to-cart than single products",
+            "Live Shopping events average 300+ watches per session",
+            "Affiliate commissions range 5-20% depending on niche",
+            "Creator Fund monetization: $0.02-$0.04 per 1K views minimum"
+          ],
+          "resources": ["Shop setup guide", "Product tagging checklist", "Monetization requirements"]
+        },
+        {
+          "id": "ch-16",
+          "title": "Threads – The New Conversation Platform",
+          "topics": [
+            "Threads platform features and growth",
+            "Threads vs Twitter/X comparison",
+            "Building authentic community",
+            "Conversation threading strategy",
+            "Organic reach without follower paywall",
+            "Brand opportunity and first-mover advantage"
+          ],
+          "keyTakeaways": [
+            "Threads crossed 100M signups in 2 days; now exceeds 300M users",
+            "No character limit (versus X's 280)",
+            "Organic reach 50x higher on Threads than equivalent X post",
+            "Linear threading allows deeper conversations without algorithm gatekeeping",
+            "First-mover advantage still available; most brands haven't arrived yet"
+          ],
+          "resources": ["Threads strategy guide", "Threading best practices", "Community guidelines"]
+        }
+      ]
+    },
+    {
+      "id": "module-6",
+      "title": "Module Six | TikTok",
+      "subtitle": "Short-Form Video Dominance",
+      "chapters": [
+        {
+          "id": "ch-17",
+          "title": "TikTok for Business – Full Module",
+          "topics": [
+            "TikTok algorithm and FYP mechanics",
+            "Business account setup and optimization",
+            "Trending sounds and hashtags",
+            "Creator economy participation",
+            "TikTok Shop integration",
+            "Age demographics (now expanding beyond Gen Z)"
+          ],
+          "keyTakeaways": [
+            "TikTok has 1.65B users and grew 27% YoY despite regulatory pressure",
+            "FYP algorithm prioritizes watch time and completes over followers",
+            "New accounts get 200-1K initial views; deserve to go viral",
+            "Trending audio 3-4x more discoverable than original audio",
+            "Hook viewers in 0.5 seconds on TikTok vs 3 seconds on other platforms"
+          ],
+          "resources": ["TikTok business setup guide", "Trending content calendar", "Hook formula"]
+        },
+        {
+          "id": "ch-18",
+          "title": "TikTok Ads & TikTok Shop",
+          "topics": [
+            "TikTok Ads Manager interface",
+            "Native creator ads (influencer content)",
+            "TikTok Shop inventory and orders",
+            "Fulfillment and logistics integrations",
+            "Average order value optimization",
+            "Social commerce trends on TikTok"
+          ],
+          "keyTakeaways": [
+            "Creator ads (real TikToker content) convert 2-3x better than polished ads",
+            "TikTok Shop fulfillment: dropshipping, local sellers, and inventory models",
+            "TikTok Shop users spend 60% more than website visitors",
+            "TikTok ads average ROAS 1.8-2.5x depending on product/niche",
+            "Live shopping on TikTok averages $50K+ revenue per 1-hour session for established creators"
+          ],
+          "resources": ["TikTok Ads Manager guide", "Shop setup checklist", "Creator collaboration network"]
+        }
+      ]
+    },
+    {
+      "id": "module-7",
+      "title": "Module Seven | YouTube",
+      "subtitle": "Long-Form and Short-Form Video Strategy",
+      "chapters": [
+        {
+          "id": "ch-19",
+          "title": "YouTube Studio & Shorts",
+          "topics": [
+            "YouTube channel setup and optimization",
+            "Metadata and SEO for YouTube",
+            "YouTube Shorts algorithm (70B views/day)",
+            "Monetization requirements",
+            "Community tab and playlists",
+            "Crossover from TikTok/Instagram Reels"
+          ],
+          "keyTakeaways": [
+            "YouTube Shorts receives 70 billion views per day (larger than TikTok)",
+            "Monetization requires 1K subscribers + 4K watched hours (or 10M Shorts views)",
+            "Exact match keywords in title/tags boost discoverability 2x",
+            "YouTube favors longer watch time; playlists increase binge-watching by 40%",
+            "Shorts and long-form content support different monetization strategies"
+          ],
+          "resources": ["Channel optimization checklist", "Keyword research tool recommendations", "Monetization playbook"]
+        },
+        {
+          "id": "ch-20",
+          "title": "YouTube Analytics & Monetization",
+          "topics": [
+            "YouTube Analytics dashboard KPIs",
+            "Revenue streams (ads, memberships, Super Chat)",
+            "Audience retention metrics",
+            "Click-through rate optimization",
+            "Thumbnail A/B testing",
+            "Revenue reporting and payment"
+          ],
+          "keyTakeaways": [
+            "CPM (cost per thousand): $2-10 US/UK, $0.25-1 other regions",
+            "Thumbnail relevance affects CTR by 20-40%",
+            "Average view duration above 50% significantly boosts recommendations",
+            "Memberships yield higher revenue per 100 views than ads",
+            "Super Chat provides recurring revenue from engaged viewers"
+          ],
+          "resources": ["Revenue projection calculator", "Thumbnail best practices", "Upload checklist"]
+        }
+      ]
+    },
+    {
+      "id": "module-8",
+      "title": "Module Eight | LinkedIn & X",
+      "subtitle": "Professional and Real-Time Marketing",
+      "chapters": [
+        {
+          "id": "ch-21",
+          "title": "LinkedIn for Business & B2B Marketing",
+          "topics": [
+            "LinkedIn organic reach (currently highest)",
+            "Corporate pages vs personal brand profiles",
+            "Thought leadership and content strategy",
+            "LinkedIn ads and sponsored content",
+            "Company culture content",
+            "Recruitment and employer branding"
+          ],
+          "keyTakeaways": [
+            "LinkedIn organic reach HIGHEST of all major platforms in 2025",
+            "Native LinkedIn posts get 20x more engagement than external links",
+            "Carousel posts average 3x higher engagement than single image",
+            "LinkedIn ads cost $5-10 CPC but convert at 10x rate of cold traffic",
+            "Authentic employee posts reach more than corporate brand posts"
+          ],
+          "resources": ["LinkedIn profile optimization", "Content calendar (B2B)", "Ads setup guide"]
+        },
+        {
+          "id": "ch-22",
+          "title": "X (Twitter) Marketing in 2025",
+          "topics": [
+            "X platform evolution post-rebrand",
+            "Community Notes and verification tiers",
+            "Spaces for real-time audio discussion",
+            "Tweet threads and threading strategy",
+            "Influencer marketing on X",
+            "Misinformation and brand safety"
+          ],
+          "keyTakeaways": [
+            "X (formerly Twitter) has 610M users; smaller but highly influential audience",
+            "Retweets drive 5x more reach than likes",
+            "Spaces (audio) format: 52% of listeners are loyal weekly participants",
+            "Threads (text chains) average 30% higher engagement than single tweets",
+            "X still dominates news and real-time trends (breaking news spreads 2hour faster)"
+          ],
+          "resources": ["X strategy guide", "Threading templates", "Spaces host guidelines"]
+        }
+      ]
+    },
+    {
+      "id": "module-9",
+      "title": "Module Nine | Finishing Touches",
+      "subtitle": "Compliance, Ethics, and Emerging Platforms",
+      "chapters": [
+        {
+          "id": "ch-23",
+          "title": "WhatsApp Business & Social Commerce",
+          "topics": [
+            "WhatsApp Business app features",
+            "Chatbot integration for customer service",
+            "Broadcast lists for customer communication",
+            "Payment features and order management",
+            "Privacy considerations",
+            "Comparison with other messaging platforms"
+          ],
+          "keyTakeaways": [
+            "WhatsApp has 2B users; highest trust rating of any messaging app",
+            "WhatsApp Business API enables automated customer service",
+            "Message opens average 98% (vs email 20%)",
+            "Broadcast lists allow one-to-many communication without group chat noise",
+            "WhatsApp Pay now available in select regions; expanding global commerce"
+          ],
+          "resources": ["WhatsApp Business setup", "Bot automation templates", "Privacy compliance checklist"]
+        },
+        {
+          "id": "ch-24",
+          "title": "Intellectual Property, AI Ethics & Compliance",
+          "topics": [
+            "Copyright and fair use on social media",
+            "Disclosing sponsored content and affiliate links",
+            "GDPR and data privacy compliance",
+            "AI content disclosure and ethics",
+            "Trademark protection for your brand",
+            "Terms of service compliance across platforms"
+          ],
+          "keyTakeaways": [
+            "Failing to disclose sponsorships carries FTC fines up to $43K per violation",
+            "AI-generated content must be disclosed to maintain audience trust",
+            "User-generated content requires permission before reposting",
+            "GDPR violations: €20M or 4% of global revenue (whichever is higher)",
+            "Trademarking your brand name costs $250-500 and protects globally"
+          ],
+          "resources": ["FTC disclosure guide", "GDPR compliance checklist", "Trademark registration guide"]
+        }
+      ]
+    }
+  ]
+}
