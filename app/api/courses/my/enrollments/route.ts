@@ -4,14 +4,18 @@ import { readDb } from '@/lib/mock-db'
 
 export const runtime = 'nodejs'
 
-function getUserIdFromRequest(request: Request): number | null {
+function getTokenFromRequest(request: Request): string | null {
   const auth = request.headers.get('authorization') || ''
-  const token = auth.startsWith('Bearer ') ? auth.replace('Bearer ', '') : null
-  if (!token) return null
+  return auth.startsWith('Bearer ') ? auth.replace('Bearer ', '') : null
+}
 
+function getDecodedToken(token: string) {
   try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET || 'dev-secret-key') as { id?: number }
-    return decoded.id || null
+    return jwt.verify(token, process.env.JWT_SECRET || 'dev-secret-key') as {
+      id?: number
+      tv?: number
+      pwv?: number
+    }
   } catch {
     return null
   }
@@ -19,12 +23,35 @@ function getUserIdFromRequest(request: Request): number | null {
 
 export async function GET(request: Request) {
   try {
-    const userId = getUserIdFromRequest(request)
-    if (!userId) {
+    const token = getTokenFromRequest(request)
+    if (!token) {
+      return NextResponse.json([], { status: 200 })
+    }
+
+    const decoded = getDecodedToken(token)
+    if (!decoded?.id) {
       return NextResponse.json([], { status: 200 })
     }
 
     const db = await readDb()
+
+    if ((decoded.tv || 0) !== db.security.tokenVersion) {
+      return NextResponse.json({ error: 'Session expired. Please sign in again.' }, { status: 401 })
+    }
+
+    const currentUser = db.users.find((entry) => Number(entry.id) === Number(decoded.id))
+    if (!currentUser) {
+      return NextResponse.json([], { status: 200 })
+    }
+
+    if ((decoded.pwv || 0) !== (currentUser.password_version || 1)) {
+      return NextResponse.json({ error: 'Session expired. Please sign in again.' }, { status: 401 })
+    }
+
+    const userId = decoded.id
+    if (!userId) {
+      return NextResponse.json([], { status: 200 })
+    }
     const enrolled = db.enrollments.filter((enrollment) => Number(enrollment.student_id) === Number(userId))
 
     const result = enrolled

@@ -9,7 +9,8 @@
     "client": "cross-env PORT=3000 next dev -p 3000",
     "build": "next build",
     "start": "node server-production.js",
-    "init-db": "node scripts/init-database.js"
+    "init-db": "node scripts/init-database.js",
+    "rotate-security": "node scripts/rotate-security.js"
   },
   "keywords": [
     "learning",

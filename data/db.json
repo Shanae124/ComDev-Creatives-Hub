@@ -166,5 +166,8 @@
   "enrollments": [],
   "submissions": [],
   "discussions": [],
-  "portfolio": []
+  "portfolio": [],
+  "security": {
+    "tokenVersion": 2
+  }
 }

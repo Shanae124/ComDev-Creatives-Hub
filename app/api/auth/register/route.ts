@@ -30,13 +30,22 @@ export async function POST(request: Request) {
       first_name: String(firstName).trim(),
       last_name: String(lastName).trim(),
       role: String(role),
+      password_version: 1,
+      password_updated_at: new Date().toISOString(),
+      force_password_reset: false,
     }
 
     db.users.push(newUser)
     await writeDb(db)
 
     const token = jwt.sign(
-      { id: newUser.id, email: newUser.email, role: newUser.role },
+      {
+        id: newUser.id,
+        email: newUser.email,
+        role: newUser.role,
+        tv: db.security.tokenVersion,
+        pwv: newUser.password_version,
+      },
       process.env.JWT_SECRET || 'dev-secret-key',
       { expiresIn: '7d' }
     )

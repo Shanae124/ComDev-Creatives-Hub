@@ -27,8 +27,24 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Invalid credentials' }, { status: 401 })
     }
 
+    if (user.force_password_reset) {
+      return NextResponse.json(
+        {
+          error: 'Password reset required before login',
+          code: 'PASSWORD_RESET_REQUIRED',
+        },
+        { status: 403 }
+      )
+    }
+
     const token = jwt.sign(
-      { id: user.id, email: user.email, role: user.role },
+      {
+        id: user.id,
+        email: user.email,
+        role: user.role,
+        tv: db.security.tokenVersion,
+        pwv: user.password_version || 1,
+      },
       process.env.JWT_SECRET || 'dev-secret-key',
       { expiresIn: '7d' }
     )
