@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 
 type TaskStatus = 'todo' | 'in-progress' | 'done'
 type TaskPriority = 'low' | 'medium' | 'high'
+type PipelineStage = 'Idea' | 'Draft' | 'Edit' | 'Schedule' | 'Published'
 
 interface WorkspaceTask {
   id: string
@@ -13,6 +14,7 @@ interface WorkspaceTask {
   platform: string
   status: TaskStatus
   priority: TaskPriority
+  stage: PipelineStage
 }
 
 interface GeneratedPost {
@@ -23,6 +25,7 @@ interface GeneratedPost {
 }
 
 const platforms = ['Instagram', 'TikTok', 'YouTube', 'Facebook', 'LinkedIn', 'Pinterest']
+const pipelineStages: PipelineStage[] = ['Idea', 'Draft', 'Edit', 'Schedule', 'Published']
 
 const eventSuggestions = [
   { name: 'International Women’s Day', date: '2026-03-08', category: 'Global' },
@@ -69,6 +72,7 @@ export default function WorkspacePage() {
   const [notifiedTaskIds, setNotifiedTaskIds] = useState<string[]>([])
   const [notificationsEnabled, setNotificationsEnabled] = useState(false)
   const [selectedMonth, setSelectedMonth] = useState(new Date())
+  const [draggingTaskId, setDraggingTaskId] = useState<string | null>(null)
   const [title, setTitle] = useState('')
   const [dueDate, setDueDate] = useState('')
   const [platform, setPlatform] = useState('Instagram')
@@ -99,7 +103,11 @@ export default function WorkspacePage() {
           notifiedTaskIds?: string[]
           selectedMonth?: string
         }
-        setTasks(parsedSaved.tasks || [])
+        const normalizedTasks = (parsedSaved.tasks || []).map((task) => ({
+          ...task,
+          stage: task.stage || (task.status === 'done' ? 'Published' : 'Idea'),
+        }))
+        setTasks(normalizedTasks)
         setNotifiedTaskIds(parsedSaved.notifiedTaskIds || [])
         if (parsedSaved.selectedMonth) {
           setSelectedMonth(new Date(parsedSaved.selectedMonth))
@@ -164,6 +172,7 @@ export default function WorkspacePage() {
       platform: taskPlatform,
       status: 'todo',
       priority,
+      stage: 'Idea',
     }
     setTasks((prev) => [nextTask, ...prev])
   }
@@ -178,7 +187,26 @@ export default function WorkspacePage() {
   }
 
   const updateStatus = (id: string, status: TaskStatus) => {
-    setTasks((prev) => prev.map((task) => (task.id === id ? { ...task, status } : task)))
+    setTasks((prev) => prev.map((task) => {
+      if (task.id !== id) return task
+      if (status === 'done') {
+        return { ...task, status, stage: 'Published' }
+      }
+      return { ...task, status }
+    }))
+  }
+
+  const updateDueDate = (id: string, newDate: string) => {
+    setTasks((prev) => prev.map((task) => (task.id === id ? { ...task, dueDate: newDate } : task)))
+    setNotifiedTaskIds((prev) => prev.filter((taskId) => taskId !== id))
+  }
+
+  const updateStage = (id: string, stage: PipelineStage) => {
+    setTasks((prev) => prev.map((task) => {
+      if (task.id !== id) return task
+      const nextStatus: TaskStatus = stage === 'Published' ? 'done' : task.status === 'done' ? 'in-progress' : task.status
+      return { ...task, stage, status: nextStatus }
+    }))
   }
 
   const removeTask = (id: string) => {
@@ -281,13 +309,23 @@ export default function WorkspacePage() {
           <div className="grid grid-cols-7 gap-1">
             {monthGrid.map((date) => {
               const dateKey = toDateInput(date)
-              const count = tasks.filter((task) => task.dueDate === dateKey).length
+              const tasksForDay = tasks.filter((task) => task.dueDate === dateKey)
+              const count = tasksForDay.length
               const inMonth = date.getMonth() === selectedMonth.getMonth()
               return (
-                <button
+                <div
                   key={date.toISOString()}
+                  onDragOver={(event) => event.preventDefault()}
+                  onDrop={(event) => {
+                    event.preventDefault()
+                    const taskId = event.dataTransfer.getData('text/task-id') || draggingTaskId
+                    if (taskId) {
+                      updateDueDate(taskId, dateKey)
+                      setDraggingTaskId(null)
+                    }
+                  }}
                   onClick={() => setDueDate(dateKey)}
-                  className={`min-h-20 border rounded-lg p-2 text-left hover:bg-gray-50 transition ${inMonth ? 'border-gray-200' : 'border-gray-100 bg-gray-50/50'}`}
+                  className={`min-h-24 border rounded-lg p-2 text-left hover:bg-gray-50 transition ${inMonth ? 'border-gray-200' : 'border-gray-100 bg-gray-50/50'} ${draggingTaskId ? 'ring-1 ring-primary-200' : ''}`}
                 >
                   <div className={`text-xs font-semibold ${inMonth ? 'text-gray-700' : 'text-gray-400'}`}>{date.getDate()}</div>
                   {count > 0 && (
@@ -295,7 +333,14 @@ export default function WorkspacePage() {
                       {count} task{count > 1 ? 's' : ''}
                     </div>
                   )}
-                </button>
+                  <div className="mt-1 space-y-1">
+                    {tasksForDay.slice(0, 2).map((task) => (
+                      <div key={task.id} className="text-[11px] px-1.5 py-0.5 rounded bg-gray-100 text-gray-700 truncate">
+                        {task.title}
+                      </div>
+                    ))}
+                  </div>
+                </div>
               )
             })}
           </div>
@@ -342,8 +387,20 @@ export default function WorkspacePage() {
                       {task.platform} • Due {task.dueDate}
                       {days < 0 ? ' • Overdue' : days === 0 ? ' • Due today' : ` • ${days} day(s) left`}
                     </div>
+                    <div className="text-xs text-gray-500 mt-1">Stage: {task.stage}</div>
                   </div>
                   <div className="flex items-center gap-2">
+                    <button
+                      draggable
+                      onDragStart={(event) => {
+                        event.dataTransfer.setData('text/task-id', task.id)
+                        setDraggingTaskId(task.id)
+                      }}
+                      onDragEnd={() => setDraggingTaskId(null)}
+                      className="px-3 py-1.5 text-xs border border-gray-300 rounded-lg hover:bg-gray-50"
+                    >
+                      Drag
+                    </button>
                     <select
                       value={task.status}
                       onChange={(event) => updateStatus(task.id, event.target.value as TaskStatus)}
@@ -413,6 +470,57 @@ export default function WorkspacePage() {
               </button>
             </div>
           )}
+        </section>
+
+        <section className="card p-6">
+          <h2 className="text-xl font-bold text-gray-900 mb-2">Content Production Pipeline</h2>
+          <p className="text-sm text-gray-600 mb-4">Drag tasks between stages: Idea → Draft → Edit → Schedule → Published.</p>
+          <div className="grid md:grid-cols-5 gap-3">
+            {pipelineStages.map((stage) => {
+              const stageTasks = tasks.filter((task) => task.stage === stage)
+              return (
+                <div
+                  key={stage}
+                  onDragOver={(event) => event.preventDefault()}
+                  onDrop={(event) => {
+                    event.preventDefault()
+                    const taskId = event.dataTransfer.getData('text/task-id') || draggingTaskId
+                    if (taskId) {
+                      updateStage(taskId, stage)
+                      setDraggingTaskId(null)
+                    }
+                  }}
+                  className="border border-gray-200 rounded-lg bg-white min-h-48"
+                >
+                  <div className="px-3 py-2 border-b border-gray-200 bg-gray-50 rounded-t-lg flex items-center justify-between">
+                    <h3 className="text-sm font-semibold text-gray-900">{stage}</h3>
+                    <span className="text-xs text-gray-600">{stageTasks.length}</span>
+                  </div>
+                  <div className="p-2 space-y-2">
+                    {stageTasks.map((task) => (
+                      <div
+                        key={task.id}
+                        draggable
+                        onDragStart={(event) => {
+                          event.dataTransfer.setData('text/task-id', task.id)
+                          setDraggingTaskId(task.id)
+                        }}
+                        onDragEnd={() => setDraggingTaskId(null)}
+                        className="p-2 border border-gray-200 rounded-lg bg-white hover:bg-gray-50 cursor-move"
+                      >
+                        <div className="text-sm font-semibold text-gray-900 line-clamp-2">{task.title}</div>
+                        <div className="text-xs text-gray-600 mt-1">{task.platform}</div>
+                        <div className="text-xs text-gray-500">Due {task.dueDate}</div>
+                      </div>
+                    ))}
+                    {stageTasks.length === 0 && (
+                      <div className="text-xs text-gray-400 p-2">Drop tasks here</div>
+                    )}
+                  </div>
+                </div>
+              )
+            })}
+          </div>
         </section>
 
         <section className="grid lg:grid-cols-2 gap-6">
