@@ -39,10 +39,18 @@ export default function RegisterPage() {
         credentials: 'include'
       })
 
-      const data = await response.json()
+      const raw = await response.text()
+      let data: any = {}
+      if (raw) {
+        try {
+          data = JSON.parse(raw)
+        } catch {
+          data = {}
+        }
+      }
 
       if (!response.ok) {
-        throw new Error(data.error || 'Registration failed')
+        throw new Error(data.error || `Registration failed (${response.status})`)
       }
 
       localStorage.setItem('user', JSON.stringify(data.user))

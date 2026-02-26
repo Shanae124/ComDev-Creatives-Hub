@@ -22,10 +22,18 @@ export default function LoginPage() {
         credentials: 'include'
       })
 
-      const data = await response.json()
+      const raw = await response.text()
+      let data: any = {}
+      if (raw) {
+        try {
+          data = JSON.parse(raw)
+        } catch {
+          data = {}
+        }
+      }
 
       if (!response.ok) {
-        throw new Error(data.error || 'Login failed')
+        throw new Error(data.error || `Login failed (${response.status})`)
       }
 
       // Store user data
