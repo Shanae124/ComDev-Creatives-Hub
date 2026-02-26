@@ -87,14 +87,22 @@ export default function ToolsPage() {
         <section className="mb-12 card p-8 bg-gradient-to-r from-primary-50 to-blue-50 border-l-4 border-primary-600">
           <h2 className="text-2xl font-bold text-gray-900 mb-3">Design Studio</h2>
           <p className="text-gray-700 mb-6">
-            Access our integrated design studio to create graphics, mockups, and social media assets right here in your learning hub.
+            Access your production-ready design workspace to create graphics, mockups, reels assets, and branded content in one place.
           </p>
-          <button
-            onClick={() => router.push('/tools/design-studio')}
-            className="px-6 py-3 bg-primary-600 text-white font-semibold rounded-lg hover:bg-primary-700 transition"
-          >
-            Launch Design Studio
-          </button>
+          <div className="flex flex-wrap gap-3">
+            <button
+              onClick={() => router.push('/tools/design-studio')}
+              className="px-6 py-3 bg-primary-600 text-white font-semibold rounded-lg hover:bg-primary-700 transition"
+            >
+              Launch Design Studio
+            </button>
+            <button
+              onClick={() => router.push('/workspace')}
+              className="px-6 py-3 border border-primary-600 text-primary-600 font-semibold rounded-lg hover:bg-primary-50 transition"
+            >
+              Open My Workspace
+            </button>
+          </div>
         </section>
 
         {/* Tools Grid */}
@@ -131,19 +139,19 @@ export default function ToolsPage() {
 
         {/* Getting Started */}
         <section className="mt-16 card p-8 bg-blue-50 border-l-4 border-blue-600">
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">Getting Started with Tools</h2>
+          <h2 className="text-2xl font-bold text-gray-900 mb-4">Creator Workflow</h2>
           <div className="grid md:grid-cols-3 gap-6">
             <div>
-              <h3 className="font-bold text-gray-900 mb-2">Step 1: Choose Your Tool</h3>
-              <p className="text-sm text-gray-700">Pick the tool that best fits your task. For beginners, we recommend starting with Canva.</p>
+              <h3 className="font-bold text-gray-900 mb-2">Step 1: Plan in Workspace</h3>
+              <p className="text-sm text-gray-700">Set your personal deadlines, reminders, and content calendar before creating assets.</p>
             </div>
             <div>
-              <h3 className="font-bold text-gray-900 mb-2">Step 2: Create & Experiment</h3>
-              <p className="text-sm text-gray-700">Most tools are free to start. Sign up and explore the templates to get familiar with the interface.</p>
+              <h3 className="font-bold text-gray-900 mb-2">Step 2: Create in Studio</h3>
+              <p className="text-sm text-gray-700">Build visuals and edit media with embedded editors and your preferred professional tools.</p>
             </div>
             <div>
-              <h3 className="font-bold text-gray-900 mb-2">Step 3: Share Feedback</h3>
-              <p className="text-sm text-gray-700">Share your creations in the community forum to get constructive feedback from peers.</p>
+              <h3 className="font-bold text-gray-900 mb-2">Step 3: Publish & Track</h3>
+              <p className="text-sm text-gray-700">Mark tasks complete, review what’s due next, and keep momentum with real reminder prompts.</p>
             </div>
           </div>
         </section>

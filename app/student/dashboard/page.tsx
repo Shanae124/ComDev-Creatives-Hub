@@ -15,9 +15,9 @@ interface Course {
 const navigationItems = [
   { label: 'Dashboard', href: '/student/dashboard', icon: 'home' },
   { label: 'Courses', href: '/courses', icon: 'book' },
+  { label: 'Workspace', href: '/workspace', icon: 'calendar' },
   { label: 'Design Studio', href: '/tools/design-studio', icon: 'palette' },
   { label: 'Resources', href: '/resources', icon: 'lightbulb' },
-  { label: 'Community', href: '/community', icon: 'users' },
   { label: 'Portfolio', href: '/student/portfolio', icon: 'star' },
 ]
 
@@ -88,6 +88,7 @@ export default function StudentDashboard() {
               <span className="text-lg">
                 {item.icon === 'home' && '🏠'}
                 {item.icon === 'book' && '📚'}
+                {item.icon === 'calendar' && '🗓️'}
                 {item.icon === 'palette' && '🎨'}
                 {item.icon === 'lightbulb' && '💡'}
                 {item.icon === 'users' && '👥'}
@@ -202,31 +203,31 @@ export default function StudentDashboard() {
               </button>
 
               <button
-                onClick={() => router.push('/resources')}
+                onClick={() => router.push('/workspace')}
                 className="card p-6 hover:shadow-md transition text-left"
               >
                 <div className="w-10 h-10 bg-primary-100 text-primary-600 rounded-lg flex items-center justify-center text-xl font-bold mb-3">
-                  💡
+                  🗓️
                 </div>
-                <h4 className="font-bold text-gray-900 mb-1">Resources</h4>
-                <p className="text-sm text-gray-600">Templates, guides, and tools</p>
+                <h4 className="font-bold text-gray-900 mb-1">My Workspace</h4>
+                <p className="text-sm text-gray-600">Personal calendar, reminders, and tasks</p>
               </button>
             </div>
           </section>
 
-          {/* Community Section */}
+          {/* Creator Productivity Section */}
           <section className="mb-10">
-            <h3 className="text-2xl font-bold text-gray-900 mb-6">Connect & Collaborate</h3>
+            <h3 className="text-2xl font-bold text-gray-900 mb-6">Creator Productivity</h3>
             <div className="grid md:grid-cols-2 gap-6">
               <button
-                onClick={() => router.push('/community')}
+                onClick={() => router.push('/workspace')}
                 className="card p-6 hover:shadow-md transition text-left"
               >
-                <div className="w-10 h-10 bg-green-100 text-green-600 rounded-lg flex items-center justify-center text-xl font-bold mb-3">
-                  👥
+                <div className="w-10 h-10 bg-amber-100 text-amber-600 rounded-lg flex items-center justify-center text-xl font-bold mb-3">
+                  ✅
                 </div>
-                <h4 className="font-bold text-gray-900 mb-1">Community Forum</h4>
-                <p className="text-sm text-gray-600">Ask questions, get feedback, and support peers</p>
+                <h4 className="font-bold text-gray-900 mb-1">Task Completion</h4>
+                <p className="text-sm text-gray-600">Track due tasks, reminders, and completion rates</p>
               </button>
 
               <button
