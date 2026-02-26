@@ -46,6 +46,17 @@ const getDaysUntil = (dateString: string) => {
   return Math.ceil(diff / (1000 * 60 * 60 * 24))
 }
 
+const isSameDay = (dateString: string, date: Date) => {
+  const d = new Date(dateString)
+  return d.getFullYear() === date.getFullYear() && d.getMonth() === date.getMonth() && d.getDate() === date.getDate()
+}
+
+const getPriorityStyles = (priority: TaskPriority) => {
+  if (priority === 'high') return 'border-l-red-500 bg-red-50/30'
+  if (priority === 'medium') return 'border-l-amber-500 bg-amber-50/20'
+  return 'border-l-emerald-500 bg-emerald-50/20'
+}
+
 const toDateInput = (date: Date) => {
   const year = date.getFullYear()
   const month = String(date.getMonth() + 1).padStart(2, '0')
@@ -76,6 +87,8 @@ export default function WorkspacePage() {
   const [title, setTitle] = useState('')
   const [dueDate, setDueDate] = useState('')
   const [platform, setPlatform] = useState('Instagram')
+  const [priority, setPriority] = useState<TaskPriority>('medium')
+  const [activeFilter, setActiveFilter] = useState<'all' | 'today' | 'week' | 'overdue'>('all')
   const [campaignTheme, setCampaignTheme] = useState('')
   const [campaignPlan, setCampaignPlan] = useState<GeneratedPost[]>([])
 
@@ -180,10 +193,11 @@ export default function WorkspacePage() {
   const addTask = () => {
     if (!title.trim() || !dueDate) return
 
-    createTask(title.trim(), dueDate, platform, 'medium')
+    createTask(title.trim(), dueDate, platform, priority)
     setTitle('')
     setDueDate('')
     setPlatform('Instagram')
+    setPriority('medium')
   }
 
   const updateStatus = (id: string, status: TaskStatus) => {
@@ -238,6 +252,15 @@ export default function WorkspacePage() {
   const dueSoon = tasks.filter((task) => task.status !== 'done' && getDaysUntil(task.dueDate) <= 2)
   const overdue = tasks.filter((task) => task.status !== 'done' && getDaysUntil(task.dueDate) < 0)
   const monthGrid = getMonthGrid(selectedMonth)
+  const today = new Date()
+  const weekEnd = new Date(today)
+  weekEnd.setDate(today.getDate() + 7)
+  const filteredTasks = tasks.filter((task) => {
+    if (activeFilter === 'all') return true
+    if (activeFilter === 'today') return isSameDay(task.dueDate, today)
+    if (activeFilter === 'overdue') return getDaysUntil(task.dueDate) < 0 && task.status !== 'done'
+    return new Date(task.dueDate) >= new Date(toDateInput(today)) && new Date(task.dueDate) <= weekEnd
+  })
 
   if (!user) return null
 
@@ -348,7 +371,7 @@ export default function WorkspacePage() {
 
         <section className="card p-6">
           <h2 className="text-xl font-bold text-gray-900 mb-4">Personal Content Calendar Tasks</h2>
-          <div className="grid md:grid-cols-4 gap-3">
+          <div className="grid md:grid-cols-5 gap-3">
             <input
               value={title}
               onChange={(event) => setTitle(event.target.value)}
@@ -370,24 +393,40 @@ export default function WorkspacePage() {
                 <option key={item}>{item}</option>
               ))}
             </select>
+            <select
+              value={priority}
+              onChange={(event) => setPriority(event.target.value as TaskPriority)}
+              className="px-3 py-2 border border-gray-300 rounded-lg"
+            >
+              <option value="low">Low Priority</option>
+              <option value="medium">Medium Priority</option>
+              <option value="high">High Priority</option>
+            </select>
             <button onClick={addTask} className="px-4 py-2 bg-primary-600 text-white rounded-lg font-semibold hover:bg-primary-700 transition">
               Add Task
             </button>
           </div>
 
+          <div className="mt-4 flex flex-wrap gap-2">
+            <button onClick={() => setActiveFilter('all')} className={`px-3 py-1.5 text-xs rounded-full border ${activeFilter === 'all' ? 'bg-gray-900 text-white border-gray-900' : 'bg-white text-gray-700 border-gray-300'}`}>All</button>
+            <button onClick={() => setActiveFilter('today')} className={`px-3 py-1.5 text-xs rounded-full border ${activeFilter === 'today' ? 'bg-primary-600 text-white border-primary-600' : 'bg-white text-gray-700 border-gray-300'}`}>Today</button>
+            <button onClick={() => setActiveFilter('week')} className={`px-3 py-1.5 text-xs rounded-full border ${activeFilter === 'week' ? 'bg-primary-600 text-white border-primary-600' : 'bg-white text-gray-700 border-gray-300'}`}>This Week</button>
+            <button onClick={() => setActiveFilter('overdue')} className={`px-3 py-1.5 text-xs rounded-full border ${activeFilter === 'overdue' ? 'bg-red-600 text-white border-red-600' : 'bg-white text-gray-700 border-gray-300'}`}>Overdue</button>
+          </div>
+
           <div className="mt-5 space-y-3">
-            {tasks.length === 0 && <p className="text-sm text-gray-600">No tasks yet. Add your first content task above.</p>}
-            {tasks.map((task) => {
+            {filteredTasks.length === 0 && <p className="text-sm text-gray-600">No tasks in this view yet.</p>}
+            {filteredTasks.map((task) => {
               const days = getDaysUntil(task.dueDate)
               return (
-                <div key={task.id} className="border border-gray-200 rounded-lg p-4 flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+                <div key={task.id} className={`border border-gray-200 border-l-4 rounded-lg p-4 flex flex-col md:flex-row md:items-center md:justify-between gap-3 ${getPriorityStyles(task.priority)}`}>
                   <div>
                     <div className="font-semibold text-gray-900">{task.title}</div>
                     <div className="text-sm text-gray-600 mt-1">
                       {task.platform} • Due {task.dueDate}
                       {days < 0 ? ' • Overdue' : days === 0 ? ' • Due today' : ` • ${days} day(s) left`}
                     </div>
-                    <div className="text-xs text-gray-500 mt-1">Stage: {task.stage}</div>
+                    <div className="text-xs text-gray-500 mt-1">Stage: {task.stage} • Priority: {task.priority}</div>
                   </div>
                   <div className="flex items-center gap-2">
                     <button
@@ -506,11 +545,12 @@ export default function WorkspacePage() {
                           setDraggingTaskId(task.id)
                         }}
                         onDragEnd={() => setDraggingTaskId(null)}
-                        className="p-2 border border-gray-200 rounded-lg bg-white hover:bg-gray-50 cursor-move"
+                        className={`p-2 border border-l-4 border-gray-200 rounded-lg bg-white hover:bg-gray-50 cursor-move ${getPriorityStyles(task.priority)}`}
                       >
                         <div className="text-sm font-semibold text-gray-900 line-clamp-2">{task.title}</div>
                         <div className="text-xs text-gray-600 mt-1">{task.platform}</div>
                         <div className="text-xs text-gray-500">Due {task.dueDate}</div>
+                        <div className="text-[11px] text-gray-600 capitalize">{task.priority} priority</div>
                       </div>
                     ))}
                     {stageTasks.length === 0 && (
