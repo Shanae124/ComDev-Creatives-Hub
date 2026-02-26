@@ -11,6 +11,7 @@ interface WorkspaceTask {
   id: string
   title: string
   dueDate: string
+  timeSlot: string
   platform: string
   status: TaskStatus
   priority: TaskPriority
@@ -26,6 +27,34 @@ interface GeneratedPost {
 
 const platforms = ['Instagram', 'TikTok', 'YouTube', 'Facebook', 'LinkedIn', 'Pinterest']
 const pipelineStages: PipelineStage[] = ['Idea', 'Draft', 'Edit', 'Schedule', 'Published']
+const timelineHours = Array.from({ length: 17 }, (_, index) => `${String(index + 6).padStart(2, '0')}:00`)
+
+const postingWindows: Record<string, { window: string; why: string }[]> = {
+  Instagram: [
+    { window: '09:00–11:00', why: 'Strong morning browse behavior for Reels and carousel saves.' },
+    { window: '18:00–20:00', why: 'Peak evening engagement and story completion.' },
+  ],
+  TikTok: [
+    { window: '12:00–14:00', why: 'Lunch scroll sessions lift early velocity.' },
+    { window: '19:00–22:00', why: 'Highest watch time window for short-form loops.' },
+  ],
+  YouTube: [
+    { window: '15:00–17:00', why: 'Upload lead time before prime-time viewing.' },
+    { window: '19:00–21:00', why: 'Peak long-form and Shorts consumption.' },
+  ],
+  Facebook: [
+    { window: '08:00–10:00', why: 'Early feed checks and community group activity.' },
+    { window: '13:00–15:00', why: 'Midday click-through and comment activity.' },
+  ],
+  LinkedIn: [
+    { window: '07:30–09:00', why: 'Pre-work professional feed check.' },
+    { window: '12:00–13:30', why: 'Lunch-time B2B content engagement.' },
+  ],
+  Pinterest: [
+    { window: '20:00–23:00', why: 'Planning and inspiration behavior peaks late evening.' },
+    { window: '09:00–11:00', why: 'Search-heavy discovery and saves.' },
+  ],
+}
 
 const eventSuggestions = [
   { name: 'International Women’s Day', date: '2026-03-08', category: 'Global' },
@@ -86,9 +115,11 @@ export default function WorkspacePage() {
   const [draggingTaskId, setDraggingTaskId] = useState<string | null>(null)
   const [title, setTitle] = useState('')
   const [dueDate, setDueDate] = useState('')
+  const [timeSlot, setTimeSlot] = useState('09:00')
   const [platform, setPlatform] = useState('Instagram')
   const [priority, setPriority] = useState<TaskPriority>('medium')
   const [activeFilter, setActiveFilter] = useState<'all' | 'today' | 'week' | 'overdue'>('all')
+  const [timelineDate, setTimelineDate] = useState(toDateInput(new Date()))
   const [campaignTheme, setCampaignTheme] = useState('')
   const [campaignPlan, setCampaignPlan] = useState<GeneratedPost[]>([])
 
@@ -119,6 +150,7 @@ export default function WorkspacePage() {
         const normalizedTasks = (parsedSaved.tasks || []).map((task) => ({
           ...task,
           stage: task.stage || (task.status === 'done' ? 'Published' : 'Idea'),
+          timeSlot: task.timeSlot || '09:00',
         }))
         setTasks(normalizedTasks)
         setNotifiedTaskIds(parsedSaved.notifiedTaskIds || [])
@@ -177,11 +209,12 @@ export default function WorkspacePage() {
     setNotificationsEnabled(permission === 'granted')
   }
 
-  const createTask = (taskTitle: string, taskDueDate: string, taskPlatform: string, priority: TaskPriority = 'medium') => {
+  const createTask = (taskTitle: string, taskDueDate: string, taskPlatform: string, priority: TaskPriority = 'medium', taskTimeSlot: string = '09:00') => {
     const nextTask: WorkspaceTask = {
       id: `${Date.now()}-${Math.random().toString(36).slice(2, 7)}`,
       title: taskTitle,
       dueDate: taskDueDate,
+      timeSlot: taskTimeSlot,
       platform: taskPlatform,
       status: 'todo',
       priority,
@@ -193,9 +226,10 @@ export default function WorkspacePage() {
   const addTask = () => {
     if (!title.trim() || !dueDate) return
 
-    createTask(title.trim(), dueDate, platform, priority)
+    createTask(title.trim(), dueDate, platform, priority, timeSlot)
     setTitle('')
     setDueDate('')
+    setTimeSlot('09:00')
     setPlatform('Instagram')
     setPriority('medium')
   }
@@ -213,6 +247,10 @@ export default function WorkspacePage() {
   const updateDueDate = (id: string, newDate: string) => {
     setTasks((prev) => prev.map((task) => (task.id === id ? { ...task, dueDate: newDate } : task)))
     setNotifiedTaskIds((prev) => prev.filter((taskId) => taskId !== id))
+  }
+
+  const updateTimeSlot = (id: string, newTimeSlot: string) => {
+    setTasks((prev) => prev.map((task) => (task.id === id ? { ...task, timeSlot: newTimeSlot } : task)))
   }
 
   const updateStage = (id: string, stage: PipelineStage) => {
@@ -261,6 +299,9 @@ export default function WorkspacePage() {
     if (activeFilter === 'overdue') return getDaysUntil(task.dueDate) < 0 && task.status !== 'done'
     return new Date(task.dueDate) >= new Date(toDateInput(today)) && new Date(task.dueDate) <= weekEnd
   })
+  const timelineTasks = tasks.filter((task) => task.dueDate === timelineDate)
+  const platformWindows = postingWindows[platform] || []
+  const suggestedTime = (platformWindows[0]?.window?.split('–')[0] || '09:00').trim()
 
   if (!user) return null
 
@@ -371,7 +412,7 @@ export default function WorkspacePage() {
 
         <section className="card p-6">
           <h2 className="text-xl font-bold text-gray-900 mb-4">Personal Content Calendar Tasks</h2>
-          <div className="grid md:grid-cols-5 gap-3">
+          <div className="grid md:grid-cols-6 gap-3">
             <input
               value={title}
               onChange={(event) => setTitle(event.target.value)}
@@ -393,6 +434,12 @@ export default function WorkspacePage() {
                 <option key={item}>{item}</option>
               ))}
             </select>
+            <input
+              type="time"
+              value={timeSlot}
+              onChange={(event) => setTimeSlot(event.target.value)}
+              className="px-3 py-2 border border-gray-300 rounded-lg"
+            />
             <select
               value={priority}
               onChange={(event) => setPriority(event.target.value as TaskPriority)}
@@ -404,6 +451,26 @@ export default function WorkspacePage() {
             </select>
             <button onClick={addTask} className="px-4 py-2 bg-primary-600 text-white rounded-lg font-semibold hover:bg-primary-700 transition">
               Add Task
+            </button>
+          </div>
+
+          <div className="mt-3 flex flex-wrap items-center gap-2">
+            <span className="text-xs text-gray-600">Best time for {platform}:</span>
+            {platformWindows.map((item) => (
+              <button
+                key={item.window}
+                onClick={() => setTimeSlot(item.window.split('–')[0].trim())}
+                className="px-2.5 py-1 text-xs border border-primary-200 text-primary-700 rounded-full hover:bg-primary-50"
+                title={item.why}
+              >
+                {item.window}
+              </button>
+            ))}
+            <button
+              onClick={() => setTimeSlot(suggestedTime)}
+              className="px-2.5 py-1 text-xs border border-gray-300 text-gray-700 rounded-full hover:bg-gray-50"
+            >
+              Use Suggested
             </button>
           </div>
 
@@ -423,7 +490,7 @@ export default function WorkspacePage() {
                   <div>
                     <div className="font-semibold text-gray-900">{task.title}</div>
                     <div className="text-sm text-gray-600 mt-1">
-                      {task.platform} • Due {task.dueDate}
+                      {task.platform} • Due {task.dueDate} at {task.timeSlot}
                       {days < 0 ? ' • Overdue' : days === 0 ? ' • Due today' : ` • ${days} day(s) left`}
                     </div>
                     <div className="text-xs text-gray-500 mt-1">Stage: {task.stage} • Priority: {task.priority}</div>
@@ -452,6 +519,52 @@ export default function WorkspacePage() {
                     <button onClick={() => removeTask(task.id)} className="px-3 py-1.5 text-sm text-red-600 hover:bg-red-50 rounded-lg">
                       Remove
                     </button>
+                  </div>
+                </div>
+              )
+            })}
+          </div>
+        </section>
+
+        <section className="card p-6">
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 mb-4">
+            <div>
+              <h2 className="text-xl font-bold text-gray-900">Daily Timeline Planner</h2>
+              <p className="text-sm text-gray-600">Plan your content day hour-by-hour and snap tasks into exact publish slots.</p>
+            </div>
+            <input
+              type="date"
+              value={timelineDate}
+              onChange={(event) => setTimelineDate(event.target.value)}
+              className="px-3 py-2 border border-gray-300 rounded-lg"
+            />
+          </div>
+
+          <div className="space-y-2">
+            {timelineHours.map((hour) => {
+              const hourTasks = timelineTasks.filter((task) => task.timeSlot === hour)
+              return (
+                <div key={hour} className="border border-gray-200 rounded-lg p-3 grid grid-cols-[80px_1fr] gap-3">
+                  <div className="text-sm font-semibold text-gray-700">{hour}</div>
+                  <div className="space-y-2">
+                    {hourTasks.length === 0 && <div className="text-xs text-gray-400">No tasks scheduled</div>}
+                    {hourTasks.map((task) => (
+                      <div key={task.id} className={`border border-l-4 border-gray-200 rounded-lg px-3 py-2 ${getPriorityStyles(task.priority)}`}>
+                        <div className="text-sm font-semibold text-gray-900">{task.title}</div>
+                        <div className="text-xs text-gray-600">{task.platform} • {task.stage}</div>
+                        <div className="mt-1">
+                          <select
+                            value={task.timeSlot}
+                            onChange={(event) => updateTimeSlot(task.id, event.target.value)}
+                            className="px-2 py-1 border border-gray-300 rounded text-xs"
+                          >
+                            {timelineHours.map((slot) => (
+                              <option key={slot} value={slot}>{slot}</option>
+                            ))}
+                          </select>
+                        </div>
+                      </div>
+                    ))}
                   </div>
                 </div>
               )
@@ -549,7 +662,7 @@ export default function WorkspacePage() {
                       >
                         <div className="text-sm font-semibold text-gray-900 line-clamp-2">{task.title}</div>
                         <div className="text-xs text-gray-600 mt-1">{task.platform}</div>
-                        <div className="text-xs text-gray-500">Due {task.dueDate}</div>
+                        <div className="text-xs text-gray-500">Due {task.dueDate} at {task.timeSlot}</div>
                         <div className="text-[11px] text-gray-600 capitalize">{task.priority} priority</div>
                       </div>
                     ))}
