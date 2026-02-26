@@ -40,7 +40,7 @@ a {
 
 /* Cards */
 .card {
-  @apply bg-white border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition duration-250;
+  @apply bg-white border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition duration-300;
 }
 
 .card-hover {
