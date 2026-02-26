@@ -15,6 +15,15 @@ interface WorkspaceTask {
   priority: TaskPriority
 }
 
+interface GeneratedPost {
+  title: string
+  platform: string
+  dueDate: string
+  angle: string
+}
+
+const platforms = ['Instagram', 'TikTok', 'YouTube', 'Facebook', 'LinkedIn', 'Pinterest']
+
 const eventSuggestions = [
   { name: 'International Women’s Day', date: '2026-03-08', category: 'Global' },
   { name: 'St. Patrick’s Day', date: '2026-03-17', category: 'Seasonal' },
@@ -34,13 +43,37 @@ const getDaysUntil = (dateString: string) => {
   return Math.ceil(diff / (1000 * 60 * 60 * 24))
 }
 
+const toDateInput = (date: Date) => {
+  const year = date.getFullYear()
+  const month = String(date.getMonth() + 1).padStart(2, '0')
+  const day = String(date.getDate()).padStart(2, '0')
+  return `${year}-${month}-${day}`
+}
+
+const getMonthGrid = (viewDate: Date) => {
+  const first = new Date(viewDate.getFullYear(), viewDate.getMonth(), 1)
+  const start = new Date(first)
+  start.setDate(first.getDate() - first.getDay())
+
+  return Array.from({ length: 42 }, (_, index) => {
+    const date = new Date(start)
+    date.setDate(start.getDate() + index)
+    return date
+  })
+}
+
 export default function WorkspacePage() {
   const router = useRouter()
   const [user, setUser] = useState<any>(null)
   const [tasks, setTasks] = useState<WorkspaceTask[]>([])
+  const [notifiedTaskIds, setNotifiedTaskIds] = useState<string[]>([])
+  const [notificationsEnabled, setNotificationsEnabled] = useState(false)
+  const [selectedMonth, setSelectedMonth] = useState(new Date())
   const [title, setTitle] = useState('')
   const [dueDate, setDueDate] = useState('')
   const [platform, setPlatform] = useState('Instagram')
+  const [campaignTheme, setCampaignTheme] = useState('')
+  const [campaignPlan, setCampaignPlan] = useState<GeneratedPost[]>([])
 
   const storageKey = useMemo(() => {
     const fallback = 'creator-workspace-anon'
@@ -61,32 +94,84 @@ export default function WorkspacePage() {
     const saved = localStorage.getItem(`creator-workspace-${parsed.id || parsed.email || 'anon'}`)
     if (saved) {
       try {
-        const parsedSaved = JSON.parse(saved) as { tasks: WorkspaceTask[] }
+        const parsedSaved = JSON.parse(saved) as {
+          tasks?: WorkspaceTask[]
+          notifiedTaskIds?: string[]
+          selectedMonth?: string
+        }
         setTasks(parsedSaved.tasks || [])
+        setNotifiedTaskIds(parsedSaved.notifiedTaskIds || [])
+        if (parsedSaved.selectedMonth) {
+          setSelectedMonth(new Date(parsedSaved.selectedMonth))
+        }
       } catch {
         setTasks([])
       }
+    }
+
+    if (typeof window !== 'undefined' && 'Notification' in window && Notification.permission === 'granted') {
+      setNotificationsEnabled(true)
     }
   }, [router])
 
   useEffect(() => {
     if (!user) return
-    localStorage.setItem(storageKey, JSON.stringify({ tasks }))
-  }, [tasks, storageKey, user])
+    localStorage.setItem(
+      storageKey,
+      JSON.stringify({
+        tasks,
+        notifiedTaskIds,
+        selectedMonth: selectedMonth.toISOString(),
+      })
+    )
+  }, [tasks, notifiedTaskIds, selectedMonth, storageKey, user])
+
+  useEffect(() => {
+    if (!notificationsEnabled || typeof window === 'undefined' || !('Notification' in window)) return
+    if (Notification.permission !== 'granted') return
+
+    const pendingReminderIds: string[] = []
+
+    tasks.forEach((task) => {
+      if (task.status === 'done') return
+      if (notifiedTaskIds.includes(task.id)) return
+
+      const days = getDaysUntil(task.dueDate)
+      if (days <= 1) {
+        new Notification(days < 0 ? 'Overdue content task' : 'Upcoming content task', {
+          body: `${task.title} • ${task.platform} • Due ${task.dueDate}`,
+        })
+        pendingReminderIds.push(task.id)
+      }
+    })
+
+    if (pendingReminderIds.length > 0) {
+      setNotifiedTaskIds((prev) => [...prev, ...pendingReminderIds])
+    }
+  }, [tasks, notificationsEnabled, notifiedTaskIds])
+
+  const requestNotifications = async () => {
+    if (typeof window === 'undefined' || !('Notification' in window)) return
+    const permission = await Notification.requestPermission()
+    setNotificationsEnabled(permission === 'granted')
+  }
+
+  const createTask = (taskTitle: string, taskDueDate: string, taskPlatform: string, priority: TaskPriority = 'medium') => {
+    const nextTask: WorkspaceTask = {
+      id: `${Date.now()}-${Math.random().toString(36).slice(2, 7)}`,
+      title: taskTitle,
+      dueDate: taskDueDate,
+      platform: taskPlatform,
+      status: 'todo',
+      priority,
+    }
+    setTasks((prev) => [nextTask, ...prev])
+  }
 
   const addTask = () => {
     if (!title.trim() || !dueDate) return
 
-    const nextTask: WorkspaceTask = {
-      id: `${Date.now()}`,
-      title: title.trim(),
-      dueDate,
-      platform,
-      status: 'todo',
-      priority: 'medium',
-    }
-
-    setTasks((prev) => [nextTask, ...prev])
+    createTask(title.trim(), dueDate, platform, 'medium')
     setTitle('')
     setDueDate('')
     setPlatform('Instagram')
@@ -98,11 +183,33 @@ export default function WorkspacePage() {
 
   const removeTask = (id: string) => {
     setTasks((prev) => prev.filter((task) => task.id !== id))
+    setNotifiedTaskIds((prev) => prev.filter((taskId) => taskId !== id))
+  }
+
+  const generateCampaignPlan = () => {
+    if (!campaignTheme.trim()) return
+
+    const today = new Date()
+    const hooks = ['Behind the scenes', 'Transformation', '3 mistakes to avoid', 'Quick tutorial', 'Case study', 'Myth vs fact', 'Launch teaser']
+
+    const generated = hooks.map((hook, index) => {
+      const date = new Date(today)
+      date.setDate(today.getDate() + index)
+      return {
+        title: `${campaignTheme.trim()}: ${hook}`,
+        platform: platforms[index % platforms.length],
+        dueDate: toDateInput(date),
+        angle: `Use a ${hook.toLowerCase()} angle with a strong CTA to comment or save.`,
+      }
+    })
+
+    setCampaignPlan(generated)
   }
 
   const completion = tasks.length ? Math.round((tasks.filter((task) => task.status === 'done').length / tasks.length) * 100) : 0
   const dueSoon = tasks.filter((task) => task.status !== 'done' && getDaysUntil(task.dueDate) <= 2)
   const overdue = tasks.filter((task) => task.status !== 'done' && getDaysUntil(task.dueDate) < 0)
+  const monthGrid = getMonthGrid(selectedMonth)
 
   if (!user) return null
 
@@ -143,6 +250,58 @@ export default function WorkspacePage() {
         </section>
 
         <section className="card p-6">
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 mb-4">
+            <div>
+              <h2 className="text-xl font-bold text-gray-900">Calendar Command Center</h2>
+              <p className="text-sm text-gray-600">Visual month planner with task density and one-click date picking.</p>
+            </div>
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => setSelectedMonth(new Date(selectedMonth.getFullYear(), selectedMonth.getMonth() - 1, 1))}
+                className="px-3 py-1.5 border border-gray-300 rounded-lg text-sm hover:bg-gray-50"
+              >
+                Prev
+              </button>
+              <div className="px-3 py-1.5 text-sm font-semibold text-gray-900">
+                {selectedMonth.toLocaleString('default', { month: 'long', year: 'numeric' })}
+              </div>
+              <button
+                onClick={() => setSelectedMonth(new Date(selectedMonth.getFullYear(), selectedMonth.getMonth() + 1, 1))}
+                className="px-3 py-1.5 border border-gray-300 rounded-lg text-sm hover:bg-gray-50"
+              >
+                Next
+              </button>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-7 text-xs font-semibold text-gray-600 mb-2">
+            <div className="px-2 py-1">Sun</div><div className="px-2 py-1">Mon</div><div className="px-2 py-1">Tue</div><div className="px-2 py-1">Wed</div><div className="px-2 py-1">Thu</div><div className="px-2 py-1">Fri</div><div className="px-2 py-1">Sat</div>
+          </div>
+
+          <div className="grid grid-cols-7 gap-1">
+            {monthGrid.map((date) => {
+              const dateKey = toDateInput(date)
+              const count = tasks.filter((task) => task.dueDate === dateKey).length
+              const inMonth = date.getMonth() === selectedMonth.getMonth()
+              return (
+                <button
+                  key={date.toISOString()}
+                  onClick={() => setDueDate(dateKey)}
+                  className={`min-h-20 border rounded-lg p-2 text-left hover:bg-gray-50 transition ${inMonth ? 'border-gray-200' : 'border-gray-100 bg-gray-50/50'}`}
+                >
+                  <div className={`text-xs font-semibold ${inMonth ? 'text-gray-700' : 'text-gray-400'}`}>{date.getDate()}</div>
+                  {count > 0 && (
+                    <div className="mt-2 inline-flex items-center px-2 py-0.5 rounded-full text-[11px] bg-primary-100 text-primary-700">
+                      {count} task{count > 1 ? 's' : ''}
+                    </div>
+                  )}
+                </button>
+              )
+            })}
+          </div>
+        </section>
+
+        <section className="card p-6">
           <h2 className="text-xl font-bold text-gray-900 mb-4">Personal Content Calendar Tasks</h2>
           <div className="grid md:grid-cols-4 gap-3">
             <input
@@ -162,12 +321,9 @@ export default function WorkspacePage() {
               onChange={(event) => setPlatform(event.target.value)}
               className="px-3 py-2 border border-gray-300 rounded-lg"
             >
-              <option>Instagram</option>
-              <option>TikTok</option>
-              <option>YouTube</option>
-              <option>Facebook</option>
-              <option>LinkedIn</option>
-              <option>Pinterest</option>
+              {platforms.map((item) => (
+                <option key={item}>{item}</option>
+              ))}
             </select>
             <button onClick={addTask} className="px-4 py-2 bg-primary-600 text-white rounded-lg font-semibold hover:bg-primary-700 transition">
               Add Task
@@ -207,6 +363,58 @@ export default function WorkspacePage() {
           </div>
         </section>
 
+        <section className="card p-6">
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 mb-4">
+            <div>
+              <h2 className="text-xl font-bold text-gray-900">Campaign Idea Engine</h2>
+              <p className="text-sm text-gray-600">Generate a 7-post campaign sequence and convert ideas into tasks instantly.</p>
+            </div>
+            <div className="flex items-center gap-2 w-full md:w-auto">
+              <input
+                value={campaignTheme}
+                onChange={(event) => setCampaignTheme(event.target.value)}
+                placeholder="e.g. Spring product launch"
+                className="px-3 py-2 border border-gray-300 rounded-lg w-full md:w-72"
+              />
+              <button
+                onClick={generateCampaignPlan}
+                className="px-4 py-2 bg-primary-600 text-white rounded-lg font-semibold hover:bg-primary-700 transition"
+              >
+                Generate
+              </button>
+            </div>
+          </div>
+
+          {campaignPlan.length > 0 && (
+            <div className="space-y-3">
+              {campaignPlan.map((idea, index) => (
+                <div key={`${idea.title}-${index}`} className="border border-gray-200 rounded-lg p-4 flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+                  <div>
+                    <div className="font-semibold text-gray-900">{idea.title}</div>
+                    <div className="text-sm text-gray-600 mt-1">{idea.platform} • {idea.dueDate}</div>
+                    <div className="text-sm text-gray-700 mt-1">{idea.angle}</div>
+                  </div>
+                  <button
+                    onClick={() => createTask(idea.title, idea.dueDate, idea.platform, 'high')}
+                    className="px-3 py-1.5 text-sm border border-primary-600 text-primary-700 rounded-lg hover:bg-primary-50"
+                  >
+                    Add as Task
+                  </button>
+                </div>
+              ))}
+              <button
+                onClick={() => {
+                  campaignPlan.forEach((idea) => createTask(idea.title, idea.dueDate, idea.platform, 'high'))
+                  setCampaignPlan([])
+                }}
+                className="px-4 py-2 text-sm font-semibold bg-gray-900 text-white rounded-lg hover:bg-black transition"
+              >
+                Add Entire Campaign to Tasks
+              </button>
+            </div>
+          )}
+        </section>
+
         <section className="grid lg:grid-cols-2 gap-6">
           <div className="card p-6">
             <h2 className="text-xl font-bold text-gray-900 mb-3">Suggested Events & Holidays</h2>
@@ -237,7 +445,15 @@ export default function WorkspacePage() {
 
           <div className="card p-6">
             <h2 className="text-xl font-bold text-gray-900 mb-3">Reminder Check</h2>
-            <p className="text-sm text-gray-600 mb-4">Your live reminders are generated from due dates and update each time you sign in.</p>
+            <div className="flex items-center justify-between mb-4">
+              <p className="text-sm text-gray-600">Your live reminders are generated from due dates and update each time you sign in.</p>
+              <button
+                onClick={requestNotifications}
+                className={`px-3 py-1.5 rounded-lg text-xs font-semibold ${notificationsEnabled ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}`}
+              >
+                {notificationsEnabled ? 'Browser Alerts On' : 'Enable Browser Alerts'}
+              </button>
+            </div>
             <div className="space-y-2">
               {overdue.length === 0 && dueSoon.length === 0 && (
                 <div className="text-sm text-gray-700">No urgent reminders right now.</div>
