@@ -80,13 +80,9 @@ Designed for:
 - Peer collaboration
 - Portfolio development
 
-## 🔒 Default Users
+## 🔒 Authentication
 
-After initialization:
-- **Instructor**: `instructor@community.dev` / `instructor123`
-- **Student**: `student@community.dev` / `student123`
-
-Change these immediately in production!
+No default credentials are seeded. Create accounts through the registration flow.
 
 ## 📝 License
 

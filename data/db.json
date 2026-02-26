@@ -1,32 +1,5 @@
 {
-  "users": [
-    {
-      "id": 1,
-      "email": "instructor@community.dev",
-      "password": "$2a$10$VHpk43vfwDnCq2S9aVosze7itU1oCUqOFSPkaf0jH.qzMovlE3AGm",
-      "first_name": "Sarah",
-      "last_name": "Johnson",
-      "role": "instructor",
-      "bio": "Social Media Marketing Expert & Cricut Design Specialist"
-    },
-    {
-      "id": 2,
-      "email": "student@community.dev",
-      "password": "$2a$10$NeLjIZvfSYRCDXgzwfY2w.jIvLBj8Ocm6r2605T/HEQZLnkg/A3bG",
-      "first_name": "Alex",
-      "last_name": "Smith",
-      "role": "student",
-      "bio": "Aspiring creative entrepreneur"
-    },
-    {
-      "id": 3,
-      "email": "tiffanyforde98@gmail.com",
-      "password": "$2a$10$Tomeo9/22.oKFbImmE8XHeHneRLETy5BAR23dUYyuFxnIlEk9gxG.",
-      "first_name": "Tiffany ",
-      "last_name": "Forde",
-      "role": "student"
-    }
-  ],
+  "users": [],
   "courses": [
     {
       "id": 1,
@@ -190,14 +163,7 @@
       "max_points": 100
     }
   ],
-  "enrollments": [
-    {
-      "id": 1,
-      "course_id": 1,
-      "student_id": 2,
-      "progress": 0
-    }
-  ],
+  "enrollments": [],
   "submissions": [],
   "discussions": [],
   "portfolio": []

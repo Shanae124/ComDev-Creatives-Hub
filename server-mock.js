@@ -45,30 +45,8 @@ const DATA_DIR = path.join(__dirname, 'data');
 const DB_PATH = path.join(DATA_DIR, 'db.json');
 
 const seedDatabase = () => {
-  const instructorPassword = bcrypt.hashSync('instructor123', 10);
-  const studentPassword = bcrypt.hashSync('student123', 10);
-
   return {
-    users: [
-      {
-        id: 1,
-        email: 'instructor@community.dev',
-        password: instructorPassword,
-        first_name: 'Sarah',
-        last_name: 'Johnson',
-        role: 'instructor',
-        bio: 'Social Media Marketing Expert & Cricut Design Specialist'
-      },
-      {
-        id: 2,
-        email: 'student@community.dev',
-        password: studentPassword,
-        first_name: 'Alex',
-        last_name: 'Smith',
-        role: 'student',
-        bio: 'Aspiring creative entrepreneur'
-      }
-    ],
+    users: [],
     courses: [
       {
         id: 1,
@@ -230,9 +208,6 @@ app.listen(PORT, () => {
   console.log(`🚀 ComDev Creatives Hub API running on port ${PORT}`);
   console.log(`📚 Mode: MOCK (Persistent file storage)`);
   console.log(`🌐 Frontend: http://localhost:3000`);
-  console.log(`\n👥 Demo Accounts:`);
-  console.log(`   Instructor: instructor@community.dev / instructor123`);
-  console.log(`   Student: student@community.dev / student123`);
 });
 
 module.exports = app;

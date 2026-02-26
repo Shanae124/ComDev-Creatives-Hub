@@ -125,20 +125,10 @@ export default function LoginPage() {
           </div>
         </div>
 
-        {/* Demo Info */}
         <div className="mt-8 card p-4 bg-gray-50 text-center">
-          <p className="text-xs text-gray-600 mb-3 font-semibold">Demo Accounts</p>
-          <div className="space-y-2 text-xs text-gray-700">
-            <div>
-              <p className="font-semibold">Instructor:</p>
-              <p>instructor@community.dev</p>
-            </div>
-            <div>
-              <p className="font-semibold">Student:</p>
-              <p>student@community.dev</p>
-            </div>
-            <p className="text-gray-600">Password: 123456</p>
-          </div>
+          <p className="text-xs text-gray-700">
+            Use your own account credentials to sign in.
+          </p>
         </div>
       </div>
     </div>

@@ -1,5 +1,4 @@
 const db = require('../database/db');
-const bcrypt = require('bcryptjs');
 const fs = require('fs');
 const path = require('path');
 
@@ -14,28 +13,12 @@ async function initializeDatabase() {
     await db.query(schema);
     console.log('✅ Database schema created');
 
-    // Create default users
-    const hashedInstructorPassword = await bcrypt.hash('instructor123', 10);
-    const hashedStudentPassword = await bcrypt.hash('student123', 10);
-
-    await db.query(`
-      INSERT INTO users (email, password, first_name, last_name, role, bio)
-      VALUES 
-        ($1, $2, 'Sarah', 'Johnson', 'instructor', 'Social Media Marketing Expert & Cricut Design Specialist'),
-        ($3, $4, 'Alex', 'Smith', 'student', 'Aspiring creative entrepreneur')
-      ON CONFLICT (email) DO NOTHING
-    `, [
-      'instructor@community.dev',
-      hashedInstructorPassword,
-      'student@community.dev',
-      hashedStudentPassword
-    ]);
-    console.log('✅ Default users created');
+    console.log('✅ User tables initialized (no default credentials seeded)');
 
     // Create sample course
     const courseResult = await db.query(`
       INSERT INTO courses (title, description, instructor_id, is_published)
-      VALUES ($1, $2, (SELECT id FROM users WHERE role = 'instructor' LIMIT 1), true)
+      VALUES ($1, $2, NULL, true)
       RETURNING id
     `, [
       'Social Media Marketing with Cricut Design',
@@ -143,13 +126,7 @@ async function initializeDatabase() {
     }
     console.log('✅ Course content created (4 modules with lessons & projects)');
 
-    // Enroll student in course
-    await db.query(`
-      INSERT INTO enrollments (course_id, student_id)
-      VALUES ($1, (SELECT id FROM users WHERE role = 'student' LIMIT 1))
-      ON CONFLICT DO NOTHING
-    `, [courseId]);
-    console.log('✅ Student enrolled in course');
+    console.log('✅ Course ready for user self-registration and enrollment');
 
     // Create uploads directory
     const uploadsDir = path.join(__dirname, '../uploads');
@@ -160,9 +137,7 @@ async function initializeDatabase() {
     console.log('✅ Uploads directory created');
 
     console.log('\n🎉 Database initialized successfully!\n');
-    console.log('📝 Default accounts:');
-    console.log('   Instructor: instructor@community.dev / instructor123');
-    console.log('   Student: student@community.dev / student123\n');
+    console.log('📝 No default login credentials were created.\n');
     console.log('🚀 Run "npm run dev" to start the platform');
 
     process.exit(0);
