@@ -25,6 +25,17 @@ interface GeneratedPost {
   angle: string
 }
 
+interface RescuePack {
+  topic: string
+  rescueScore: number
+  reelScript: string[]
+  carouselSlides: string[]
+  captionAngles: string[]
+  storyFrames: string[]
+  cta: string
+  hashtags: string[]
+}
+
 const platforms = ['Instagram', 'TikTok', 'YouTube', 'Facebook', 'LinkedIn', 'Pinterest']
 const pipelineStages: PipelineStage[] = ['Idea', 'Draft', 'Edit', 'Schedule', 'Published']
 const timelineHours = Array.from({ length: 17 }, (_, index) => `${String(index + 6).padStart(2, '0')}:00`)
@@ -105,6 +116,71 @@ const getMonthGrid = (viewDate: Date) => {
   })
 }
 
+const extractKeywords = (text: string) => {
+  const words = text
+    .toLowerCase()
+    .replace(/[^a-z0-9\s]/g, ' ')
+    .split(/\s+/)
+    .filter((word) => word.length > 4)
+
+  return [...new Set(words)].slice(0, 6)
+}
+
+const buildRescuePack = (rawDraft: string): RescuePack => {
+  const cleaned = rawDraft.trim().replace(/\s+/g, ' ')
+  const sentences = cleaned
+    .split(/[.!?]+/)
+    .map((line) => line.trim())
+    .filter(Boolean)
+
+  const topic = sentences[0]?.slice(0, 70) || 'Recovered content idea'
+  const keywords = extractKeywords(cleaned)
+  const anchor = keywords[0] || 'content'
+  const secondary = keywords[1] || 'strategy'
+
+  const scoreBase = Math.min(95, Math.max(55, 60 + Math.min(cleaned.length / 25, 25) + keywords.length * 2))
+
+  return {
+    topic,
+    rescueScore: Math.round(scoreBase),
+    reelScript: [
+      `Hook: "Stop losing reach because your ${anchor} is unclear."`,
+      `Body: Show one real mistake from your original draft and how to fix it in 3 quick steps.`,
+      `Proof: Share a mini result, screenshot, or before/after tied to ${secondary}.`,
+      `CTA: "Comment READY and I’ll share the exact workflow."`,
+    ],
+    carouselSlides: [
+      `Slide 1: Big promise about ${anchor}`,
+      `Slide 2: The common mistake creators make`,
+      `Slide 3: Step 1 quick fix`,
+      `Slide 4: Step 2 quick fix`,
+      `Slide 5: Step 3 quick fix`,
+      `Slide 6: Real-world example`,
+      `Slide 7: CTA and next action`,
+    ],
+    captionAngles: [
+      `Educational: Break down your ${anchor} framework in plain language.`,
+      `Story: Share the moment you realized your ${secondary} needed a reset.`,
+      `Contrarian: Explain what most creators do wrong and your better approach.`,
+    ],
+    storyFrames: [
+      `Frame 1: Poll - "Want better ${anchor} results?"`,
+      `Frame 2: 1 key mistake from your old draft`,
+      `Frame 3: 1 quick fix tutorial`,
+      `Frame 4: CTA to DM keyword for template`,
+    ],
+    cta: 'Save this, share with your team, and DM "RESCUE" for the template.',
+    hashtags: [
+      '#contentstrategy',
+      '#socialmediamarketing',
+      '#contentcreator',
+      '#digitalmarketing',
+      `#${anchor.replace(/\s+/g, '')}`,
+      `#${secondary.replace(/\s+/g, '')}`,
+    ],
+  }
+}
+
 export default function WorkspacePage() {
   const router = useRouter()
   const [user, setUser] = useState<any>(null)
@@ -122,6 +198,9 @@ export default function WorkspacePage() {
   const [timelineDate, setTimelineDate] = useState(toDateInput(new Date()))
   const [campaignTheme, setCampaignTheme] = useState('')
   const [campaignPlan, setCampaignPlan] = useState<GeneratedPost[]>([])
+  const [rescueInput, setRescueInput] = useState('')
+  const [rescuePlatform, setRescuePlatform] = useState('Instagram')
+  const [rescuePack, setRescuePack] = useState<RescuePack | null>(null)
 
   const storageKey = useMemo(() => {
     const fallback = 'creator-workspace-anon'
@@ -286,6 +365,26 @@ export default function WorkspacePage() {
     setCampaignPlan(generated)
   }
 
+  const runRescue = () => {
+    if (!rescueInput.trim()) return
+    setRescuePack(buildRescuePack(rescueInput))
+  }
+
+  const addRescueSprint = () => {
+    if (!rescuePack) return
+
+    const start = new Date()
+    const dates = [0, 1, 2].map((offset) => {
+      const d = new Date(start)
+      d.setDate(start.getDate() + offset)
+      return toDateInput(d)
+    })
+
+    createTask(`[Rescue] Reel: ${rescuePack.topic}`, dates[0], rescuePlatform, 'high', suggestedTime)
+    createTask(`[Rescue] Carousel: ${rescuePack.topic}`, dates[1], rescuePlatform, 'high', suggestedTime)
+    createTask(`[Rescue] Story Sequence: ${rescuePack.topic}`, dates[2], rescuePlatform, 'medium', suggestedTime)
+  }
+
   const completion = tasks.length ? Math.round((tasks.filter((task) => task.status === 'done').length / tasks.length) * 100) : 0
   const dueSoon = tasks.filter((task) => task.status !== 'done' && getDaysUntil(task.dueDate) <= 2)
   const overdue = tasks.filter((task) => task.status !== 'done' && getDaysUntil(task.dueDate) < 0)
@@ -408,6 +507,116 @@ export default function WorkspacePage() {
               )
             })}
           </div>
+        </section>
+
+        <section className="card p-6">
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 mb-4">
+            <div>
+              <h2 className="text-xl font-bold text-gray-900">Content Recovery AI</h2>
+              <p className="text-sm text-gray-600">Turn abandoned drafts into a complete campaign pack you can publish this week.</p>
+            </div>
+            <div className="flex items-center gap-2">
+              <select
+                value={rescuePlatform}
+                onChange={(event) => setRescuePlatform(event.target.value)}
+                className="px-3 py-2 border border-gray-300 rounded-lg"
+              >
+                {platforms.map((item) => (
+                  <option key={item}>{item}</option>
+                ))}
+              </select>
+              <button
+                onClick={runRescue}
+                className="px-4 py-2 bg-primary-600 text-white rounded-lg font-semibold hover:bg-primary-700 transition"
+              >
+                Rescue Draft
+              </button>
+            </div>
+          </div>
+
+          <textarea
+            value={rescueInput}
+            onChange={(event) => setRescueInput(event.target.value)}
+            placeholder="Paste old caption drafts, rough notes, or unfinished content here..."
+            className="w-full min-h-28 px-3 py-2 border border-gray-300 rounded-lg"
+          />
+
+          {rescuePack && (
+            <div className="mt-5 space-y-4">
+              <div className="flex items-center justify-between bg-gray-50 border border-gray-200 rounded-lg px-4 py-3">
+                <div>
+                  <h3 className="font-semibold text-gray-900">Recovered Topic: {rescuePack.topic}</h3>
+                  <p className="text-xs text-gray-600">Ready-to-publish assets generated for {rescuePlatform}</p>
+                </div>
+                <div className="text-sm font-semibold text-primary-700">Recovery Score: {rescuePack.rescueScore}%</div>
+              </div>
+
+              <div className="grid lg:grid-cols-2 gap-4">
+                <div className="border border-gray-200 rounded-lg p-4">
+                  <h4 className="font-semibold text-gray-900 mb-2">Reel Script</h4>
+                  <ul className="space-y-1 text-sm text-gray-700">
+                    {rescuePack.reelScript.map((line, idx) => (
+                      <li key={idx}>• {line}</li>
+                    ))}
+                  </ul>
+                </div>
+                <div className="border border-gray-200 rounded-lg p-4">
+                  <h4 className="font-semibold text-gray-900 mb-2">Carousel Outline</h4>
+                  <ul className="space-y-1 text-sm text-gray-700">
+                    {rescuePack.carouselSlides.map((line, idx) => (
+                      <li key={idx}>• {line}</li>
+                    ))}
+                  </ul>
+                </div>
+                <div className="border border-gray-200 rounded-lg p-4">
+                  <h4 className="font-semibold text-gray-900 mb-2">Caption Angles</h4>
+                  <ul className="space-y-1 text-sm text-gray-700">
+                    {rescuePack.captionAngles.map((line, idx) => (
+                      <li key={idx}>• {line}</li>
+                    ))}
+                  </ul>
+                </div>
+                <div className="border border-gray-200 rounded-lg p-4">
+                  <h4 className="font-semibold text-gray-900 mb-2">Story Sequence</h4>
+                  <ul className="space-y-1 text-sm text-gray-700">
+                    {rescuePack.storyFrames.map((line, idx) => (
+                      <li key={idx}>• {line}</li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+
+              <div className="border border-gray-200 rounded-lg p-4">
+                <div className="text-sm text-gray-800 mb-2"><span className="font-semibold">CTA:</span> {rescuePack.cta}</div>
+                <div className="flex flex-wrap gap-2">
+                  {rescuePack.hashtags.map((tag) => (
+                    <span key={tag} className="px-2 py-1 text-xs bg-primary-100 text-primary-700 rounded-full">{tag}</span>
+                  ))}
+                </div>
+              </div>
+
+              <div className="flex flex-wrap gap-2">
+                <button
+                  onClick={() => createTask(`[Rescue] Reel: ${rescuePack.topic}`, toDateInput(new Date()), rescuePlatform, 'high', suggestedTime)}
+                  className="px-3 py-2 text-sm border border-primary-600 text-primary-700 rounded-lg hover:bg-primary-50"
+                >
+                  Add Reel Task
+                </button>
+                <button
+                  onClick={() => createTask(`[Rescue] Carousel: ${rescuePack.topic}`, toDateInput(new Date()), rescuePlatform, 'high', suggestedTime)}
+                  className="px-3 py-2 text-sm border border-primary-600 text-primary-700 rounded-lg hover:bg-primary-50"
+                >
+                  Add Carousel Task
+                </button>
+                <button
+                  onClick={addRescueSprint}
+                  className="px-4 py-2 text-sm font-semibold bg-gray-900 text-white rounded-lg hover:bg-black transition"
+                >
+                  Add Full Rescue Sprint
+                </button>
+              </div>
+            </div>
+          )}
         </section>
 
         <section className="card p-6">
